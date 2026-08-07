@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { Reveal, RevealGroup, RevealItem } from "./Reveal";
 import { Building2, MessageSquare, Wrench, CreditCard } from "lucide-react";
+import { SECTION_SHELL } from "@/lib/layout";
 
 const PANELS = [
   {
@@ -38,7 +39,7 @@ export function Portal() {
   return (
     <section
       id="portal"
-      className="relative border-t border-ink-600 px-6 py-28 md:px-12 md:py-40"
+      className={SECTION_SHELL}
     >
       <div
         aria-hidden

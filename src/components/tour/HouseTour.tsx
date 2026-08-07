@@ -50,6 +50,76 @@ import { useWebGLSupport } from "./useWebGLSupport";
 
 type Mode = "walkthrough" | "gallery";
 
+/**
+ * How much of the visitor's keyboard the tour is allowed to take.
+ *
+ *  `focused`  pointer-locked, or focus is somewhere inside the tour. Arrow keys
+ *             belong to the tour and their default page scroll is prevented.
+ *  `visible`  the tour is mostly on screen but nothing in it is focused. WASD
+ *             drives the camera; arrows are left to the page so scrolling still
+ *             works.
+ *  `none`     the tour is off screen. It consumes nothing at all.
+ */
+type Engagement = "none" | "visible" | "focused";
+
+/** Movement keys that do nothing to the page and so never need preventDefault. */
+const MOVE_KEYS = new Set([
+  "KeyW",
+  "KeyA",
+  "KeyS",
+  "KeyD",
+  "ShiftLeft",
+  "ShiftRight",
+]);
+
+/** Arrows scroll. Only taken — and only prevented — when the tour is focused. */
+const ARROW_KEYS = new Set([
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+]);
+
+/**
+ * True when the keystroke came from somewhere the visitor is typing.
+ *
+ * This is the whole reason the guard exists: the tour is always mounted on `/`
+ * and its keydown listener is on `window`, so without this check typing
+ * "1234 W Main St" into the hero address field walked the 3D camera — WASD are
+ * ordinary letters. Fixing it here rather than by stopping propagation from the
+ * input keeps every other component on the page safe from the same bug.
+ */
+/* ---------------------------------------------------------------------- */
+/* Where the camera looks on the first frame                               */
+/* ---------------------------------------------------------------------- */
+
+/**
+ * The photo shell is a partial cylinder. three.js lays a CylinderGeometry's
+ * theta out as `x = sin θ, z = cos θ`, so this arc is centred a hair off +Z.
+ */
+const SHELL_THETA_START = -Math.PI / 2.05;
+const SHELL_THETA_LENGTH = Math.PI / 1.05;
+const SHELL_CENTER_THETA = SHELL_THETA_START + SHELL_THETA_LENGTH / 2;
+
+/**
+ * The camera's forward vector is `(cos yaw, sin yaw)` in (x, z), so a yaw of 0
+ * aimed it at +X — a quarter turn away from the shell, straight at its open
+ * edge. That is why the opening frame was roughly half void. Derived from the
+ * geometry constants above rather than hard-coded, so the two cannot drift.
+ */
+const INITIAL_YAW = Math.atan2(
+  Math.cos(SHELL_CENTER_THETA),
+  Math.sin(SHELL_CENTER_THETA),
+);
+
+function isTypingTarget(target: EventTarget | null): boolean {
+  const el = target as HTMLElement | null;
+  if (!el || typeof el.tagName !== "string") return false;
+  const tag = el.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+  return el.isContentEditable === true;
+}
+
 type HouseTourProps = {
   rooms: TourRoom[];
   address?: string;
@@ -188,7 +258,7 @@ function RoomMesh({
     <mesh position={[pos[0], EYE_HEIGHT, pos[2]]}>
       <cylinderGeometry
         ref={geo}
-        args={[4.4, 4.4, 4.6, 64, 24, true, -Math.PI / 2.05, Math.PI / 1.05]}
+        args={[4.4, 4.4, 4.6, 64, 24, true, SHELL_THETA_START, SHELL_THETA_LENGTH]}
       />
       <meshStandardMaterial
         ref={mat}
@@ -650,12 +720,13 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [locked, setLocked] = useState(false);
 
+  const rootRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const player = useRef<PlayerState>({
     x: rooms[0]?.position?.[0] ?? 0,
     y: EYE_HEIGHT,
     z: rooms[0]?.position?.[2] ?? 0,
-    yaw: 0, // face +X down the corridor
+    yaw: INITIAL_YAW,
     pitch: 0,
     glide: null,
   });
@@ -664,6 +735,9 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
   const lookDelta = useRef({ dx: 0, dy: 0 });
   const lockedRef = useRef(false);
   const dragLook = useRef(false);
+  /** Set once a pointer drag has actually moved, so the trailing click is not
+      mistaken for a request to lock. */
+  const dragMoved = useRef(false);
   const lastPtr = useRef({ x: 0, y: 0 });
   const prevIdx = useRef(0);
 
@@ -696,7 +770,7 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
       x: p0[0],
       y: EYE_HEIGHT,
       z: p0[2],
-      yaw: 0,
+      yaw: INITIAL_YAW,
       pitch: 0,
       glide: null,
     };
@@ -767,30 +841,99 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
     prevIdx.current = i;
   }, []);
 
+  /**
+   * How much of the keyboard the tour currently owns. Measured from a live
+   * rect at event time rather than from an IntersectionObserver: it costs one
+   * layout read per keypress, it is never stale after a scroll, and it does
+   * not depend on the browser delivering IO callbacks.
+   */
+  const engagement = useCallback((): Engagement => {
+    const root = rootRef.current;
+    if (!root) return "none";
+
+    if (stageRef.current && document.pointerLockElement === stageRef.current) {
+      return "focused";
+    }
+    const active = document.activeElement;
+    if (active && active !== document.body && root.contains(active)) {
+      return "focused";
+    }
+
+    const r = root.getBoundingClientRect();
+    if (r.height <= 0) return "none";
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const shown = Math.min(r.bottom, vh) - Math.max(r.top, 0);
+    return shown / Math.min(r.height, vh) >= 0.6 ? "visible" : "none";
+  }, []);
+
   // Keyboard
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      keys.current.add(e.code);
+      // Escape stays global on purpose — it only ever releases something.
       if (e.code === "Escape") {
         if (document.pointerLockElement) document.exitPointerLock();
         setFullscreen(false);
+        return;
       }
-      // Non-3D path: arrows still work in gallery
+
+      // Never steal a keystroke the visitor is typing somewhere.
+      if (isTypingTarget(e.target)) {
+        keys.current.clear();
+        return;
+      }
+
+      const level = engagement();
+      if (level === "none") {
+        // Also drops any key held while the tour scrolled out of view.
+        keys.current.clear();
+        return;
+      }
+
+      const isArrow = ARROW_KEYS.has(e.code);
+      if (isArrow) {
+        // Arrows scroll the page. Only take them when the tour is genuinely
+        // the focused thing, never merely because it is on screen.
+        if (level !== "focused") return;
+      } else if (!MOVE_KEYS.has(e.code)) {
+        return;
+      }
+
+      // Gallery / reduced motion: arrows page the filmstrip instead of walking.
       if (mode === "gallery" || reduce) {
-        if (e.key === "ArrowRight") goGallery(idx + 1);
-        if (e.key === "ArrowLeft") goGallery(idx - 1);
+        if (e.code === "ArrowRight") {
+          e.preventDefault();
+          goGallery(idx + 1);
+        } else if (e.code === "ArrowLeft") {
+          e.preventDefault();
+          goGallery(idx - 1);
+        }
+        return;
       }
+
+      keys.current.add(e.code);
+      // preventDefault only for keys actually consumed, and only while
+      // engaged — otherwise a single arrow press both scrolled the page and
+      // walked the camera.
+      if (isArrow) e.preventDefault();
     };
+
     const up = (e: KeyboardEvent) => {
+      // Unconditional: a key released after engagement changed must not stick.
       keys.current.delete(e.code);
     };
+    const held = keys.current;
+    const clearKeys = () => held.clear();
+
     window.addEventListener("keydown", down);
     window.addEventListener("keyup", up);
+    window.addEventListener("blur", clearKeys);
     return () => {
       window.removeEventListener("keydown", down);
       window.removeEventListener("keyup", up);
+      window.removeEventListener("blur", clearKeys);
+      held.clear();
     };
-  }, [mode, reduce, idx, goGallery]);
+  }, [mode, reduce, idx, goGallery, engagement]);
 
   // Pointer lock lifecycle
   useEffect(() => {
@@ -824,9 +967,12 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
 
   // Drag-to-look when not pointer-locked (mobile / desktop free look)
   const onPointerDown = (e: React.PointerEvent) => {
+    // Focus the stage so keyboard movement engages without a pointer lock.
+    (e.currentTarget as HTMLElement).focus?.();
     if (lockedRef.current) return;
     // left button or touch
     dragLook.current = true;
+    dragMoved.current = false;
     lastPtr.current = { x: e.clientX, y: e.clientY };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
@@ -837,10 +983,33 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
     if (!dragLook.current || lockedRef.current) return;
     const dx = e.clientX - lastPtr.current.x;
     const dy = e.clientY - lastPtr.current.y;
+    if (Math.abs(dx) + Math.abs(dy) > 4) dragMoved.current = true;
     lastPtr.current = { x: e.clientX, y: e.clientY };
     lookDelta.current.dx += dx;
     lookDelta.current.dy += dy;
   };
+
+  /**
+   * "Click to look around" — the copy in TourControls and in the caption under
+   * the stage both said click, but the stage only bound onDoubleClick, so the
+   * instruction was wrong. Single click now requests the lock; the double-click
+   * binding stays as a harmless alias.
+   *
+   * Two things are deliberately excluded: a click that ended a look-drag, and a
+   * click on any control inside the stage (doorway buttons, the hint dialog),
+   * which are UI rather than scene.
+   */
+  const onStageClick = useCallback(
+    (e: React.MouseEvent) => {
+      if (lockedRef.current || dragMoved.current) return;
+      const t = e.target as HTMLElement | null;
+      if (t?.closest?.("button, a, input, select, textarea, [role='button']")) {
+        return;
+      }
+      requestLock();
+    },
+    [requestLock],
+  );
 
   const onFloorPoint = useCallback(
     (x: number, z: number) => {
@@ -876,7 +1045,7 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
   const showWalk = movementEnabled;
 
   return (
-    <div className="relative min-w-0">
+    <div ref={rootRef} className="relative min-w-0">
       <div className="mb-3 flex min-w-0 flex-wrap items-end justify-between gap-3">
         <div className="min-w-0">
           <p className="font-display text-title-lg text-fg truncate">{address}</p>
@@ -920,11 +1089,17 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
         {showWalk ? (
           <div
             ref={stageRef}
-            className="relative h-[min(68vh,640px)] min-h-[380px] w-full touch-none"
+            // Focusable so keyboard movement can engage without a pointer lock,
+            // and so the walkthrough is reachable by tab at all.
+            tabIndex={0}
+            role="application"
+            aria-label="Interactive walkthrough. W A S D or the arrow keys move; click to look around."
+            className="relative h-[min(68vh,640px)] min-h-[380px] w-full touch-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
             onPointerMove={onPointerMove}
+            onClick={onStageClick}
             onDoubleClick={requestLock}
           >
             <WalkCanvas

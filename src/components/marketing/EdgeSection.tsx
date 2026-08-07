@@ -17,6 +17,7 @@ import {
   surfaceRise,
   viewportOnce,
 } from "@/lib/motion/variants";
+import { SECTION_SHELL } from "@/lib/layout";
 
 /**
  * The competitive-gap section.
@@ -333,7 +334,7 @@ export function EdgeSection() {
   return (
     <section
       id="edge"
-      className="relative border-t border-line px-5 py-24 md:px-12 md:py-36"
+      className={SECTION_SHELL}
     >
       <div className="mx-auto max-w-6xl">
         <Reveal>

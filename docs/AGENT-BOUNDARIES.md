@@ -32,8 +32,13 @@ Written 2026-08-07 by the logic agent, after the React #418 / dead-state pass.
 | `src/components/viz/ScoreDial.tsx` | Known / unknown branch |
 | `src/components/viz/PermitTimeline.tsx` | Bar geometry, clock handling |
 | `src/components/ui/PropertyCard.tsx` | Photo / no-photo branch, `min-w-0` |
-| `src/components/tour/*.tsx` | Touch-target geometry only |
+| `src/components/tour/*.tsx` | Touch-target geometry, input handling, camera state |
+| `src/lib/layout.ts` | The one vertical rhythm every section uses |
 | `docs/AGENT-BOUNDARIES.md` | This file |
+
+**`src/lib/layout.ts` is the only place section padding is written.** Every
+`<section>` on the landing page renders `className={SECTION_SHELL}`. Retune the
+rhythm there; do not put `py-*` back on an individual section.
 
 ### Presentation-owned
 
@@ -99,7 +104,8 @@ component internals.
 
 | Hook | Element | Intent |
 | --- | --- | --- |
-| `data-anim="hero-headline"` | `<h1>` in `Hero.tsx` | Two masked lines; currently a per-line rise. Keep the `overflow-hidden` masks. |
+| `data-anim="hero-headline"` | `<h1>` in `Hero.tsx` | Two masked lines; currently a per-line rise. Keep the `overflow-hidden` masks, and keep `text-balance` on each inner span — without it both sentences strand their last word on a line of their own. |
+| `data-anim="hero-panel"` | Right column of the hero, `lg` and up | The scoring-profile surface that fills what used to be empty black. Factor rows are read from `INVESTOR_GF_V1`; the dial is deliberately in its unknown state. |
 | `data-anim="hero-probe"` | Address-field wrapper | Entrance for the search affordance. |
 | `data-anim="hero-coverage"` | `<dl>` coverage strip | Three product figures + source lines. |
 | `data-anim="countup"` | `CountUpNumber` root | Figure animating to a value already present in the markup. |
@@ -129,8 +135,17 @@ they mean.
   not composite frames and therefore never delivers IO callbacks. The code is
   standard and degrades safely (the first row stays marked active and every row
   remains a working anchor link), but it needs one look in a real browser.
-- Two footer text links measure 44×41px — 3px under on width. They are in
-  `Footer.tsx`, which neither of us owns.
+- ~~Two footer text links measure 44×41px.~~ Fixed: `min-w-11` on the footer
+  link. A full sweep at 375px and 1440px now finds no interactive target under
+  44px on `/`.
+- `/sign-in` still has three: the wordmark (130×36) and the two inline text
+  links "Forgot your password?" (136×17) and "Create one" (65×17). Not on the
+  landing page, and in files neither agent owns.
+- The tour's camera motion could not be watched in the agent browser:
+  `requestAnimationFrame` never fires there (measured: 0 frames/second), so
+  `useFrame` never runs. The keyboard guards were verified through
+  `defaultPrevented` and observable DOM state instead, and the opening yaw was
+  verified numerically against the real `CylinderGeometry`.
 - `AnalysisDepth.tsx` and `Portal.tsx` still use raw `ink-*` / `bone-*` /
   `ember-*` palette classes instead of the semantic tokens, so they do not
   respond to the light theme. Out of scope for this pass; worth a sweep.

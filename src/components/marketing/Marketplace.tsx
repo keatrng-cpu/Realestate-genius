@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/ui/Prose";
 import { StaggerItem, StaggerList } from "@/components/ui/Skeleton";
 import { cn } from "@/lib/utils";
 import { EASE_OUT_EXPO } from "@/lib/motion/variants";
+import { SECTION_SHELL } from "@/lib/layout";
 
 /**
  * The repositioning section.
@@ -80,7 +81,7 @@ export function Marketplace() {
   return (
     <section
       id="marketplace"
-      className="relative border-t border-line px-5 py-24 md:px-12 md:py-36"
+      className={SECTION_SHELL}
     >
       <div className="mx-auto max-w-6xl">
         <Reveal>

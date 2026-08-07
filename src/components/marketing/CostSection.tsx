@@ -4,6 +4,7 @@ import { MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/ui/Prose";
 import { CostExplorer } from "@/components/interactive/CostExplorer";
+import { SECTION_SHELL } from "@/lib/layout";
 
 /**
  * The one section on the page that computes something from the visitor's own
@@ -14,7 +15,7 @@ export function CostSection() {
   return (
     <section
       id="calculator"
-      className="relative border-t border-line px-5 py-24 md:px-12 md:py-36"
+      className={SECTION_SHELL}
     >
       <div className="mx-auto max-w-6xl">
         <Reveal>

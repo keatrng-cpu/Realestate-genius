@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/ui/Prose";
 import { StaggerItem, StaggerList } from "@/components/ui/Skeleton";
 import { cn } from "@/lib/utils";
+import { SECTION_SHELL } from "@/lib/layout";
 
 /**
  * Provenance ledger.
@@ -95,7 +96,7 @@ export function SourceLedger() {
   return (
     <section
       id="sources"
-      className="relative border-t border-line px-5 py-24 md:px-12 md:py-36"
+      className={SECTION_SHELL}
     >
       <div className="mx-auto max-w-6xl">
         <Reveal>

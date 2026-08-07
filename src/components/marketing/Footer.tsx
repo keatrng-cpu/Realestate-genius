@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PRICING_VERIFIED_ON } from "@/lib/pricing";
+import { FOOTER_SHELL } from "@/lib/layout";
 
 /**
  * Site footer.
@@ -72,7 +73,9 @@ function FooterItem({ link }: { link: FooterLink }) {
     <li>
       <Link
         href={link.href}
-        className="inline-flex min-h-11 items-center text-body-sm text-fg-muted transition-colors hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        // min-w-11 alongside min-h-11: "Pricing" and "Sign in" are short enough
+        // that their text box measured 41px wide, 3px under the 44px minimum.
+        className="inline-flex min-h-11 min-w-11 items-center text-body-sm text-fg-muted transition-colors hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         {link.label}
       </Link>
@@ -81,10 +84,18 @@ function FooterItem({ link }: { link: FooterLink }) {
 }
 
 export function Footer() {
-  const year = new Date().getFullYear();
+  /**
+   * UTC, not local. `/` is statically prerendered, so this line is computed
+   * once in the build's timezone and again in the visitor's on hydration.
+   * `getFullYear()` on a UTC-built page viewed from Chicago is the exact
+   * shape of the React #418 that PermitTimeline just had to have removed.
+   * (A build that straddles a New Year's rollover is still stale until the
+   * next deploy — that is a redeploy problem, not a hydration one.)
+   */
+  const year = new Date().getUTCFullYear();
 
   return (
-    <footer className="border-t border-line px-5 py-16 md:px-12 md:py-20">
+    <footer className={FOOTER_SHELL}>
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(3,minmax(0,1fr))] md:gap-8">
           <div>

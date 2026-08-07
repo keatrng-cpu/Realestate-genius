@@ -3,6 +3,7 @@
 import { Reveal } from "@/components/Reveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { LinkButton } from "@/components/ui/Button";
+import { SECTION_SHELL } from "@/lib/layout";
 
 /**
  * Terminal call to action. Deliberately makes one promise and names the
@@ -16,7 +17,7 @@ export function ClosingCTA() {
   return (
     <section
       id="start"
-      className="relative border-t border-line px-5 py-28 md:px-12 md:py-44"
+      className={SECTION_SHELL}
     >
       <div
         aria-hidden

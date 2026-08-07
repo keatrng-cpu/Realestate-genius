@@ -4,6 +4,8 @@ import { Reveal } from "../Reveal";
 import { TourExperience } from "./TourExperience";
 import { DEFAULT_LISTING_ID, listListingIds } from "@/lib/listings/demo-data";
 import { useState } from "react";
+import { SECTION_SHELL } from "@/lib/layout";
+import { cn } from "@/lib/utils";
 
 export function TourSection() {
   const ids = listListingIds();
@@ -12,7 +14,7 @@ export function TourSection() {
   return (
     <section
       id="tour"
-      className="relative min-w-0 border-t border-line px-5 py-28 md:px-12 md:py-40"
+      className={cn(SECTION_SHELL, "min-w-0")}
     >
       <div className="mx-auto max-w-6xl min-w-0">
         <Reveal>

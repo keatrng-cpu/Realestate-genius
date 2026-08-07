@@ -351,7 +351,8 @@ export function Field({
             "transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
             "disabled:cursor-not-allowed disabled:opacity-55",
             FOCUS_RING,
-            isPassword && "pr-12",
+            // Clears the 44px reveal button below (4px offset + 44px target).
+            isPassword && "pr-14",
             error
               ? "border-flag-400/70 hover:border-flag-400"
               : "border-ink-500 hover:border-ink-500/80 focus:border-ember-400/60",
@@ -365,7 +366,11 @@ export function Field({
             disabled={disabled}
             aria-label={revealed ? "Hide password" : "Show password"}
             className={cn(
-              "absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg p-2 text-bone-500",
+              // 44x44 hit area, 16px glyph. It shipped as p-2 + size-4 = 32x32,
+              // which is under the minimum touch target for the one control on
+              // the sign-in form a phone user is most likely to reach for.
+              "absolute right-1 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center",
+              "rounded-lg text-bone-500",
               "transition-colors duration-200 hover:text-bone-100",
               FOCUS_RING,
             )}

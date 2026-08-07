@@ -14,6 +14,7 @@ import {
   scoreSubject,
   type ScoringSubject,
 } from "@/lib/scoring";
+import { SECTION_SHELL } from "@/lib/layout";
 
 /**
  * The scoring section, computed by the real engine.
@@ -125,7 +126,7 @@ export function ScoreCard() {
   return (
     <section
       id="score"
-      className="relative border-t border-line px-5 py-24 md:px-12 md:py-36"
+      className={SECTION_SHELL}
     >
       <div className="mx-auto max-w-6xl">
         <Reveal>

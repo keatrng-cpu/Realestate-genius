@@ -7,6 +7,7 @@ import { useParallaxY, useSectionProgress, useTrack } from "@/lib/motion/scroll"
 import { PropertyCard, PropertyCardCompact } from "@/components/ui/PropertyCard";
 import type { PropertyCardData } from "@/components/ui/PropertyCard";
 import { DEMO_LISTINGS } from "@/lib/listings/demo-data";
+import { SECTION_SHELL } from "@/lib/layout";
 
 /** Reuse the tour's own photography rather than shipping three dead frames. */
 const PHOTO = {
@@ -101,7 +102,7 @@ export function DealFlow() {
     <section
       id="deals"
       ref={ref}
-      className="relative border-t border-line px-5 py-24 md:px-12 md:py-36"
+      className={SECTION_SHELL}
     >
       <div className="mx-auto max-w-6xl">
         <Reveal>

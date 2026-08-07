@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import { Reveal, RevealGroup, RevealItem } from "./Reveal";
+import { SECTION_SHELL } from "@/lib/layout";
 
 /**
  * The categories below mirror what the pipeline actually pulls today
@@ -58,7 +59,7 @@ export function AnalysisDepth() {
     <section
       id="analysis"
       ref={ref}
-      className="relative border-t border-ink-600 px-6 py-28 md:px-12 md:py-40"
+      className={SECTION_SHELL}
     >
       <div className="mx-auto max-w-6xl">
         <Reveal>
