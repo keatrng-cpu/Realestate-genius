@@ -24,19 +24,15 @@ export function Hero() {
       ref={ref}
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden px-6 md:px-12"
     >
-      {/* Layered ambient light — two offset radial washes, not a linear gradient */}
+      {/* Local intensifiers only — site-wide field lives in ScrollBackground */}
       <motion.div
         aria-hidden
         style={reduce ? undefined : { scale }}
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute left-1/2 top-[-20%] h-[70vh] w-[70vw] -translate-x-1/2 rounded-full bg-ember-400/12 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[5%] h-[45vh] w-[40vw] rounded-full bg-signal-500/8 blur-[110px]" />
+        <div className="absolute left-1/2 top-[-20%] h-[70vh] w-[70vw] -translate-x-1/2 rounded-full bg-ember-400/10 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[5%] h-[45vh] w-[40vw] rounded-full bg-signal-500/6 blur-[110px]" />
       </motion.div>
-      <div
-        aria-hidden
-        className="grain-overlay pointer-events-none absolute inset-0 opacity-[0.14] mix-blend-overlay"
-      />
 
       <motion.div
         style={reduce ? undefined : { y, opacity }}
