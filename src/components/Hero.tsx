@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
-import { EASE_OUT_EXPO } from "@/lib/motion/variants";
+import { DUR, EASE_OUT_EXPO } from "@/lib/motion/variants";
 import { AddressProbe } from "@/components/interactive/AddressProbe";
 import { CountUpNumber } from "@/components/interactive/CountUpNumber";
 import { ENGINE_VERSION, INVESTOR_GF_V1 } from "@/lib/scoring/engine";
@@ -23,6 +23,9 @@ import { ENGINE_VERSION, INVESTOR_GF_V1 } from "@/lib/scoring/engine";
  *     this page led with two anchor links. `AddressProbe` answers honestly —
  *     it shows the work that WOULD run, never an invented fact about whatever
  *     the visitor typed.
+ *
+ * Timings come from `DUR` in the motion module rather than being written inline,
+ * so the page's rhythm can be retuned in one file. See docs/AGENT-BOUNDARIES.md.
  */
 
 const HEADLINE = ["Find the deal. Finish the deal.", "On the facts no portal prints."];
@@ -58,6 +61,10 @@ const COVERAGE = [
   },
 ];
 
+/**
+ * Landing hero. Scroll-exit parallax so Marketplace slides over rather than
+ * after. Colours use semantic tokens (works in light + dark).
+ */
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -75,16 +82,19 @@ export function Hero() {
   return (
     <section
       ref={ref}
+      // pt-28 clears the fixed SiteHeader; without it the eyebrow sits under it.
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden px-5 pb-16 pt-28 md:px-12 md:pt-32"
     >
-      {/* Local intensifiers only — the site-wide field lives in ScrollBackground */}
+      {/* Local intensifiers only — the site-wide field lives in ScrollBackground.
+          The max-w caps are load-bearing: a vw-sized blur with a negative inset
+          widens the layout viewport on narrow screens. */}
       <motion.div
         aria-hidden
         style={reduce ? undefined : { scale }}
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
         <div className="absolute left-1/2 top-[-20%] h-[70vh] w-[70vw] max-w-[900px] -translate-x-1/2 rounded-full bg-accent/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-0 h-[45vh] w-[40vw] max-w-[600px] rounded-full bg-measure/6 blur-[110px]" />
+        <div className="absolute bottom-[-10%] right-0 h-[45vh] w-[40vw] max-w-[600px] rounded-full bg-measure/8 blur-[110px]" />
       </motion.div>
 
       <motion.div
@@ -94,13 +104,16 @@ export function Hero() {
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
+          transition={{ duration: DUR.slow, ease: EASE_OUT_EXPO }}
           className="mb-7 font-mono text-label uppercase text-accent"
         >
           Grand Forks · Fargo · North Dakota
         </motion.p>
 
-        <h1 data-anim="hero-headline" className="max-w-4xl font-display text-display-xl">
+        <h1
+          data-anim="hero-headline"
+          className="max-w-4xl font-display text-display-xl text-fg"
+        >
           {HEADLINE.map((line, i) => (
             <span key={line} className="block overflow-hidden">
               <motion.span
@@ -108,7 +121,7 @@ export function Hero() {
                 initial={reduce ? false : { y: "110%" }}
                 animate={{ y: "0%" }}
                 transition={{
-                  duration: 1,
+                  duration: DUR.cinematic,
                   delay: 0.1 + i * 0.12,
                   ease: EASE_OUT_EXPO,
                 }}
@@ -129,7 +142,7 @@ export function Hero() {
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.45, ease: EASE_OUT_EXPO }}
+          transition={{ duration: DUR.slow, delay: 0.45, ease: EASE_OUT_EXPO }}
           className="mt-7 max-w-2xl text-balance text-body-lg text-fg-muted"
         >
           One marketplace where buyers, sellers, landlords, tenants and agents
@@ -142,7 +155,7 @@ export function Hero() {
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.6, ease: EASE_OUT_EXPO }}
+          transition={{ duration: DUR.slow, delay: 0.6, ease: EASE_OUT_EXPO }}
           data-anim="hero-probe"
           className="mt-10 max-w-3xl"
         >
@@ -152,7 +165,7 @@ export function Hero() {
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.72, ease: EASE_OUT_EXPO }}
+          transition={{ duration: DUR.slow, delay: 0.72, ease: EASE_OUT_EXPO }}
           className="mt-7 flex flex-wrap items-center gap-4"
         >
           <a
@@ -190,7 +203,7 @@ export function Hero() {
           data-anim="hero-coverage"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.85, ease: EASE_OUT_EXPO }}
+          transition={{ duration: DUR.slow, delay: 0.85, ease: EASE_OUT_EXPO }}
           className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-3"
         >
           {COVERAGE.map((c) => (
@@ -205,6 +218,22 @@ export function Hero() {
             </div>
           ))}
         </motion.dl>
+      </motion.div>
+
+      {/* Scroll cue. Decorative, so it is hidden from assistive tech and it
+          stops moving under prefers-reduced-motion. */}
+      <motion.div
+        aria-hidden
+        initial={reduce ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 1 }}
+        className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={reduce ? undefined : { y: [0, 9, 0] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          className="h-11 w-px bg-linear-to-b from-fg-muted/60 to-transparent"
+        />
       </motion.div>
     </section>
   );

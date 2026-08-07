@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useRef, type ReactNode } from "react";
 
 type RevealProps = {
   children: ReactNode;
@@ -9,6 +9,8 @@ type RevealProps = {
   y?: number;
   className?: string;
 };
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
  * Scroll-triggered reveal. Honors prefers-reduced-motion by rendering the
@@ -26,7 +28,7 @@ export function Reveal({ children, delay = 0, y = 24, className }: RevealProps) 
       transition={{
         duration: 0.7,
         delay,
-        ease: [0.16, 1, 0.3, 1],
+        ease: EASE,
       }}
     >
       {children}
@@ -78,11 +80,39 @@ export function RevealItem({
           opacity: 1,
           y: 0,
           filter: "blur(0px)",
-          transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
+          transition: { duration: 0.65, ease: EASE },
         },
       }}
     >
       {children}
     </motion.div>
+  );
+}
+
+/**
+ * Soft parallax wrapper for a section's inner content.
+ * Visual only — drop around existing section markup without changing layout.
+ */
+export function ParallaxBlock({
+  children,
+  className,
+  distance = 40,
+}: {
+  children: ReactNode;
+  className?: string;
+  distance?: number;
+}) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [distance, -distance]);
+
+  return (
+    <div ref={ref} className={className}>
+      <motion.div style={reduce ? undefined : { y }}>{children}</motion.div>
+    </div>
   );
 }
