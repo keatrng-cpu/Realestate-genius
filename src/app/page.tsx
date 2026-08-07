@@ -1,6 +1,7 @@
 import { Hero } from "@/components/Hero";
 import { AnalysisDepth } from "@/components/AnalysisDepth";
 import { ScoreCard } from "@/components/ScoreCard";
+import { TourSection } from "@/components/tour/TourSection";
 import { Portal } from "@/components/Portal";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Hero />
       <AnalysisDepth />
       <ScoreCard />
+      <TourSection />
       <Portal />
 
       <footer className="border-t border-ink-600 px-6 py-14 md:px-12">
