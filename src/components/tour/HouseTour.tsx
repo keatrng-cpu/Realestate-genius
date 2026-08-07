@@ -129,24 +129,15 @@ function usePlaceholderTexture(tint: string, label: string) {
   }, [tint, label]);
 }
 
-function RoomTexture({ room }: { room: TourRoom }) {
-  const placeholder = usePlaceholderTexture(room.tint, room.label);
-  if (!room.src) return placeholder;
-  // eslint-disable-next-line react-hooks/rules-of-hooks -- src is stable per room id
-  const loaded = useTexture(room.src);
-  loaded.colorSpace = THREE.SRGBColorSpace;
-  loaded.anisotropy = 8;
-  return loaded;
-}
-
-function RoomShell({
+function RoomMesh({
   room,
   active,
+  map,
 }: {
   room: TourRoom;
   active: boolean;
+  map: THREE.Texture;
 }) {
-  const tex = RoomTexture({ room });
   const mat = useRef<THREE.MeshBasicMaterial>(null);
 
   useFrame((_, dt) => {
@@ -162,7 +153,7 @@ function RoomShell({
       />
       <meshBasicMaterial
         ref={mat}
-        map={tex}
+        map={map}
         side={THREE.BackSide}
         transparent
         opacity={active ? 1 : 0.08}
@@ -170,6 +161,31 @@ function RoomShell({
       />
     </mesh>
   );
+}
+
+function RoomShellPhoto({ room, active }: { room: TourRoom; active: boolean }) {
+  const map = useTexture(room.src!);
+  map.colorSpace = THREE.SRGBColorSpace;
+  map.anisotropy = 8;
+  return <RoomMesh room={room} active={active} map={map} />;
+}
+
+function RoomShellPlaceholder({
+  room,
+  active,
+}: {
+  room: TourRoom;
+  active: boolean;
+}) {
+  const map = usePlaceholderTexture(room.tint, room.label);
+  return <RoomMesh room={room} active={active} map={map} />;
+}
+
+function RoomShell({ room, active }: { room: TourRoom; active: boolean }) {
+  if (room.src) {
+    return <RoomShellPhoto room={room} active={active} />;
+  }
+  return <RoomShellPlaceholder room={room} active={active} />;
 }
 
 function Rig({
@@ -231,7 +247,6 @@ export function HouseTour() {
     [total],
   );
 
-  // Cinematic autoplay: gentle yaw sweep, then advance rooms.
   useEffect(() => {
     if (!playing || reduce || mode !== "walkthrough") return;
 
@@ -243,10 +258,8 @@ export function HouseTour() {
       lastT = now;
 
       roomDwell.current += dt;
-      // Slow auto-pan inside the room
       setYaw((y) => y + dt * 0.18);
 
-      // ~4.2s per room, then travel
       const dwell = 4.2;
       const local = Math.min(1, roomDwell.current / dwell);
       setProgress((idx + local) / total);
@@ -267,7 +280,6 @@ export function HouseTour() {
     return () => cancelAnimationFrame(raf);
   }, [playing, reduce, mode, idx, total, go]);
 
-  // Keyboard
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") go(idx + 1);
@@ -303,7 +315,6 @@ export function HouseTour() {
 
   return (
     <div className="relative">
-      {/* Mode + tour controls */}
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="inline-flex rounded-full border border-ink-500 bg-ink-800/80 p-1">
           {(
@@ -353,7 +364,6 @@ export function HouseTour() {
         </div>
       </div>
 
-      {/* Main stage */}
       <div className="relative overflow-hidden rounded-2xl border border-ink-600 bg-ink-800">
         {mode === "walkthrough" ? (
           <div
@@ -377,12 +387,10 @@ export function HouseTour() {
               </Suspense>
             </Canvas>
 
-            {/* Cinematic edge vignette */}
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(10,10,11,0.55)_100%)]" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-ink-900 via-ink-900/50 to-transparent" />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b from-ink-900/70 to-transparent" />
 
-            {/* Room chrome */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={room.id}
@@ -401,7 +409,6 @@ export function HouseTour() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Prev / next */}
             <div className="absolute inset-y-0 left-0 flex items-center pl-2">
               <button
                 type="button"
@@ -427,7 +434,6 @@ export function HouseTour() {
               Drag to look · arrows to move
             </p>
 
-            {/* Tour progress */}
             <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-ink-600">
               <motion.div
                 className="h-full bg-linear-to-r from-ember-400 to-signal-500"
@@ -436,7 +442,6 @@ export function HouseTour() {
             </div>
           </div>
         ) : (
-          /* Gallery mode — Zillow-class still presentation, cleaner framing */
           <div className="relative">
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-ink-900">
               <AnimatePresence mode="wait">
@@ -485,7 +490,6 @@ export function HouseTour() {
           </div>
         )}
 
-        {/* Filmstrip — always visible, better than portal thumbnail rails */}
         <div className="border-t border-ink-600 bg-ink-900/80 p-3 md:p-4">
           <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:thin]">
             {ROOMS.map((r, i) => {
@@ -523,7 +527,7 @@ export function HouseTour() {
 
       <p className="mt-3 flex items-center gap-2 font-mono text-[11px] text-bone-500">
         <Maximize2 size={12} className="opacity-60" />
-        Demo listing media · live tours pull the property&apos;s own photo set
+        Demo listing media · live tours pull the property's own photo set
       </p>
     </div>
   );
