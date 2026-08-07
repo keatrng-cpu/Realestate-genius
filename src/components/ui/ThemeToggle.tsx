@@ -86,7 +86,19 @@ function Mark({ dark }: { dark: boolean }) {
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, hydrated, toggle } = useTheme();
   const reduce = useReducedMotion();
-  const dark = theme === "dark";
+
+  // Pinned to the SSR state until hydration completes, and NOT simply
+  // `theme === "dark"`.
+  //
+  // `suppressHydrationWarning` on the button below only covers that element's
+  // own attributes and text — it does not extend to descendants. `<Mark>` is a
+  // descendant and draws different geometry per theme, so branching on the real
+  // theme during the first client render produces a genuine mismatch (React
+  // #418) for every visitor whose stored or system preference is light.
+  //
+  // Gating on `hydrated` makes the first render identical on both sides; the
+  // effect then swaps in the true theme a tick later.
+  const dark = hydrated ? theme === "dark" : true;
 
   return (
     <button
