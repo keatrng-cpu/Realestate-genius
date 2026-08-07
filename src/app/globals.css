@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warm near-black base — deliberately not blue-black. Real estate should
+     feel like architecture and daylight, not a crypto dashboard. */
+  --color-ink-900: #0a0a0b;
+  --color-ink-800: #101012;
+  --color-ink-700: #17171a;
+  --color-ink-600: #202024;
+  --color-ink-500: #2c2c31;
+
+  --color-bone-50: #f7f5f2;
+  --color-bone-100: #ebe7e1;
+  --color-bone-300: #a8a29a;
+  --color-bone-500: #706b64;
+
+  /* Amber accent: warmth, property, daylight. Chosen specifically to avoid
+     the purple/violet gradient that reads as generic AI product. */
+  --color-ember-300: #f2c078;
+  --color-ember-400: #e8a33d;
+  --color-ember-500: #d4881f;
+
+  /* Cool secondary strictly for data/measurement, never decoration. */
+  --color-signal-400: #5ec8bd;
+  --color-signal-500: #3aa89c;
+
+  --color-flag-400: #e06c5a;
+
+  --font-display: var(--font-instrument), Georgia, serif;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-ink-900);
+}
+
+body {
+  background-color: var(--color-ink-900);
+  color: var(--color-bone-50);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Respect users who ask for less motion — a site this animation-heavy is
+   genuinely uncomfortable for vestibular disorders otherwise. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Fine grain over large dark fields — kills the flat "CSS gradient" look. */
+@utility grain {
+  position: relative;
+}
+@utility grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
