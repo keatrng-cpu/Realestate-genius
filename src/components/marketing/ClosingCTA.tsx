@@ -6,13 +6,16 @@ import { LinkButton } from "@/components/ui/Button";
 
 /**
  * Terminal call to action. Deliberately makes one promise and names the
- * coverage limit in the same breath — a waitlist that oversells its footprint
+ * coverage limit in the same breath — a CTA that oversells its footprint
  * converts once and churns immediately.
+ *
+ * The section id was `#waitlist` and the button pointed at `#portal`, i.e. the
+ * page's final ask was an anchor back into itself. Both now go to `/sign-up`.
  */
 export function ClosingCTA() {
   return (
     <section
-      id="waitlist"
+      id="start"
       className="relative border-t border-line px-5 py-28 md:px-12 md:py-44"
     >
       <div
@@ -29,6 +32,10 @@ export function ClosingCTA() {
             Know what the parcel is allowed to become —
             <span className="text-fg-subtle"> before anyone else asks.</span>
           </h2>
+          <p className="sr-only">
+            Create a free Realestate Genius account to run the full analysis on
+            a Grand Forks or Fargo address.
+          </p>
           <p className="mx-auto mt-7 max-w-xl text-balance text-body-lg text-fg-muted">
             We are building depth in two North Dakota markets before widening.
             Depth means every parcel, every permit, every zoning district — not
@@ -38,7 +45,7 @@ export function ClosingCTA() {
 
         <Reveal delay={0.1}>
           <div className="mt-11 flex flex-wrap items-center justify-center gap-4">
-            <MagneticButton href="#portal">Get early access</MagneticButton>
+            <MagneticButton href="/sign-up">Create a free account</MagneticButton>
             <LinkButton href="#edge" variant="secondary">
               See what we surface
             </LinkButton>

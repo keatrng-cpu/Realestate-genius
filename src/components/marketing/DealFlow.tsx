@@ -6,6 +6,13 @@ import { SectionHeading } from "@/components/ui/Prose";
 import { useParallaxY, useSectionProgress, useTrack } from "@/lib/motion/scroll";
 import { PropertyCard, PropertyCardCompact } from "@/components/ui/PropertyCard";
 import type { PropertyCardData } from "@/components/ui/PropertyCard";
+import { DEMO_LISTINGS } from "@/lib/listings/demo-data";
+
+/** Reuse the tour's own photography rather than shipping three dead frames. */
+const PHOTO = {
+  sample: DEMO_LISTINGS["sample-ave-n"].photos[0].url,
+  river: DEMO_LISTINGS["premium-river-rd"].photos[0].url,
+} as const;
 
 /**
  * "Finding and completing deals" — the verb the product is organised around.
@@ -47,7 +54,7 @@ const DEMO: PropertyCardData = {
   baths: 2,
   sqft: 1_842,
   score: 82,
-  photo: null,
+  photo: PHOTO.sample,
   signals: [
     { label: "2 units of headroom", tone: "accent" },
     { label: "20y permit silence", tone: "caution" },
@@ -65,9 +72,12 @@ const DEMO_LIST: PropertyCardData[] = [
     baths: 2,
     sqft: 1_610,
     score: 71,
+    photo: PHOTO.river,
     signals: [{ label: "Lot split viable", tone: "accent" }],
   },
   {
+    // Deliberately photo-less: an owner-direct pocket listing genuinely has no
+    // photography yet, and the parcel schematic is what we show instead.
     id: "demo-3",
     address: "88 Riverside Dr",
     locality: "Grand Forks, ND",
@@ -76,6 +86,7 @@ const DEMO_LIST: PropertyCardData[] = [
     baths: 3,
     sqft: null,
     score: null,
+    photo: null,
     signals: [{ label: "Owner-direct", tone: "neutral" }],
   },
 ];
@@ -100,9 +111,12 @@ export function DealFlow() {
           </SectionHeading>
         </Reveal>
 
-        <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+        {/* `min-w-0` on both tracks: a grid item defaults to `min-width:auto`,
+            so the card's min-content width was widening the whole grid past a
+            375px viewport and giving the page a horizontal scrollbar. */}
+        <div className="mt-16 grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
           {/* Steps with a scroll-filled rail */}
-          <div className="relative pl-8">
+          <div className="relative min-w-0 pl-8">
             <div aria-hidden className="absolute bottom-0 left-0 top-0 w-px bg-line" />
             <motion.div
               aria-hidden
@@ -134,17 +148,24 @@ export function DealFlow() {
           {/* Card stack, drifting slower than the copy beside it */}
           <motion.div
             style={reduce ? undefined : { y: stackY }}
-            className="space-y-4 lg:sticky lg:top-28 lg:self-start"
+            className="min-w-0 space-y-4 lg:sticky lg:top-28 lg:self-start"
           >
             <PropertyCard data={DEMO} />
-            <div className="space-y-2.5">
+            <div className="min-w-0 space-y-2.5">
               {DEMO_LIST.map((d) => (
                 <PropertyCardCompact key={d.id} data={d} />
               ))}
             </div>
             <p className="pt-1 font-mono text-micro uppercase text-fg-subtle">
-              Illustrative records · photography not shown
+              Illustrative records · the third has no photography, so it shows
+              its parcel instead
             </p>
+            <a
+              href="/sign-up"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong bg-surface-2 px-5 text-body font-medium text-fg no-underline transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              Start a saved search
+            </a>
           </motion.div>
         </div>
       </div>

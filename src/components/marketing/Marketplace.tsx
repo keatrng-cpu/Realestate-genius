@@ -137,6 +137,20 @@ export function Marketplace() {
             </StaggerItem>
           ))}
         </StaggerList>
+
+        <Reveal delay={0.1}>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <a
+              href="/sign-up"
+              className="inline-flex min-h-12 items-center rounded-full bg-accent px-7 text-body font-medium text-on-accent no-underline transition-colors duration-200 hover:bg-accent-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              Pick your side and start
+            </a>
+            <p className="font-mono text-micro uppercase text-fg-subtle">
+              Free account · you can tick more than one
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

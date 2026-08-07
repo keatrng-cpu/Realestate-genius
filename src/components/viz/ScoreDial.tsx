@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { EASE_OUT_EXPO } from "@/lib/motion/variants";
+import { useCountUp } from "@/components/interactive/useCountUp";
 import {
   clamp,
   describeArc,
@@ -49,35 +50,6 @@ const SIZES = {
 } as const;
 
 /**
- * Eased count-up.
- *
- * Reduced motion is handled by *deriving* the final value rather than by
- * pushing it through setState in an effect — the effect then has a single
- * responsibility (drive rAF) and never causes a cascading render on mount.
- */
-function useCountUp(target: number, active: boolean) {
-  const [v, setV] = useState(0);
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (!active || reduce) return;
-    let raf = 0;
-    const start = performance.now();
-    const dur = 1100;
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / dur);
-      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-      setV(Math.round(eased * target));
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [active, target, reduce]);
-
-  return reduce ? target : v;
-}
-
-/**
  * Animated 270° score arc.
  *
  * Reads as an instrument, not a progress bar: the track is always fully drawn
@@ -104,6 +76,13 @@ export function ScoreDial({
 
   const known = isKnown(value);
   const fraction = known ? clamp(value / max) : 0;
+  /**
+   * The count-up resolves to the true score until the ramp actually starts, so
+   * the server HTML carries `82`, not `0`. A dial that renders `0/100` next to
+   * a caption like "Immediate alert" is indistinguishable from broken
+   * software, and an unscored property must reach the `known === false` branch
+   * below instead — never a zero.
+   */
   const display = useCountUp(known ? Math.round(value) : 0, inView && known);
   const s = SIZES[size];
 
@@ -126,7 +105,12 @@ export function ScoreDial({
     : `${label}: not available.${unknownReason ? ` ${unknownReason}.` : ""}`;
 
   return (
-    <div ref={ref} className={cn("flex flex-col items-center gap-3", className)}>
+    <div
+      ref={ref}
+      data-anim="score-dial"
+      data-known={known}
+      className={cn("flex flex-col items-center gap-3", className)}
+    >
       <div className={cn("relative", s.box)}>
         <svg
           viewBox="0 0 140 140"
@@ -204,7 +188,13 @@ export function ScoreDial({
               ) : null}
             </div>
           ) : (
-            <div className="px-3">
+            /* VISUAL: the honest empty state. It must read as "we have not
+               measured this yet", never as a low or bad score — so it stays
+               colourless (no accent, no caution) and the glyph stays an
+               em-dash. The dashed track above carries the same message. Do not
+               substitute a 0, a placeholder digit, or a red treatment: shipping
+               "0/100 · IMMEDIATE ALERT" is the exact bug this branch fixes. */
+            <div data-anim="score-empty" className="px-3">
               <p
                 aria-hidden
                 className={cn("font-display leading-none text-unknown", s.num)}

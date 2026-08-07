@@ -23,12 +23,16 @@ function Mark({ dark }: { dark: boolean }) {
     >
       <mask id="rg-theme-mask">
         <rect x="0" y="0" width="24" height="24" fill="white" />
-        {/* The occluding disc slides in to carve the crescent. */}
+        {/* The occluding disc slides in to carve the crescent.
+
+            `initial` is mandatory, not decorative: motion resolves an animated
+            SVG *attribute* from the initial state, not from a same-named JSX
+            prop. Without it the first committed frame writes cx/cy/r="undefined"
+            and the browser logs "Expected length". */}
         <motion.circle
-          cx="24"
-          cy="10"
           r="6"
           fill="black"
+          initial={{ cx: dark ? 18 : 30, cy: dark ? 7 : 2 }}
           animate={dark ? { cx: 18, cy: 7 } : { cx: 30, cy: 2 }}
           transition={t}
         />
@@ -39,6 +43,7 @@ function Mark({ dark }: { dark: boolean }) {
         cy="12"
         fill="currentColor"
         mask="url(#rg-theme-mask)"
+        initial={{ r: dark ? 8.5 : 5 }}
         animate={dark ? { r: 8.5 } : { r: 5 }}
         transition={t}
       />
@@ -92,7 +97,9 @@ export function ThemeToggle({ className }: { className?: string }) {
       onClick={toggle}
       suppressHydrationWarning
       className={cn(
-        "group relative inline-grid h-11 w-11 place-items-center rounded-full",
+        // `shrink-0`: as a flex child in the header this was being squeezed to
+        // 34px wide, i.e. below the 44px minimum the h-11/w-11 was there for.
+        "group relative inline-grid h-11 w-11 shrink-0 place-items-center rounded-full",
         "border border-line-strong bg-surface-2/70 text-fg-muted backdrop-blur-sm",
         "transition-colors duration-300 hover:border-fg-subtle hover:text-accent",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",

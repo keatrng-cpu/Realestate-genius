@@ -167,3 +167,34 @@ export const tooltipPop: Variants = {
 
 /** Standard viewport config for whileInView — fire once, slightly early. */
 export const viewportOnce = { once: true, margin: "-70px" } as const;
+
+/* ---------------------------------------------------------------------- */
+/* Marketing-page surfaces                                                 */
+/* ---------------------------------------------------------------------- */
+
+/**
+ * Entrance for one "surface" in the landing page's pinned progression
+ * (`marketing/EdgeSection.tsx`). Lives here rather than inline in that file so
+ * the whole progression can be retuned in one place.
+ *
+ * Consumers pass `initial={reduce ? false : "hidden"}` — a variant cannot opt
+ * itself out of reduced motion.
+ */
+export const surfaceRise: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  shown: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.75, ease: EASE_OUT_EXPO },
+  },
+};
+
+/** Row entrance for the portals-vs-us comparison table. */
+export const compareRow: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  shown: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: DUR.base, ease: EASE_OUT_EXPO },
+  },
+};

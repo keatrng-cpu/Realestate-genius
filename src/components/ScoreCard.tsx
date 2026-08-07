@@ -1,174 +1,301 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { Reveal } from "./Reveal";
-import { usd } from "@/lib/utils";
+import { cn, usd } from "@/lib/utils";
+import { EASE_OUT_EXPO } from "@/lib/motion/variants";
+import { ScoreDial } from "@/components/viz/ScoreDial";
+import { SectionHeading } from "@/components/ui/Prose";
+import { CautionChip, UnknownChip } from "@/components/viz/primitives";
+import {
+  INVESTOR_GF_V1,
+  scoreIntegrity,
+  scoreSubject,
+  type ScoringSubject,
+} from "@/lib/scoring";
 
 /**
- * Demonstrates the real 8-factor model from the vitaforge-property-alerts
- * engine. NOTE: this is a synthetic illustrative property, not a real
- * listing — labelled as such in the UI. Scores here are precomputed
- * deterministically; the UI never derives them.
+ * The scoring section, computed by the real engine.
+ *
+ * Previously this shipped a hand-written array of eight rows whose numbers had
+ * to be kept in sync with `@/lib/scoring` by hand — and a bespoke count-up that
+ * rendered a red `0/100 · IMMEDIATE ALERT` until the section scrolled into
+ * view. Both problems have the same cure: run `scoreSubject()` against a
+ * clearly-labelled synthetic subject and render whatever it returns, including
+ * its data gaps and its tier.
+ *
+ * The subject below is illustrative and labelled as such. Everything derived
+ * from it — points, notes, cautions, the tier, the integrity line — is the
+ * engine's output, so this section cannot drift away from the product.
  */
-const FACTORS = [
-  { label: "Price vs. assessed value", points: 20, max: 20, note: "22% below implied market" },
-  { label: "Multi-unit structure", points: 15, max: 15, note: "Duplex — occupancy cap advantage" },
-  { label: "Days on market + cuts", points: 15, max: 15, note: "90 DOM, one modest cut" },
-  { label: "Above-grade $/sqft", points: 15, max: 15, note: "$103/sqft vs $130 area median" },
-  { label: "Bath-to-bed ratio", points: 10, max: 10, note: "2 full baths / 4 beds" },
-  { label: "Year built vs. systems", points: 5, max: 10, note: "1948 — verify electrical" },
-  { label: "Disclosure completeness", points: 10, max: 10, note: "All three fields present" },
-  { label: "Garage", points: 7, max: 5, note: "3-stall — bonus" },
-] as const;
 
-const TOTAL = FACTORS.reduce((s, f) => s + f.points, 0);
+/** A synthetic Grand Forks duplex. Not a listing; every field is invented. */
+const SUBJECT: ScoringSubject = {
+  address_id: "illustrative-sample-ave-n",
+  listing_id: null,
 
-function useCountUp(target: number, active: boolean) {
-  const [v, setV] = useState(0);
-  const reduce = useReducedMotion();
+  price_cents: 18_990_000,
+  beds: 4,
+  baths_full: 2,
+  baths_partial: 0,
+  sqft_total: 2_140,
+  sqft_above_grade: 1_842,
+  lot_size_sqft: 8_400,
+  year_built: 1948,
+  property_type: "duplex",
+  garage_spaces: 3,
+  days_on_market: 90,
 
-  useEffect(() => {
-    if (!active) return;
-    if (reduce) {
-      setV(target);
-      return;
-    }
-    let raf = 0;
-    const start = performance.now();
-    const dur = 1100;
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / dur);
-      // easeOutExpo
-      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-      setV(Math.round(eased * target));
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [active, target, reduce]);
+  price_history: [
+    { effective_on: "2026-05-04", price_cents: 19_900_000 },
+    { effective_on: "2026-06-21", price_cents: 18_990_000 },
+  ],
 
-  return v;
-}
+  assessed_total_cents: 21_400_000,
+  assessment_ratio: 0.5,
+  assessment_ratio_confidence: "derived",
+  assessment_tax_year: 2025,
+
+  disclosure_electrical: "Original panel, 200A service upgraded 2005",
+  disclosure_heating: "Forced air, furnace replaced 2004",
+  disclosure_water_heater_age: "2019",
+
+  state: "ND",
+  county_fips: "38035",
+};
+
+/**
+ * `now` is pinned rather than read from the clock. `scoreSubject` stamps
+ * `computed_at` and the day-on-market factor reads the date, so an unpinned
+ * clock would make the server and client HTML differ — the exact hydration
+ * class of bug this page just had to have removed from it.
+ */
+const AS_OF = new Date("2026-08-06T00:00:00.000Z");
+
+const TIER_COPY = {
+  immediate_alert: {
+    label: "Immediate alert",
+    tone: "border-accent/45 bg-accent-soft text-accent",
+  },
+  daily_digest: {
+    label: "Daily digest",
+    tone: "border-measure/45 bg-measure-soft text-measure",
+  },
+  below_threshold: {
+    label: "Below threshold",
+    tone: "border-line-strong bg-surface-3 text-fg-muted",
+  },
+  "n/a": {
+    label: "Not scored",
+    tone: "border-dashed border-unknown/60 bg-unknown-soft text-fg-subtle",
+  },
+} as const;
 
 export function ScoreCard() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const score = useCountUp(Math.min(100, TOTAL), inView);
   const reduce = useReducedMotion();
 
+  const result = useMemo(
+    () =>
+      scoreSubject(SUBJECT, INVESTOR_GF_V1, {
+        now: AS_OF,
+        // No published ZIP median is wired yet. Leaving it null is the honest
+        // input: the engine records a reference-data gap instead of inventing
+        // an area median, and the gap is rendered below.
+        area_median_price_per_sqft_cents: null,
+      }),
+    [],
+  );
+
+  const integrity = useMemo(() => scoreIntegrity(result), [result]);
+  const tier = TIER_COPY[result.tier];
+
+  const rows = useMemo(
+    () =>
+      INVESTOR_GF_V1.config.factors
+        .map((spec) => ({ key: spec.key, f: result.factors[spec.key] }))
+        .filter((r): r is { key: string; f: NonNullable<typeof r.f> } => !!r.f),
+    [result],
+  );
+
+  const threshold = INVESTOR_GF_V1.config.thresholds?.immediate ?? 65;
+
   return (
-    <section className="relative border-t border-ink-600 px-6 py-28 md:px-12 md:py-40">
+    <section
+      id="score"
+      className="relative border-t border-line px-5 py-24 md:px-12 md:py-36"
+    >
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-ember-400">
-            Deterministic scoring
-          </p>
-          <h2 className="mt-6 max-w-3xl font-display text-[clamp(2rem,5vw,3.75rem)] leading-[1.02] tracking-[-0.02em]">
+          <SectionHeading eyebrow="Deterministic scoring" eyebrowTone="measure">
             Every number is computed in code.
-            <span className="text-bone-500">
+            <span className="text-fg-subtle">
               {" "}
               The AI explains — it never does the math.
             </span>
-          </h2>
+          </SectionHeading>
+          <p className="mt-7 max-w-2xl text-body-lg text-fg-muted">
+            The panel below is not a mock-up. It calls{" "}
+            <code className="rounded border border-line bg-surface-3 px-1.5 py-0.5 font-mono text-body-sm text-fg">
+              scoreSubject()
+            </code>{" "}
+            — the same function the product runs — against a synthetic parcel,
+            and prints whatever comes back, gaps included.
+          </p>
         </Reveal>
 
-        <div ref={ref} className="mt-16 grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-          {/* Score dial */}
-          <Reveal>
-            <div className="relative overflow-hidden rounded-2xl border border-ink-600 bg-ink-800 p-8 md:p-10">
+        <div
+          ref={ref}
+          className="mt-14 grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12"
+        >
+          {/* ---- The reading ------------------------------------------- */}
+          <Reveal className="min-w-0">
+            <div className="relative h-full overflow-hidden rounded-2xl border border-line bg-surface-2/80 p-6 backdrop-blur-sm md:p-8">
               <div
                 aria-hidden
-                className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-ember-400/10 blur-3xl"
+                className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl"
               />
-              <div className="relative flex items-start justify-between gap-6">
-                <div>
-                  <p className="font-mono text-[11px] uppercase tracking-widest text-bone-500">
+
+              <div className="relative flex flex-wrap items-start justify-between gap-6">
+                <div className="min-w-0">
+                  <p className="font-mono text-micro uppercase text-fg-subtle">
                     Illustrative property
                   </p>
-                  <p className="mt-3 font-display text-2xl leading-tight md:text-3xl">
+                  <p className="mt-3 font-display text-display-xs text-fg">
                     100 Sample Ave N
                   </p>
-                  <p className="mt-1 text-sm text-bone-300">
+                  <p className="mt-1 text-body-sm text-fg-muted">
                     Grand Forks, ND 58201 · Duplex · Built 1948
                   </p>
-                  <p className="mt-6 font-display text-4xl text-ember-400">
-                    {usd(189900)}
+                  <p className="mt-6 font-display text-display-xs numeric text-accent">
+                    {usd(189_900)}
+                  </p>
+                  <p className="mt-1 font-mono text-micro uppercase text-fg-subtle">
+                    Reduced from {usd(199_000)} · 90 days on market
                   </p>
                 </div>
 
-                <div className="shrink-0 text-right">
-                  <div className="font-display text-6xl leading-none tabular-nums md:text-7xl">
-                    {score}
-                    <span className="text-2xl text-bone-500">/100</span>
-                  </div>
-                  <motion.p
-                    initial={reduce ? false : { opacity: 0 }}
-                    animate={inView ? { opacity: 1 } : {}}
-                    transition={{ delay: 1, duration: 0.5 }}
-                    className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-signal-500/40 bg-signal-500/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-signal-400"
-                  >
-                    Immediate alert
-                  </motion.p>
+                <div className="shrink-0">
+                  <ScoreDial
+                    value={result.display_score}
+                    label="Opportunity score"
+                    size="md"
+                    caption={tier.label}
+                  />
                 </div>
               </div>
 
-              <p className="relative mt-8 border-t border-ink-600 pt-6 text-sm leading-relaxed text-bone-300">
-                Clears the ≥65 threshold, so this fires a real-time alert rather
-                than waiting for the daily digest. Two flags travel with it:
-                pre-1950 electrical is unverified, and the photo pass found no
-                water-intrusion pattern — which is a clean result, not an absent
-                one.
+              <div className="relative mt-7 flex flex-wrap items-center gap-2">
+                <span
+                  className={cn(
+                    "rounded-full border px-3 py-1 font-mono text-micro uppercase",
+                    tier.tone,
+                  )}
+                >
+                  {tier.label} · threshold {threshold}
+                </span>
+                <span className="rounded-full border border-line-strong bg-surface-3 px-3 py-1 font-mono text-micro uppercase text-fg-subtle">
+                  Confidence: {result.confidence}
+                </span>
+                {result.data_gaps.length ? (
+                  <UnknownChip>
+                    {result.data_gaps.length} data gap
+                    {result.data_gaps.length === 1 ? "" : "s"}
+                  </UnknownChip>
+                ) : null}
+              </div>
+
+              <p className="relative mt-6 border-t border-line pt-5 text-body-sm leading-relaxed text-fg-muted">
+                {integrity.label}. Raw total {result.raw_score} across{" "}
+                {rows.length} factors — the garage bonus is allowed to exceed
+                its own weight, which is why the raw figure and the displayed
+                0–100 score are not the same number.
               </p>
+
+              {result.cautions.length ? (
+                <ul className="relative mt-5 space-y-2">
+                  {result.cautions.slice(0, 2).map((c) => (
+                    <li key={c.factor}>
+                      <CautionChip>{c.note}</CautionChip>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </div>
           </Reveal>
 
-          {/* Factor breakdown */}
-          <div className="space-y-3.5">
-            {FACTORS.map((f, i) => {
+          {/* ---- Factor breakdown, straight from the engine -------------- */}
+          <div className="min-w-0 space-y-4">
+            {rows.map(({ key, f }, i) => {
               const pct = Math.min(100, (f.points / f.max) * 100);
               const isBonus = f.points > f.max;
               return (
                 <motion.div
-                  key={f.label}
+                  key={key}
                   initial={reduce ? false : { opacity: 0, x: 16 }}
                   animate={inView ? { opacity: 1, x: 0 } : {}}
                   transition={{
                     duration: 0.6,
-                    delay: 0.15 + i * 0.07,
-                    ease: [0.16, 1, 0.3, 1],
+                    delay: 0.15 + i * 0.06,
+                    ease: EASE_OUT_EXPO,
                   }}
+                  className="min-w-0"
                 >
-                  <div className="flex items-baseline justify-between gap-4 text-sm">
-                    <span className="text-bone-100">{f.label}</span>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <span className="min-w-0 text-body-sm text-fg">
+                      {key.replace(/_/g, " ")}
+                    </span>
                     <span
-                      className={`font-mono text-xs tabular-nums ${
-                        isBonus ? "text-ember-400" : "text-bone-500"
-                      }`}
+                      className={cn(
+                        "shrink-0 font-mono text-body-sm numeric",
+                        isBonus ? "text-accent" : "text-fg-subtle",
+                      )}
                     >
                       {f.points}/{f.max}
                     </span>
                   </div>
-                  <div className="mt-2 h-[3px] overflow-hidden rounded-full bg-ink-600">
+
+                  <div className="mt-2 h-[3px] overflow-hidden rounded-full bg-surface-inset">
                     <motion.div
-                      className={`h-full rounded-full ${
-                        pct >= 100 ? "bg-ember-400" : "bg-signal-500"
-                      }`}
+                      className={cn(
+                        "h-full rounded-full",
+                        f.data_gap
+                          ? "bg-unknown"
+                          : pct >= 100
+                            ? "bg-accent"
+                            : "bg-measure",
+                      )}
                       initial={reduce ? false : { width: 0 }}
-                      animate={inView ? { width: `${pct}%` } : {}}
+                      animate={inView ? { width: `${pct.toFixed(2)}%` } : {}}
+                      style={reduce ? { width: `${pct.toFixed(2)}%` } : undefined}
                       transition={{
                         duration: 0.9,
-                        delay: 0.25 + i * 0.07,
-                        ease: [0.16, 1, 0.3, 1],
+                        delay: 0.25 + i * 0.06,
+                        ease: EASE_OUT_EXPO,
                       }}
                     />
                   </div>
-                  <p className="mt-1.5 font-mono text-[11px] text-bone-500">
-                    {f.note}
-                  </p>
+
+                  <p className="mt-1.5 text-body-sm text-fg-subtle">{f.note}</p>
                 </motion.div>
               );
             })}
+
+            <Reveal delay={0.1}>
+              <a
+                href="/sign-up"
+                className={cn(
+                  "mt-2 inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong",
+                  "bg-surface-2 px-5 text-body font-medium text-fg no-underline",
+                  "transition-colors duration-200 hover:border-accent hover:text-accent",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+                )}
+              >
+                Score a real address
+              </a>
+            </Reveal>
           </div>
         </div>
       </div>

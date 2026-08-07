@@ -13,6 +13,7 @@ import { EASE_OUT_EXPO } from "@/lib/motion/variants";
 import { Media } from "./Media";
 import { Skeleton } from "./Skeleton";
 import { UnknownChip } from "@/components/viz/primitives";
+import { ParcelGlyph } from "@/components/interactive/ParcelGlyph";
 
 export type PropertySignal = {
   label: string;
@@ -120,13 +121,18 @@ export function PropertyCard({
   return (
     <motion.div
       ref={ref}
+      data-anim="property-card"
       onPointerMove={onMove}
       onPointerLeave={reset}
       style={reduce ? undefined : { transform, transformStyle: "preserve-3d" }}
       whileHover={reduce ? undefined : { y: -4 }}
       transition={{ duration: 0.3, ease: EASE_OUT_EXPO }}
       className={cn(
-        "group relative rounded-2xl border border-line bg-surface-2/80 p-3",
+        // `min-w-0` is load-bearing, not cosmetic: as a grid/flex item this
+        // card's min-content width (the nowrap address + the price) was
+        // forcing its track wider than a 375px viewport and giving the whole
+        // page a sideways scroll.
+        "group relative min-w-0 rounded-2xl border border-line bg-surface-2/80 p-3",
         "transition-colors duration-300 hover:border-line-strong hover:elev-2",
         className,
       )}
@@ -136,15 +142,21 @@ export function PropertyCard({
           style={reduce ? undefined : { x: imgX, y: imgY, scale: 1.06 }}
           className="will-change-transform"
         >
-          <Media
-            src={data.photo}
-            alt={`${data.address}, ${data.locality}`}
-            blurDataURL={data.blurDataURL}
-            ratio={4 / 3}
-            priority={priority}
-            onClick={onOpenPhoto ? () => onOpenPhoto(data.id) : undefined}
-            className="[&_figure]:m-0"
-          />
+          {data.photo ? (
+            <Media
+              src={data.photo}
+              alt={`${data.address}, ${data.locality}`}
+              blurDataURL={data.blurDataURL}
+              ratio={4 / 3}
+              priority={priority}
+              onClick={onOpenPhoto ? () => onOpenPhoto(data.id) : undefined}
+              className="[&_figure]:m-0"
+            />
+          ) : (
+            /* No photograph is not a broken card. The parcel plan is the
+               asset this product actually leads with, so it takes the slot. */
+            <ParcelGlyph seed={data.address} ratio={4 / 3} />
+          )}
         </motion.div>
 
         {/* Score chip floats above the image, at the frame's depth. */}
@@ -266,18 +278,22 @@ export function PropertyCardCompact({
       whileHover={reduce ? undefined : { x: 2 }}
       transition={{ duration: 0.25, ease: EASE_OUT_EXPO }}
       className={cn(
-        "group relative flex min-h-[5.5rem] items-center gap-3.5 rounded-xl border border-line",
+        "group relative flex min-h-[5.5rem] min-w-0 items-center gap-3.5 rounded-xl border border-line",
         "bg-surface-2/70 p-2.5 transition-colors duration-300 hover:border-line-strong",
         className,
       )}
     >
       <div className="w-24 shrink-0 sm:w-28">
-        <Media
-          src={data.photo}
-          alt={`${data.address}, ${data.locality}`}
-          blurDataURL={data.blurDataURL}
-          ratio={4 / 3}
-        />
+        {data.photo ? (
+          <Media
+            src={data.photo}
+            alt={`${data.address}, ${data.locality}`}
+            blurDataURL={data.blurDataURL}
+            ratio={4 / 3}
+          />
+        ) : (
+          <ParcelGlyph seed={data.address} ratio={4 / 3} caption="" />
+        )}
       </div>
 
       <div className="min-w-0 flex-1">

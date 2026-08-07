@@ -22,6 +22,15 @@ export type PermitTimelineProps = {
   permits: Permit[];
   /** Defaults to year built / earliest permit. */
   rangeStart?: string;
+  /**
+   * ISO date the strip runs to. Defaults to midnight UTC today.
+   *
+   * PASS THIS EXPLICITLY ON ANY PRERENDERED PAGE. The default reads a clock,
+   * and on a statically-generated route the build's clock and the visitor's
+   * clock are different numbers — every bar position derived from them then
+   * differs between the server HTML and the first client render, which is a
+   * hydration mismatch (React #418).
+   */
   rangeEnd?: string;
   /** Silence below this many years — short gaps are normal, long ones aren't. */
   gapThresholdYears?: number;
@@ -37,13 +46,35 @@ export type PermitTimelineProps = {
 const YEAR_MS = 365.2425 * 24 * 60 * 60 * 1000;
 
 /**
- * "Now", captured once when the module loads rather than on every render.
+ * Percentages are emitted at fixed precision on purpose.
  *
- * Calling Date.now() during render is impure and would also desync server and
- * client HTML. Everything this component prints from it is year-granular, so a
- * stable per-page-load timestamp is both correct and stable across re-renders.
+ * An inline `left: 13.370741785071505%` survives into the server HTML, but the
+ * browser's CSSOM normalises a percentage to six significant figures when it
+ * parses the style attribute, so the DOM reports `13.3708%`. React then
+ * compares its freshly-computed full-precision string against that normalised
+ * one during hydration, finds them different, and throws the attribute
+ * mismatch (minified error #418). Rounding here means server and client agree
+ * on a string the CSSOM will not rewrite.
  */
-const RENDERED_AT = Date.now();
+function pct(n: number): string {
+  return `${n.toFixed(2)}%`;
+}
+
+/**
+ * Midnight UTC today. Used ONLY for the year labels, never for geometry.
+ *
+ * The distinction matters: this page is statically prerendered, so the HTML a
+ * visitor receives was built hours or weeks before their browser hydrates it.
+ * Any bar position derived from a live clock is therefore computed from two
+ * different "now"s — the build's and the visitor's — and the two disagree by
+ * however long the page has been cached. That was the second, larger half of
+ * the hydration mismatch on this component; rounding alone only hid it.
+ */
+const TODAY_UTC = (() => {
+  const d = new Date();
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+})();
+
 
 const STATUS_STYLE: Record<NonNullable<Permit["status"]>, string> = {
   final: "border-measure/50 bg-measure-soft text-measure",
@@ -83,8 +114,8 @@ export function PermitTimeline({
       ? Date.parse(rangeStart)
       : sorted.length
         ? Date.parse(sorted[0].date) - 3 * YEAR_MS
-        : RENDERED_AT - 30 * YEAR_MS;
-    const endMs = rangeEnd ? Date.parse(rangeEnd) : RENDERED_AT;
+        : TODAY_UTC - 30 * YEAR_MS;
+    const endMs = rangeEnd ? Date.parse(rangeEnd) : TODAY_UTC;
     const span = Math.max(endMs - startMs, YEAR_MS);
 
     const pos = (ms: number) => ((ms - startMs) / span) * 100;
@@ -146,9 +177,13 @@ export function PermitTimeline({
                     whileInView={{ opacity: 1, scaleX: 1 }}
                     viewport={viewportOnce}
                     transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
-                    style={{ left: `${left}%`, width: `${width}%`, originX: 0 }}
+                    style={{ left: pct(left), width: pct(width) }}
                     className={cn(
-                      "absolute top-5 h-8 rounded-sm border border-dashed",
+                      // `origin-left` as a class rather than motion's `originX`
+                      // style: motion serialises originX to `0% 50% 0`, which
+                      // the CSSOM rewrites to `0% 50% 0px` — another hydration
+                      // attribute mismatch.
+                      "absolute top-5 h-8 origin-left rounded-sm border border-dashed",
                       g.trailing
                         ? "border-caution/45 bg-[repeating-linear-gradient(135deg,var(--caution-soft)_0_5px,transparent_5px_11px)]"
                         : "border-unknown/50 bg-[repeating-linear-gradient(135deg,var(--unknown-soft)_0_5px,transparent_5px_11px)]",
@@ -176,7 +211,7 @@ export function PermitTimeline({
                       delay: 0.1 + i * 0.05,
                       ease: EASE_OUT_EXPO,
                     }}
-                    style={{ left: `${left}%` }}
+                    style={{ left: pct(left) }}
                     className="absolute top-0 h-20 -translate-x-1/2"
                   >
                     <span
@@ -213,7 +248,7 @@ export function PermitTimeline({
         <div className="mt-1 flex justify-between font-mono text-micro uppercase text-fg-subtle">
           <span>{startYear}</span>
           <span>
-            {endYear === new Date(RENDERED_AT).getFullYear() ? "Today" : endYear}
+            {endYear === new Date(TODAY_UTC).getFullYear() ? "Today" : endYear}
           </span>
         </div>
       </div>

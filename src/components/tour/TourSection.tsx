@@ -39,7 +39,7 @@ export function TourSection() {
                 key={id}
                 type="button"
                 onClick={() => setListingId(id)}
-                className={`rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-wider transition-colors ${
+                className={`inline-flex min-h-11 items-center rounded-full border px-4 font-mono text-[11px] uppercase tracking-wider transition-colors ${
                   listingId === id
                     ? "border-ember-400 bg-ember-400/10 text-ember-300"
                     : "border-ink-500 text-bone-300 hover:border-bone-500"

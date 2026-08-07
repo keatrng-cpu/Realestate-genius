@@ -408,7 +408,7 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
                   setMode(id);
                   setPlaying(false);
                 }}
-                className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+                className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm transition-colors ${
                   mode === id
                     ? "bg-ember-400/15 text-ember-300"
                     : "text-bone-300 hover:text-bone-100"
@@ -430,7 +430,7 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
                 setPlaying((p) => !p);
               }
             }}
-            className="inline-flex items-center gap-2 rounded-full border border-ember-400/50 bg-ember-400/10 px-4 py-2 text-sm text-ember-300 transition-colors hover:bg-ember-400/20"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-ember-400/50 bg-ember-400/10 px-4 text-sm text-ember-300 transition-colors hover:bg-ember-400/20"
           >
             {playing ? <Pause size={14} /> : <Play size={14} />}
             {playing ? "Pause tour" : "Play tour"}
@@ -497,7 +497,7 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
                 type="button"
                 aria-label="Previous room"
                 onClick={() => go(idx - 1)}
-                className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm"
+                className="inline-grid h-11 w-11 place-items-center rounded-full border border-ink-500/80 bg-ink-900/60 text-bone-100 backdrop-blur-sm"
               >
                 <ChevronLeft size={18} />
               </button>
@@ -507,7 +507,7 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
                 type="button"
                 aria-label="Next room"
                 onClick={() => go(idx + 1)}
-                className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm"
+                className="inline-grid h-11 w-11 place-items-center rounded-full border border-ink-500/80 bg-ink-900/60 text-bone-100 backdrop-blur-sm"
               >
                 <ChevronRight size={18} />
               </button>
@@ -538,7 +538,7 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
             <button
               type="button"
               onClick={() => setFullscreen(true)}
-              className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-ink-500/80 bg-ink-900/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-bone-100"
+              className="absolute right-4 top-4 inline-flex min-h-11 items-center gap-1.5 rounded-full border border-ink-500/80 bg-ink-900/70 px-4 font-mono text-[10px] uppercase tracking-wider text-bone-100"
             >
               <Maximize2 size={12} />
               Expand
@@ -546,7 +546,10 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
           </div>
         )}
 
-        <div className="flex items-center gap-1 border-t border-ink-600 bg-ink-900/60 px-4 py-2.5">
+        {/* Chapter dots. The bar itself stays 6px; the button around it is a
+            full 44px so it is actually tappable on a phone — the visual and
+            the hit area are deliberately different sizes. */}
+        <div className="flex items-stretch gap-1 border-t border-ink-600 bg-ink-900/60 px-4">
           {rooms.map((r, i) => (
             <button
               key={r.id}
@@ -555,8 +558,10 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
                 go(i);
                 setPlaying(false);
               }}
-              className="flex flex-1 flex-col items-center gap-1"
+              className="flex min-h-11 flex-1 items-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ember-400"
               title={r.label}
+              aria-label={`Go to ${r.label}`}
+              aria-current={i === idx ? "true" : undefined}
             >
               <span
                 className={`h-1.5 w-full rounded-full ${
@@ -623,7 +628,7 @@ export function HouseTour({ rooms, address = "", city = "" }: HouseTourProps) {
               <button
                 type="button"
                 onClick={() => setFullscreen(false)}
-                className="rounded-full border border-ink-500 p-2 text-bone-100"
+                className="inline-grid h-11 w-11 place-items-center rounded-full border border-ink-500 text-bone-100"
                 aria-label="Close"
               >
                 <X size={18} />
