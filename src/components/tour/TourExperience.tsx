@@ -12,7 +12,7 @@ const HouseTour = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-[min(68vh,640px)] min-h-[380px] w-full animate-pulse rounded-2xl border border-ink-600 bg-ink-800" />
+      <div className="h-[min(68vh,640px)] min-h-[380px] w-full animate-pulse rounded-2xl border border-line bg-surface-2" />
     ),
   },
 );
@@ -27,7 +27,15 @@ const TIER_LABEL: Record<TourTier, string> = {
   splat: "Premium splat",
 };
 
-export function TourExperience({ listingId = DEFAULT_LISTING_ID }: TourExperienceProps) {
+const TIER_HINT: Record<TourTier, string> = {
+  photos: "Walk the estimated path through listing stills",
+  depth: "Depth is inferred from the photo — an estimate, not a survey",
+  splat: "Guided capture only · free-look when the asset is ready",
+};
+
+export function TourExperience({
+  listingId = DEFAULT_LISTING_ID,
+}: TourExperienceProps) {
   const [payload, setPayload] = useState<TourPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [tierOverride, setTierOverride] = useState<TourTier | null>(null);
@@ -37,6 +45,7 @@ export function TourExperience({ listingId = DEFAULT_LISTING_ID }: TourExperienc
     let cancelled = false;
     setError(null);
     setPayload(null);
+    setDepthIdx(0);
 
     fetch(`/api/listings/${listingId}/tour`)
       .then(async (res) => {
@@ -62,7 +71,7 @@ export function TourExperience({ listingId = DEFAULT_LISTING_ID }: TourExperienc
 
   if (error) {
     return (
-      <div className="rounded-2xl border border-flag-400/40 bg-ink-800 p-8 text-sm text-bone-300">
+      <div className="rounded-2xl border border-caution/40 bg-surface-2 p-8 text-body-sm text-fg-muted">
         {error}
       </div>
     );
@@ -70,7 +79,7 @@ export function TourExperience({ listingId = DEFAULT_LISTING_ID }: TourExperienc
 
   if (!payload) {
     return (
-      <div className="h-[min(68vh,640px)] min-h-[380px] w-full animate-pulse rounded-2xl border border-ink-600 bg-ink-800" />
+      <div className="h-[min(68vh,640px)] min-h-[380px] w-full animate-pulse rounded-2xl border border-line bg-surface-2" />
     );
   }
 
@@ -78,30 +87,33 @@ export function TourExperience({ listingId = DEFAULT_LISTING_ID }: TourExperienc
   const room = payload.rooms[depthIdx] ?? payload.rooms[0];
 
   return (
-    <div className="space-y-5">
-      {/* Tier switcher — product truth, not marketing blur */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="inline-flex rounded-full border border-ink-500 bg-ink-800/80 p-1">
+    <div className="min-w-0 space-y-5">
+      <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
+        <div className="inline-flex max-w-full flex-wrap rounded-full border border-line bg-surface-2 p-1">
           {(["photos", "depth", "splat"] as TourTier[]).map((t) => (
             <button
               key={t}
               type="button"
               onClick={() => setTierOverride(t)}
-              className={`rounded-full px-3.5 py-1.5 text-sm transition-colors ${
+              className={`inline-flex min-h-11 items-center rounded-full px-3.5 text-body-sm transition-colors ${
                 tier === t
-                  ? "bg-ember-400/15 text-ember-300"
-                  : "text-bone-300 hover:text-bone-100"
+                  ? t === "splat"
+                    ? "bg-measure/15 text-measure"
+                    : "bg-accent-soft text-accent"
+                  : "text-fg-muted hover:text-fg"
               }`}
             >
               {TIER_LABEL[t]}
             </button>
           ))}
         </div>
-        <p className="font-mono text-[11px] text-bone-500">
+        <p className="font-mono text-[11px] text-fg-subtle">
           listing_photos · {payload.rooms.length} stills · resolved{" "}
-          <span className="text-bone-300">{payload.tier}</span>
+          <span className="text-fg-muted">{payload.tier}</span>
         </p>
       </div>
+
+      <p className="font-mono text-[11px] text-fg-subtle">{TIER_HINT[tier]}</p>
 
       {tier === "photos" && (
         <HouseTour
@@ -112,8 +124,8 @@ export function TourExperience({ listingId = DEFAULT_LISTING_ID }: TourExperienc
       )}
 
       {tier === "depth" && room?.src && (
-        <div className="overflow-hidden rounded-2xl border border-ink-600 bg-ink-800">
-          <div className="relative aspect-[16/10] w-full">
+        <div className="min-w-0 overflow-hidden rounded-2xl border border-line bg-surface-2">
+          <div className="relative aspect-[16/10] w-full min-h-[280px]">
             <DepthStill
               key={room.id}
               src={room.src}
@@ -121,36 +133,43 @@ export function TourExperience({ listingId = DEFAULT_LISTING_ID }: TourExperienc
               alt={room.label}
               className="absolute inset-0 h-full w-full"
             />
-            <div className="pointer-events-none absolute left-5 top-5 md:left-7 md:top-7">
-              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-ember-400">
-                {room.depthSrc ? "Depth map live" : "Depth proxy · move pointer"}
+            <div className="pointer-events-none absolute left-4 top-4 md:left-6 md:top-6">
+              <p className="font-mono text-label uppercase text-accent">
+                {room.depthSrc
+                  ? "Depth map · estimate"
+                  : "Depth proxy · move pointer"}
               </p>
-              <p className="mt-1.5 font-display text-2xl text-bone-50 drop-shadow md:text-3xl">
+              <p className="mt-1.5 font-display text-display-xs text-fg drop-shadow md:text-display-sm">
                 {room.label}
+              </p>
+              <p className="mt-1 max-w-sm font-mono text-[10px] uppercase tracking-wider text-fg-subtle">
+                Not a measured room dimension
               </p>
             </div>
           </div>
-          <div className="flex gap-2 overflow-x-auto border-t border-ink-600 p-3">
+          <div className="flex gap-2 overflow-x-auto border-t border-line p-3">
             {payload.rooms.map((r, i) => (
               <button
                 key={r.id}
                 type="button"
                 onClick={() => setDepthIdx(i)}
-                className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-md border ${
+                className={`relative h-14 min-h-11 w-20 shrink-0 overflow-hidden rounded-md border ${
                   i === depthIdx
-                    ? "border-ember-400"
-                    : "border-ink-500 opacity-70"
+                    ? "border-accent"
+                    : "border-line opacity-70"
                 }`}
+                aria-label={r.label}
+                aria-current={i === depthIdx ? "true" : undefined}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={r.src} alt="" className="h-full w-full object-cover" />
               </button>
             ))}
           </div>
-          <p className="border-t border-ink-600 px-4 py-3 font-mono text-[11px] text-bone-500">
+          <p className="border-t border-line px-4 py-3 font-mono text-[11px] text-fg-subtle">
             Move across the image for parallax. When{" "}
-            <code className="text-bone-300">depth_map_url</code> is set on a
-            photo, layers use the real map instead of luminance.
+            <code className="text-fg-muted">depth_map_url</code> is set, layers
+            use that map instead of luminance. Depth is always an estimate.
           </p>
         </div>
       )}

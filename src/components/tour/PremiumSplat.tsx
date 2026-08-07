@@ -82,7 +82,7 @@ export function PremiumSplat({
             href={capture.splat_url}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full bg-ember-400 px-5 py-2.5 text-sm font-medium text-ink-900"
+            className="inline-flex min-h-11 items-center rounded-full bg-accent px-5 text-body-sm font-medium text-on-accent"
           >
             Open splat asset
           </a>
@@ -154,7 +154,7 @@ export function PremiumSplat({
             type="button"
             disabled={busy || localStatus === "requested"}
             onClick={requestCapture}
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-ember-400 px-6 py-3 text-sm font-medium text-ink-900 transition hover:bg-ember-300 disabled:opacity-60"
+            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-6 text-body-sm font-medium text-on-accent transition hover:bg-accent-strong disabled:opacity-60"
           >
             {busy ? (
               <Loader2 size={16} className="animate-spin" />
