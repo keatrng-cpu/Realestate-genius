@@ -1,0 +1,17 @@
+[build]
+  command = "npm run build"
+  # Both of these are required together:
+  #   - Without [[plugins]], the deploy publishes raw .next internals as static
+  #     files and every route 404s (deploy summary shows plugin_state: "none").
+  #   - Without `publish`, it defaults to the base directory and the plugin
+  #     hard-fails: "Your publish directory cannot be the same as the base
+  #     directory of your site."
+  # Netlify only auto-installs the runtime for git-linked builds, so an
+  # API/CLI-triggered deploy has to declare it explicitly.
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "22"
