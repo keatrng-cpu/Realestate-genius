@@ -12,9 +12,9 @@ export function TourSection() {
   return (
     <section
       id="tour"
-      className="relative border-t border-ink-600 px-6 py-28 md:px-12 md:py-40"
+      className="relative min-w-0 border-t border-line px-5 py-28 md:px-12 md:py-40"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl min-w-0">
         <Reveal>
           <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-ember-400">
             Listing media
