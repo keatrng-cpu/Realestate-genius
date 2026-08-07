@@ -10,7 +10,7 @@ const HouseTour = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-[62vh] min-h-[420px] w-full animate-pulse rounded-2xl border border-ink-600 bg-ink-800" />
+      <div className="h-[min(68vh,640px)] min-h-[380px] w-full animate-pulse rounded-2xl border border-ink-600 bg-ink-800" />
     ),
   },
 );
@@ -24,15 +24,17 @@ export function TourSection() {
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-ember-400">
-            Walkthrough
+            Listing media
           </p>
           <h2 className="mt-6 max-w-3xl font-display text-[clamp(2rem,5vw,3.75rem)] leading-[1.02] tracking-[-0.02em]">
-            Walk the house before you drive to it.
+            The photos, shown properly.
+            <span className="text-bone-500"> Then a tour that moves.</span>
           </h2>
           <p className="mt-6 max-w-2xl leading-relaxed text-bone-300">
-            Each room is projected onto curved geometry and viewed from the
-            inside, so dragging pans with real perspective and moving between
-            rooms travels through the floorplan.
+            Full-bleed presentation, labeled filmstrip, and a cinematic walkthrough
+            that pans each room and travels the floor plan — built to beat the
+            compressed galleries and floor-arrow 3D tours portals ship today.
+            Every listing with photos gets this; guided capture unlocks the next tier.
           </p>
         </Reveal>
 
@@ -41,18 +43,36 @@ export function TourSection() {
         </Reveal>
 
         <Reveal delay={0.15}>
-          <p className="mt-8 max-w-2xl rounded-lg border border-ink-600 bg-ink-800/60 p-5 text-sm leading-relaxed text-bone-300">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-bone-500">
-              Build note
-            </span>
-            <br />
-            This is a genuine 3D walkthrough, not photogrammetry. Reconstructing
-            a mesh the way Zillow 3D Home does requires overlapping capture from
-            a rig or a guided phone flow — ordinary listing photos can&apos;t be
-            solved into one. The next step that works on existing photos is
-            per-image depth estimation for true parallax; the step after that is
-            asking sellers for a guided capture.
-          </p>
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {[
+              {
+                k: "01",
+                t: "Picture first",
+                d: "Higher-fidelity framing, less crush, room labels on every still — the gallery is the product, not an afterthought.",
+              },
+              {
+                k: "02",
+                t: "Animated path",
+                d: "Play tour walks the house: slow look inside each room, then a camera move to the next. No floor-arrow scavenger hunt.",
+              },
+              {
+                k: "03",
+                t: "Any photo set",
+                d: "Works on ordinary listing photos nationwide. Depth parallax and full splats layer on when capture quality allows.",
+              },
+            ].map((c) => (
+              <div
+                key={c.k}
+                className="rounded-xl border border-ink-600 bg-ink-800/50 p-5"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-widest text-bone-500">
+                  {c.k}
+                </p>
+                <p className="mt-2 font-display text-lg">{c.t}</p>
+                <p className="mt-2 text-sm leading-relaxed text-bone-300">{c.d}</p>
+              </div>
+            ))}
+          </div>
         </Reveal>
       </div>
     </section>
