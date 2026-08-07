@@ -12,83 +12,75 @@ import {
 } from "react";
 import * as THREE from "three";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { Pause, Play, Maximize2, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Pause,
+  Play,
+  Maximize2,
+  Minimize2,
+  ChevronLeft,
+  ChevronRight,
+  X,
+} from "lucide-react";
+import { DEMO_LISTING, type TourRoom } from "@/lib/tour";
 
 /**
  * Listing-grade walkthrough viewer.
  *
- * Goal vs. Zillow: better picture presentation and motion — full-bleed curved
- * projection, cinematic room travel, filmstrip, autoplay tour — without
- * claiming photogrammetry from sparse MLS stills.
+ * Better picture display + animated path than portal galleries / floor-arrow
+ * 3D Home. Accepts any TourRoom[] — plug listing_photos nationwide.
  *
- * Real listing photos plug in via TourRoom.src. Demo uses public interiors
- * so the marketing page shows the product, not placeholders.
+ * Parallax uses a luminance-derived displacement map (stand-in for a cached
+ * monocular depth pass). Real Depth Anything maps drop in the same slot later.
  */
-
-export type TourRoom = {
-  id: string;
-  label: string;
-  /** Optional image URL. When absent, a generated placeholder is used. */
-  src?: string;
-  /** Position in the floorplan, in world units. */
-  position: [number, number, number];
-  tint: string;
-  note?: string;
-};
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Demo interiors — high-res public photos so the tour looks like a listing. */
-const ROOMS: TourRoom[] = [
-  {
-    id: "exterior",
-    label: "Exterior",
-    position: [0, 0, 0],
-    tint: "#3a322c",
-    src: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1800&q=85",
-    note: "Curb appeal · south-facing",
-  },
-  {
-    id: "living",
-    label: "Living room",
-    position: [12, 0, 0],
-    tint: "#3a2f28",
-    src: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=85",
-    note: "Open plan · natural light",
-  },
-  {
-    id: "kitchen",
-    label: "Kitchen",
-    position: [24, 0, 0],
-    tint: "#2f3630",
-    src: "https://images.unsplash.com/photo-1556912173-46c336c7fd55?auto=format&fit=crop&w=1800&q=85",
-    note: "Updated surfaces · island",
-  },
-  {
-    id: "dining",
-    label: "Dining",
-    position: [36, 0, 0],
-    tint: "#342e28",
-    src: "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1800&q=85",
-    note: "Adjacent to kitchen",
-  },
-  {
-    id: "primary",
-    label: "Primary suite",
-    position: [48, 0, 0],
-    tint: "#332d38",
-    src: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1800&q=85",
-    note: "Quiet wing · full bath",
-  },
-  {
-    id: "bath",
-    label: "Bath",
-    position: [60, 0, 0],
-    tint: "#2a3034",
-    src: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1800&q=85",
-    note: "Tile · natural light",
-  },
-];
+type Mode = "walkthrough" | "gallery";
+
+type HouseTourProps = {
+  rooms?: TourRoom[];
+  address?: string;
+  city?: string;
+};
+
+/** Build a soft depth map from photo luminance — near-white = closer. */
+function displacementFromMap(map: THREE.Texture): THREE.CanvasTexture | null {
+  const img = map.image as
+    | HTMLImageElement
+    | HTMLCanvasElement
+    | ImageBitmap
+    | undefined;
+  if (!img) return null;
+
+  const w = Math.min(512, "width" in img ? Number(img.width) || 512 : 512);
+  const h = Math.min(256, "height" in img ? Number(img.height) || 256 : 256);
+
+  const c = document.createElement("canvas");
+  c.width = w;
+  c.height = h;
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return null;
+
+  try {
+    ctx.drawImage(img as CanvasImageSource, 0, 0, w, h);
+  } catch {
+    return null; // cross-origin without CORS
+  }
+
+  const data = ctx.getImageData(0, 0, w, h);
+  const px = data.data;
+  for (let i = 0; i < px.length; i += 4) {
+    const y = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2];
+    // Invert slightly so dark corners (often depth) push back
+    const d = Math.min(255, Math.max(0, y * 0.85 + 20));
+    px[i] = px[i + 1] = px[i + 2] = d;
+  }
+  ctx.putImageData(data, 0, 0);
+
+  const disp = new THREE.CanvasTexture(c);
+  disp.colorSpace = THREE.NoColorSpace;
+  return disp;
+}
 
 function usePlaceholderTexture(tint: string, label: string) {
   return useMemo(() => {
@@ -133,41 +125,71 @@ function RoomMesh({
   room,
   active,
   map,
+  parallax,
 }: {
   room: TourRoom;
   active: boolean;
   map: THREE.Texture;
+  parallax: boolean;
 }) {
-  const mat = useRef<THREE.MeshBasicMaterial>(null);
+  const mat = useRef<THREE.MeshStandardMaterial>(null);
+  const mesh = useRef<THREE.Mesh>(null);
+  const disp = useMemo(
+    () => (parallax ? displacementFromMap(map) : null),
+    [map, parallax],
+  );
 
   useFrame((_, dt) => {
     if (!mat.current) return;
-    const target = active ? 1 : 0.08;
+    const target = active ? 1 : 0.06;
     mat.current.opacity += (target - mat.current.opacity) * Math.min(1, dt * 3.5);
+    if (mat.current.displacementScale !== undefined && disp) {
+      const dTarget = active ? 0.22 : 0;
+      mat.current.displacementScale +=
+        (dTarget - mat.current.displacementScale) * Math.min(1, dt * 3);
+    }
   });
 
+  const pos = room.position ?? [0, 0, 0];
+
   return (
-    <mesh position={room.position}>
+    <mesh ref={mesh} position={pos}>
       <cylinderGeometry
-        args={[4.2, 4.2, 4.8, 64, 1, true, -Math.PI / 2.05, Math.PI / 1.05]}
+        args={[4.2, 4.2, 4.8, 96, 32, true, -Math.PI / 2.05, Math.PI / 1.05]}
       />
-      <meshBasicMaterial
+      <meshStandardMaterial
         ref={mat}
         map={map}
+        displacementMap={disp ?? undefined}
+        displacementScale={0}
+        displacementBias={-0.05}
         side={THREE.BackSide}
         transparent
-        opacity={active ? 1 : 0.08}
+        opacity={active ? 1 : 0.06}
         toneMapped={false}
+        roughness={1}
+        metalness={0}
+        emissiveMap={map}
+        emissive={new THREE.Color("#ffffff")}
+        emissiveIntensity={0.85}
       />
     </mesh>
   );
 }
 
-function RoomShellPhoto({ room, active }: { room: TourRoom; active: boolean }) {
+function RoomShellPhoto({
+  room,
+  active,
+  parallax,
+}: {
+  room: TourRoom;
+  active: boolean;
+  parallax: boolean;
+}) {
   const map = useTexture(room.src!);
   map.colorSpace = THREE.SRGBColorSpace;
   map.anisotropy = 8;
-  return <RoomMesh room={room} active={active} map={map} />;
+  return <RoomMesh room={room} active={active} map={map} parallax={parallax} />;
 }
 
 function RoomShellPlaceholder({
@@ -177,13 +199,21 @@ function RoomShellPlaceholder({
   room: TourRoom;
   active: boolean;
 }) {
-  const map = usePlaceholderTexture(room.tint, room.label);
-  return <RoomMesh room={room} active={active} map={map} />;
+  const map = usePlaceholderTexture(room.tint ?? "#2c2c31", room.label);
+  return <RoomMesh room={room} active={active} map={map} parallax={false} />;
 }
 
-function RoomShell({ room, active }: { room: TourRoom; active: boolean }) {
+function RoomShell({
+  room,
+  active,
+  parallax,
+}: {
+  room: TourRoom;
+  active: boolean;
+  parallax: boolean;
+}) {
   if (room.src) {
-    return <RoomShellPhoto room={room} active={active} />;
+    return <RoomShellPhoto room={room} active={active} parallax={parallax} />;
   }
   return <RoomShellPlaceholder room={room} active={active} />;
 }
@@ -217,26 +247,35 @@ function Rig({
   return null;
 }
 
-type Mode = "walkthrough" | "gallery";
-
-export function HouseTour() {
+export function HouseTour({
+  rooms: roomsProp,
+  address,
+  city,
+}: HouseTourProps = {}) {
   const reduce = useReducedMotion();
+  const rooms = roomsProp?.length ? roomsProp : DEMO_LISTING.rooms;
+  const listingAddress = address ?? DEMO_LISTING.address;
+  const listingCity = city ?? DEMO_LISTING.city;
+
   const [idx, setIdx] = useState(0);
   const [yaw, setYaw] = useState(0);
   const [pitch, setPitch] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [mode, setMode] = useState<Mode>("walkthrough");
   const [progress, setProgress] = useState(0);
+  const [fullscreen, setFullscreen] = useState(false);
 
   const dragging = useRef(false);
   const last = useRef({ x: 0, y: 0 });
   const roomDwell = useRef(0);
 
-  const room = ROOMS[idx];
-  const total = ROOMS.length;
+  const total = rooms.length;
+  const room = rooms[Math.min(idx, total - 1)] ?? rooms[0];
+  const pos = (room?.position ?? [0, 0, 0]) as [number, number, number];
 
   const go = useCallback(
     (next: number) => {
+      if (!total) return;
       const n = ((next % total) + total) % total;
       setIdx(n);
       setYaw(0);
@@ -288,10 +327,21 @@ export function HouseTour() {
         e.preventDefault();
         setPlaying((p) => !p);
       }
+      if (e.key === "Escape") setFullscreen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [idx, go]);
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    if (!fullscreen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [fullscreen]);
 
   const onPointerDown = (e: React.PointerEvent) => {
     dragging.current = true;
@@ -313,35 +363,253 @@ export function HouseTour() {
     setPitch((p) => Math.max(-0.45, Math.min(0.45, p - dy * 0.003)));
   };
 
-  return (
-    <div className="relative">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div className="inline-flex rounded-full border border-ink-500 bg-ink-800/80 p-1">
-          {(
-            [
-              ["walkthrough", "Walkthrough"],
-              ["gallery", "Gallery"],
-            ] as const
-          ).map(([id, label]) => (
+  if (!room) return null;
+
+  const stage = (
+    <div className="relative overflow-hidden rounded-2xl border border-ink-600 bg-ink-800">
+      {mode === "walkthrough" ? (
+        <div
+          className="relative h-[min(68vh,640px)] min-h-[380px] w-full cursor-grab touch-none active:cursor-grabbing"
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+          onPointerMove={onPointerMove}
+        >
+          <Canvas
+            camera={{ position: [0, 0, 0.1], fov: 72 }}
+            gl={{ antialias: true, alpha: false }}
+            dpr={[1, 1.75]}
+          >
+            <color attach="background" args={["#0a0a0b"]} />
+            <ambientLight intensity={0.35} />
+            <Suspense fallback={null}>
+              {rooms.map((r, i) => (
+                <RoomShell
+                  key={r.id}
+                  room={r}
+                  active={i === idx}
+                  parallax={!reduce}
+                />
+              ))}
+              <Rig target={pos} yaw={yaw} pitch={pitch} />
+            </Suspense>
+          </Canvas>
+
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(10,10,11,0.55)_100%)]" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-ink-900 via-ink-900/50 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b from-ink-900/70 to-transparent" />
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={room.id}
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, ease: EASE }}
+              className="pointer-events-none absolute left-5 top-5 md:left-7 md:top-7"
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-ember-400">
+                {room.note ?? `Room ${idx + 1}`}
+              </p>
+              <p className="mt-1.5 font-display text-2xl md:text-3xl">
+                {room.label}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="absolute inset-y-0 left-0 flex items-center pl-2">
             <button
-              key={id}
               type="button"
-              onClick={() => {
-                setMode(id);
-                setPlaying(false);
-              }}
-              className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
-                mode === id
-                  ? "bg-ember-400/15 text-ember-300"
-                  : "text-bone-300 hover:text-bone-100"
+              aria-label="Previous room"
+              onClick={() => go(idx - 1)}
+              className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm transition hover:border-bone-500"
+            >
+              <ChevronLeft size={18} />
+            </button>
+          </div>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+            <button
+              type="button"
+              aria-label="Next room"
+              onClick={() => go(idx + 1)}
+              className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm transition hover:border-bone-500"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+
+          <p className="pointer-events-none absolute bottom-14 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.22em] text-bone-500">
+            Drag to look · depth shifts with the pan
+          </p>
+
+          <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-ink-600">
+            <motion.div
+              className="h-full bg-linear-to-r from-ember-400 to-signal-500"
+              style={{ width: `${progress * 100}%` }}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="relative">
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-ink-900">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={room.id}
+                src={room.src}
+                alt={room.label}
+                initial={reduce ? false : { opacity: 0, scale: 1.04 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.55, ease: EASE }}
+                className="absolute inset-0 h-full w-full object-cover"
+                draggable={false}
+              />
+            </AnimatePresence>
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(10,10,11,0.4)_100%)]" />
+            <div className="absolute left-5 top-5 md:left-7 md:top-7">
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-ember-400">
+                {room.note}
+              </p>
+              <p className="mt-1.5 font-display text-2xl text-bone-50 drop-shadow md:text-3xl">
+                {room.label}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setFullscreen(true)}
+              className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-ink-500/80 bg-ink-900/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-bone-100 backdrop-blur-sm transition hover:border-bone-500"
+            >
+              <Maximize2 size={12} />
+              Expand
+            </button>
+            <div className="absolute inset-y-0 left-0 flex items-center pl-2">
+              <button
+                type="button"
+                aria-label="Previous"
+                onClick={() => go(idx - 1)}
+                className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm"
+              >
+                <ChevronLeft size={18} />
+              </button>
+            </div>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+              <button
+                type="button"
+                aria-label="Next"
+                onClick={() => go(idx + 1)}
+                className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Sequence path — room story, not floor arrows */}
+      <div className="flex items-center gap-1 border-t border-ink-600 bg-ink-900/60 px-4 py-2.5">
+        {rooms.map((r, i) => (
+          <button
+            key={r.id}
+            type="button"
+            onClick={() => {
+              go(i);
+              setPlaying(false);
+            }}
+            className="group flex flex-1 flex-col items-center gap-1"
+            title={r.label}
+          >
+            <span
+              className={`h-1.5 w-full rounded-full transition-colors ${
+                i === idx
+                  ? "bg-ember-400"
+                  : i < idx
+                    ? "bg-signal-500/50"
+                    : "bg-ink-500"
+              }`}
+            />
+            <span
+              className={`hidden font-mono text-[9px] uppercase tracking-wider md:block ${
+                i === idx ? "text-ember-300" : "text-bone-500"
               }`}
             >
-              {label}
-            </button>
-          ))}
+              {r.label}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Filmstrip */}
+      <div className="border-t border-ink-600 bg-ink-900/80 p-3 md:p-4">
+        <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:thin]">
+          {rooms.map((r, i) => {
+            const active = i === idx;
+            return (
+              <button
+                key={r.id}
+                type="button"
+                onClick={() => {
+                  go(i);
+                  setPlaying(false);
+                }}
+                className={`group relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border transition-all duration-300 md:h-[72px] md:w-28 ${
+                  active
+                    ? "border-ember-400 ring-1 ring-ember-400/40"
+                    : "border-ink-500 opacity-70 hover:opacity-100"
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={r.src}
+                  alt=""
+                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  draggable={false}
+                />
+                <span className="absolute inset-x-0 bottom-0 bg-ink-900/75 px-1.5 py-0.5 text-left font-mono text-[9px] uppercase tracking-wider text-bone-100">
+                  {r.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="relative">
+      <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="font-display text-lg text-bone-50">{listingAddress}</p>
+          <p className="font-mono text-[11px] text-bone-500">{listingCity}</p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="inline-flex rounded-full border border-ink-500 bg-ink-800/80 p-1">
+            {(
+              [
+                ["walkthrough", "Walkthrough"],
+                ["gallery", "Gallery"],
+              ] as const
+            ).map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => {
+                  setMode(id);
+                  setPlaying(false);
+                }}
+                className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
+                  mode === id
+                    ? "bg-ember-400/15 text-ember-300"
+                    : "text-bone-300 hover:text-bone-100"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
           <button
             type="button"
             onClick={() => {
@@ -358,177 +626,76 @@ export function HouseTour() {
             {playing ? <Pause size={14} /> : <Play size={14} />}
             {playing ? "Pause tour" : "Play tour"}
           </button>
+
           <span className="hidden font-mono text-[11px] text-bone-500 sm:inline">
             {String(idx + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
           </span>
         </div>
       </div>
 
-      <div className="relative overflow-hidden rounded-2xl border border-ink-600 bg-ink-800">
-        {mode === "walkthrough" ? (
-          <div
-            className="relative h-[min(68vh,640px)] min-h-[380px] w-full cursor-grab touch-none active:cursor-grabbing"
-            onPointerDown={onPointerDown}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerUp}
-            onPointerMove={onPointerMove}
+      {stage}
+
+      <p className="mt-3 flex items-center gap-2 font-mono text-[11px] text-bone-500">
+        <Minimize2 size={12} className="opacity-60" />
+        Listing photo set · parallax from depth proxy · plug any nationwide
+        media via rooms prop
+      </p>
+
+      {/* Fullscreen gallery lightbox */}
+      <AnimatePresence>
+        {fullscreen && room.src ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex flex-col bg-ink-900/95 backdrop-blur-md"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Expanded photo"
           >
-            <Canvas
-              camera={{ position: [0, 0, 0.1], fov: 72 }}
-              gl={{ antialias: true, alpha: false }}
-              dpr={[1, 1.75]}
-            >
-              <color attach="background" args={["#0a0a0b"]} />
-              <Suspense fallback={null}>
-                {ROOMS.map((r, i) => (
-                  <RoomShell key={r.id} room={r} active={i === idx} />
-                ))}
-                <Rig target={room.position} yaw={yaw} pitch={pitch} />
-              </Suspense>
-            </Canvas>
-
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(10,10,11,0.55)_100%)]" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-ink-900 via-ink-900/50 to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b from-ink-900/70 to-transparent" />
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={room.id}
-                initial={reduce ? false : { opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.4, ease: EASE }}
-                className="pointer-events-none absolute left-5 top-5 md:left-7 md:top-7"
-              >
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-ember-400">
-                  {room.note ?? `Room ${idx + 1}`}
-                </p>
-                <p className="mt-1.5 font-display text-2xl md:text-3xl">
-                  {room.label}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-
-            <div className="absolute inset-y-0 left-0 flex items-center pl-2">
-              <button
-                type="button"
-                aria-label="Previous room"
-                onClick={() => go(idx - 1)}
-                className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm transition hover:border-bone-500"
-              >
-                <ChevronLeft size={18} />
-              </button>
-            </div>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2">
-              <button
-                type="button"
-                aria-label="Next room"
-                onClick={() => go(idx + 1)}
-                className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm transition hover:border-bone-500"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
-
-            <p className="pointer-events-none absolute bottom-14 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.22em] text-bone-500">
-              Drag to look · arrows to move
-            </p>
-
-            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-ink-600">
-              <motion.div
-                className="h-full bg-linear-to-r from-ember-400 to-signal-500"
-                style={{ width: `${progress * 100}%` }}
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="relative">
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-ink-900">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={room.id}
-                  src={room.src}
-                  alt={room.label}
-                  initial={reduce ? false : { opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.55, ease: EASE }}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  draggable={false}
-                />
-              </AnimatePresence>
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(10,10,11,0.4)_100%)]" />
-              <div className="absolute left-5 top-5 md:left-7 md:top-7">
+            <div className="flex items-center justify-between px-5 py-4">
+              <div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-ember-400">
                   {room.note}
                 </p>
-                <p className="mt-1.5 font-display text-2xl text-bone-50 drop-shadow md:text-3xl">
-                  {room.label}
-                </p>
+                <p className="font-display text-xl">{room.label}</p>
               </div>
-              <div className="absolute inset-y-0 left-0 flex items-center pl-2">
-                <button
-                  type="button"
-                  aria-label="Previous"
-                  onClick={() => go(idx - 1)}
-                  className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm"
-                >
-                  <ChevronLeft size={18} />
-                </button>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2">
-                <button
-                  type="button"
-                  aria-label="Next"
-                  onClick={() => go(idx + 1)}
-                  className="rounded-full border border-ink-500/80 bg-ink-900/60 p-2 text-bone-100 backdrop-blur-sm"
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => setFullscreen(false)}
+                className="rounded-full border border-ink-500 p-2 text-bone-100 hover:border-bone-300"
+                aria-label="Close"
+              >
+                <X size={18} />
+              </button>
             </div>
-          </div>
-        )}
-
-        <div className="border-t border-ink-600 bg-ink-900/80 p-3 md:p-4">
-          <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:thin]">
-            {ROOMS.map((r, i) => {
-              const active = i === idx;
-              return (
-                <button
-                  key={r.id}
-                  type="button"
-                  onClick={() => {
-                    go(i);
-                    setPlaying(false);
-                  }}
-                  className={`group relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border transition-all duration-300 md:h-[72px] md:w-28 ${
-                    active
-                      ? "border-ember-400 ring-1 ring-ember-400/40"
-                      : "border-ink-500 opacity-70 hover:opacity-100"
-                  }`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={r.src}
-                    alt=""
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                    draggable={false}
-                  />
-                  <span className="absolute inset-x-0 bottom-0 bg-ink-900/75 px-1.5 py-0.5 text-left font-mono text-[9px] uppercase tracking-wider text-bone-100">
-                    {r.label}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      <p className="mt-3 flex items-center gap-2 font-mono text-[11px] text-bone-500">
-        <Maximize2 size={12} className="opacity-60" />
-        Demo listing media · live tours pull the property's own photo set
-      </p>
+            <div className="relative flex flex-1 items-center justify-center px-4 pb-8">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={room.src}
+                alt={room.label}
+                className="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+              />
+              <button
+                type="button"
+                aria-label="Previous"
+                onClick={() => go(idx - 1)}
+                className="absolute left-4 rounded-full border border-ink-500 bg-ink-800/80 p-3 text-bone-100"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button
+                type="button"
+                aria-label="Next"
+                onClick={() => go(idx + 1)}
+                className="absolute right-4 rounded-full border border-ink-500 bg-ink-800/80 p-3 text-bone-100"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 }

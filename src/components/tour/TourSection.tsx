@@ -2,9 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { Reveal } from "../Reveal";
+import { DEMO_LISTING } from "@/lib/tour";
 
-// WebGL + canvas texture generation both touch browser-only APIs, so this
-// must not render on the server.
 const HouseTour = dynamic(
   () => import("./HouseTour").then((m) => m.HouseTour),
   {
@@ -31,15 +30,19 @@ export function TourSection() {
             <span className="text-bone-500"> Then a tour that moves.</span>
           </h2>
           <p className="mt-6 max-w-2xl leading-relaxed text-bone-300">
-            Full-bleed presentation, labeled filmstrip, and a cinematic walkthrough
-            that pans each room and travels the floor plan — built to beat the
-            compressed galleries and floor-arrow 3D tours portals ship today.
-            Every listing with photos gets this; guided capture unlocks the next tier.
+            Full-bleed gallery, labeled filmstrip, cinematic walkthrough with
+            depth parallax, and a one-tap play path through the house — built to
+            beat compressed portal galleries and floor-arrow 3D tours. Works on
+            ordinary listing photos nationwide.
           </p>
         </Reveal>
 
         <Reveal delay={0.1} className="mt-12">
-          <HouseTour />
+          <HouseTour
+            rooms={DEMO_LISTING.rooms}
+            address={DEMO_LISTING.address}
+            city={DEMO_LISTING.city}
+          />
         </Reveal>
 
         <Reveal delay={0.15}>
@@ -48,17 +51,17 @@ export function TourSection() {
               {
                 k: "01",
                 t: "Picture first",
-                d: "Higher-fidelity framing, less crush, room labels on every still — the gallery is the product, not an afterthought.",
+                d: "Expandable full-bleed stills, room labels on every frame, sequence path under the stage — the gallery is the product.",
               },
               {
                 k: "02",
                 t: "Animated path",
-                d: "Play tour walks the house: slow look inside each room, then a camera move to the next. No floor-arrow scavenger hunt.",
+                d: "Play tour pans each room, then travels the floor plan. No scavenger hunt on floor arrows.",
               },
               {
                 k: "03",
-                t: "Any photo set",
-                d: "Works on ordinary listing photos nationwide. Depth parallax and full splats layer on when capture quality allows.",
+                t: "Depth on any set",
+                d: "Parallax from a depth proxy today; swap in monocular depth maps per photo when the batch job is live.",
               },
             ].map((c) => (
               <div
