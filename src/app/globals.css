@@ -1,52 +1,350 @@
 @import "tailwindcss";
 
 @theme {
-  /* Warm near-black base — deliberately not blue-black. Real estate should
-     feel like architecture and daylight, not a crypto dashboard. */
+  /* ---------------------------------------------------------------------
+     RAW PALETTE — the fixed pigments. These never change between themes.
+     Warm near-black base, deliberately not blue-black. Real estate should
+     feel like architecture and daylight, not a crypto dashboard.
+     --------------------------------------------------------------------- */
   --color-ink-900: #0a0a0b;
   --color-ink-800: #101012;
   --color-ink-700: #17171a;
   --color-ink-600: #202024;
   --color-ink-500: #2c2c31;
+  --color-ink-400: #3a3a41;
 
   --color-bone-50: #f7f5f2;
   --color-bone-100: #ebe7e1;
+  --color-bone-200: #ddd8d0;
   --color-bone-300: #a8a29a;
+  --color-bone-400: #8b857c;
   --color-bone-500: #706b64;
 
   /* Amber accent: warmth, property, daylight. Chosen specifically to avoid
      the purple/violet gradient that reads as generic AI product. */
+  --color-ember-200: #f8dcae;
   --color-ember-300: #f2c078;
   --color-ember-400: #e8a33d;
   --color-ember-500: #d4881f;
+  --color-ember-600: #a8690f;
 
   /* Cool secondary strictly for data/measurement, never decoration. */
+  --color-signal-300: #8adcd3;
   --color-signal-400: #5ec8bd;
   --color-signal-500: #3aa89c;
+  --color-signal-600: #26766d;
 
   --color-flag-400: #e06c5a;
+  --color-flag-500: #c1503d;
 
-  --font-display: var(--font-instrument), Georgia, serif;
+  /* ---------------------------------------------------------------------
+     SEMANTIC TOKENS — indirection layer. Each maps to a plain custom
+     property that the theme blocks below re-point. Tailwind emits these
+     into :root, so `bg-surface` resolves through var(--surface) and picks
+     up whichever theme is active at paint time.
+     --------------------------------------------------------------------- */
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-surface-inset: var(--surface-inset);
+
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-fg-inverse: var(--fg-inverse);
+
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+
+  /* Measurement only. Never decorative. */
+  --color-measure: var(--measure);
+  --color-measure-soft: var(--measure-soft);
+
+  --color-caution: var(--caution);
+  --color-caution-soft: var(--caution-soft);
+
+  /* Unknown / no-data. Deliberately colourless — an absent value must never
+     borrow the visual weight of a real one. */
+  --color-unknown: var(--unknown);
+  --color-unknown-soft: var(--unknown-soft);
+
+  /* ---------------------------------------------------------------------
+     TYPE SCALE — editorial. Display sizes are fluid and tightly tracked so
+     Instrument Serif can actually behave like a masthead instead of a
+     slightly-bigger heading.
+     --------------------------------------------------------------------- */
+  --text-display-xl: clamp(2.75rem, 8.5vw, 7rem);
+  --text-display-xl--line-height: 0.92;
+  --text-display-xl--letter-spacing: -0.028em;
+
+  --text-display-lg: clamp(2.25rem, 6vw, 4.5rem);
+  --text-display-lg--line-height: 0.96;
+  --text-display-lg--letter-spacing: -0.024em;
+
+  --text-display-md: clamp(2rem, 5vw, 3.75rem);
+  --text-display-md--line-height: 1.02;
+  --text-display-md--letter-spacing: -0.02em;
+
+  --text-display-sm: clamp(1.6rem, 3.2vw, 2.5rem);
+  --text-display-sm--line-height: 1.08;
+  --text-display-sm--letter-spacing: -0.018em;
+
+  --text-display-xs: clamp(1.3rem, 2.2vw, 1.75rem);
+  --text-display-xs--line-height: 1.18;
+  --text-display-xs--letter-spacing: -0.012em;
+
+  --text-title-lg: 1.375rem;
+  --text-title-lg--line-height: 1.3;
+  --text-title-lg--letter-spacing: -0.01em;
+
+  --text-title-md: 1.125rem;
+  --text-title-md--line-height: 1.4;
+  --text-title-md--letter-spacing: -0.006em;
+
+  --text-body-lg: 1.0625rem;
+  --text-body-lg--line-height: 1.65;
+
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.62;
+
+  --text-body-sm: 0.8125rem;
+  --text-body-sm--line-height: 1.55;
+
+  /* Mono eyebrow / label. Tracking is the whole point of it. */
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.1;
+  --text-label--letter-spacing: 0.28em;
+
+  --text-micro: 0.625rem;
+  --text-micro--line-height: 1.2;
+  --text-micro--letter-spacing: 0.16em;
+
+  --font-display: var(--font-instrument), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --animate-shimmer: rg-shimmer 1.75s linear infinite;
+
+  @keyframes rg-shimmer {
+    0% {
+      background-position: -160% 0;
+    }
+    100% {
+      background-position: 260% 0;
+    }
+  }
 }
+
+/* =======================================================================
+   THEME DEFINITIONS
+
+   Order matters and is deliberate:
+     1. :root                                 -> dark (the brand default,
+                                                 and what SSR paints)
+     2. @media (prefers-color-scheme: light)  -> OS signal flips it
+     3. :root[data-theme="..."]               -> explicit user choice; higher
+                                                 specificity so it wins in
+                                                 BOTH directions
+   ======================================================================= */
 
 :root {
   color-scheme: dark;
+
+  --surface: #0a0a0b;
+  --surface-2: #101012;
+  --surface-3: #17171a;
+  --surface-inset: #060607;
+
+  --line: #202024;
+  --line-strong: #2c2c31;
+
+  --fg: #f7f5f2;
+  --fg-muted: #a8a29a;
+  --fg-subtle: #706b64;
+  --fg-inverse: #0a0a0b;
+
+  --accent: #e8a33d;
+  --accent-strong: #f2c078;
+  --accent-soft: color-mix(in oklab, #e8a33d 12%, transparent);
+  --on-accent: #0a0a0b;
+
+  --measure: #5ec8bd;
+  --measure-soft: color-mix(in oklab, #5ec8bd 14%, transparent);
+
+  --caution: #e06c5a;
+  --caution-soft: color-mix(in oklab, #e06c5a 14%, transparent);
+
+  --unknown: #706b64;
+  --unknown-soft: color-mix(in oklab, #706b64 18%, transparent);
+
+  --grain-opacity: 0.11;
+  --grain-blend: overlay;
+  --elev-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --elev-2: 0 12px 32px -12px rgb(0 0 0 / 0.65);
+  --elev-3: 0 30px 70px -24px rgb(0 0 0 / 0.8);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+
+    --surface: #f7f5f2;
+    --surface-2: #fffefc;
+    --surface-3: #ebe7e1;
+    --surface-inset: #e4dfd7;
+
+    --line: #e2ddd5;
+    --line-strong: #cdc6bb;
+
+    --fg: #17171a;
+    --fg-muted: #514c45;
+    --fg-subtle: #6b665e;
+    --fg-inverse: #f7f5f2;
+
+    --accent: #a8690f;
+    --accent-strong: #d4881f;
+    --accent-soft: color-mix(in oklab, #d4881f 14%, transparent);
+    --on-accent: #17171a;
+
+    --measure: #26766d;
+    --measure-soft: color-mix(in oklab, #3aa89c 16%, transparent);
+
+    --caution: #b3452f;
+    --caution-soft: color-mix(in oklab, #c1503d 14%, transparent);
+
+    --unknown: #8b857c;
+    --unknown-soft: color-mix(in oklab, #8b857c 16%, transparent);
+
+    --grain-opacity: 0.06;
+    --grain-blend: multiply;
+    --elev-1: 0 1px 2px rgb(23 23 26 / 0.06);
+    --elev-2: 0 12px 32px -14px rgb(23 23 26 / 0.16);
+    --elev-3: 0 30px 70px -28px rgb(23 23 26 / 0.22);
+  }
+}
+
+/* Explicit user choice — must beat the OS media query in both directions. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --surface: #0a0a0b;
+  --surface-2: #101012;
+  --surface-3: #17171a;
+  --surface-inset: #060607;
+
+  --line: #202024;
+  --line-strong: #2c2c31;
+
+  --fg: #f7f5f2;
+  --fg-muted: #a8a29a;
+  --fg-subtle: #706b64;
+  --fg-inverse: #0a0a0b;
+
+  --accent: #e8a33d;
+  --accent-strong: #f2c078;
+  --accent-soft: color-mix(in oklab, #e8a33d 12%, transparent);
+  --on-accent: #0a0a0b;
+
+  --measure: #5ec8bd;
+  --measure-soft: color-mix(in oklab, #5ec8bd 14%, transparent);
+
+  --caution: #e06c5a;
+  --caution-soft: color-mix(in oklab, #e06c5a 14%, transparent);
+
+  --unknown: #706b64;
+  --unknown-soft: color-mix(in oklab, #706b64 18%, transparent);
+
+  --grain-opacity: 0.11;
+  --grain-blend: overlay;
+  --elev-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --elev-2: 0 12px 32px -12px rgb(0 0 0 / 0.65);
+  --elev-3: 0 30px 70px -24px rgb(0 0 0 / 0.8);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --surface: #f7f5f2;
+  --surface-2: #fffefc;
+  --surface-3: #ebe7e1;
+  --surface-inset: #e4dfd7;
+
+  --line: #e2ddd5;
+  --line-strong: #cdc6bb;
+
+  --fg: #17171a;
+  --fg-muted: #514c45;
+  --fg-subtle: #6b665e;
+  --fg-inverse: #f7f5f2;
+
+  --accent: #a8690f;
+  --accent-strong: #d4881f;
+  --accent-soft: color-mix(in oklab, #d4881f 14%, transparent);
+  --on-accent: #17171a;
+
+  --measure: #26766d;
+  --measure-soft: color-mix(in oklab, #3aa89c 16%, transparent);
+
+  --caution: #b3452f;
+  --caution-soft: color-mix(in oklab, #c1503d 14%, transparent);
+
+  --unknown: #8b857c;
+  --unknown-soft: color-mix(in oklab, #8b857c 16%, transparent);
+
+  --grain-opacity: 0.06;
+  --grain-blend: multiply;
+  --elev-1: 0 1px 2px rgb(23 23 26 / 0.06);
+  --elev-2: 0 12px 32px -14px rgb(23 23 26 / 0.16);
+  --elev-3: 0 30px 70px -28px rgb(23 23 26 / 0.22);
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: var(--color-ink-900);
+  background-color: var(--surface);
 }
 
 body {
-  background-color: var(--color-ink-900);
-  color: var(--color-bone-50);
+  background-color: var(--surface);
+  color: var(--fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Theme swap should feel like a dimmer, not a strobe. Scoped to the shell
+   only — animating every element's colour is expensive and looks smeared.
+
+   Declared permanently and gated in CSS rather than toggled by a JS class:
+   adding a transition in the same frame the custom properties change, then
+   removing it on a timer, races with style recalculation and can leave the
+   background stuck on the previous theme's colour. */
+@media (prefers-reduced-motion: no-preference) {
+  html,
+  body {
+    transition:
+      background-color 380ms var(--ease-out-expo),
+      color 380ms var(--ease-out-expo);
+  }
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--fg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* Respect users who ask for less motion — a site this animation-heavy is
@@ -61,6 +359,7 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -68,10 +367,58 @@ body {
   text-wrap: balance;
 }
 
-/* Fine grain over large dark fields — kills the flat "CSS gradient" look. */
+@utility text-pretty {
+  text-wrap: pretty;
+}
+
+/* Tabular figures for anything a user might compare down a column. */
+@utility numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Fine grain over large fields — kills the flat "CSS gradient" look. */
 @utility grain {
   position: relative;
 }
 @utility grain-overlay {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+}
+
+@utility elev-1 {
+  box-shadow: var(--elev-1);
+}
+@utility elev-2 {
+  box-shadow: var(--elev-2);
+}
+@utility elev-3 {
+  box-shadow: var(--elev-3);
+}
+
+/* Minimum comfortable touch target. Applied to controls that would
+   otherwise be visually small (icon buttons, dial legends, chips). */
+@utility tap {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Shimmer sweep for skeletons. The animation itself is suppressed by the
+   reduced-motion block above, leaving a static neutral block. */
+@utility shimmer {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--fg) 7%, transparent) 45%,
+    color-mix(in oklab, var(--fg) 11%, transparent) 55%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* Hairline separator that survives both themes without looking sooty. */
+@utility rule {
+  border-color: var(--line);
 }

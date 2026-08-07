@@ -15,8 +15,11 @@ const LAYERS = [
     k: "01",
     title: "The record",
     live: true,
-    body: "Price, beds, baths, above-grade square footage, lot, garage, year built — merged across every source that carries the address, so one bad feed can't distort the picture.",
-    items: ["MLS / IDX", "RentCast", "Realtor.com", "Zillow", "Redfin", "FSBO boards"],
+    body: "Price, beds, baths, above-grade square footage, lot, garage, year built — merged across every source we are licensed to retain, so one bad feed can't distort the picture.",
+    // Consumer portals are deliberately absent: their terms forbid retaining
+    // copies of listing data, so building on them is legal exposure, not a
+    // source. See docs/OPEN_QUESTIONS.md.
+    items: ["County assessor", "MLS / IDX", "RentCast", "Owner-direct", "FSBO boards"],
   },
   {
     k: "02",
