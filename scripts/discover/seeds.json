@@ -1,0 +1,12 @@
+{
+  "note": "Hand-verified endpoints that ArcGIS Online item search cannot find, because the jurisdiction runs its own ArcGIS Server and never registered a hosted item. Add only URLs you have actually opened. The crawler probes and scores these exactly like discovered candidates.",
+  "seeds": [
+    {
+      "url": "https://gis.cityoffargo.com/arcgis/rest/services/General/Zoning/MapServer",
+      "title": "City of Fargo Zoning by Parcel",
+      "accessInformation": "City of Fargo, ND",
+      "hintState": "ND",
+      "why": "Calibration reference. Parcel-level with zoning joined (Zone1/Zone2), PUD number, conditional-use flag, lot width and depth, year built, units, assessed value, owner, situs address, legal description. No key, no licence gate."
+    }
+  ]
+}

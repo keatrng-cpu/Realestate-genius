@@ -61,6 +61,22 @@ function pct(n: number): string {
 }
 
 /**
+ * Year of a timestamp, read in UTC.
+ *
+ * `getFullYear()` is LOCAL-time and is a hydration bug on a prerendered page.
+ * `Date.parse("1994-01-01")` is UTC midnight; `getFullYear()` then reads it back
+ * in the visitor's zone. Netlify builds in UTC and emits 1994, a visitor in
+ * America/Chicago renders 1993, and the text mismatch throws React #418.
+ *
+ * It never reproduces locally because the dev machine builds and views in the
+ * same zone — which is exactly why it survived several rounds of debugging.
+ * Anything derived from a date on this page must use a UTC getter.
+ */
+function utcYear(ms: number): number {
+  return new Date(ms).getUTCFullYear();
+}
+
+/**
  * Midnight UTC today. Used ONLY for the year labels, never for geometry.
  *
  * The distinction matters: this page is statically prerendered, so the HTML a
@@ -142,8 +158,8 @@ export function PermitTimeline({
   }, [permits, rangeStart, rangeEnd, gapThresholdYears]);
 
   const { sorted, startMs, endMs, pos, gaps } = model;
-  const startYear = new Date(startMs).getFullYear();
-  const endYear = new Date(endMs).getFullYear();
+  const startYear = utcYear(startMs);
+  const endYear = utcYear(endMs);
 
   const summary = !coverage
     ? `Permit timeline unavailable. ${coverageNote ?? "This jurisdiction does not publish permit records we can read."}`
@@ -236,7 +252,7 @@ export function PermitTimeline({
                         flip ? "top-[3.4rem]" : "top-2",
                       )}
                     >
-                      {new Date(p.date).getFullYear()}
+                      {utcYear(Date.parse(p.date))}
                     </span>
                   </motion.div>
                 );
@@ -248,7 +264,7 @@ export function PermitTimeline({
         <div className="mt-1 flex justify-between font-mono text-micro uppercase text-fg-subtle">
           <span>{startYear}</span>
           <span>
-            {endYear === new Date(TODAY_UTC).getFullYear() ? "Today" : endYear}
+            {endYear === utcYear(TODAY_UTC) ? "Today" : endYear}
           </span>
         </div>
       </div>
@@ -290,7 +306,7 @@ export function PermitTimeline({
                 className="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-3"
               >
                 <span className="w-16 shrink-0 font-mono text-body-sm numeric text-fg-subtle">
-                  {new Date(p.date).getFullYear()}
+                  {utcYear(Date.parse(p.date))}
                 </span>
                 <span className="text-body text-fg">{p.type}</span>
                 {p.description ? (

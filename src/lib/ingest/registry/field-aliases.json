@@ -1,0 +1,5500 @@
+{
+  "generatedAt": "2026-08-07T16:49:05.579Z",
+  "note": "Observed field names per canonical concept, ordered by how many verified layers used them. Compare case-insensitively with non-alphanumerics stripped.",
+  "concepts": {
+    "parcel_id": [
+      {
+        "field": "PIN",
+        "count": 108
+      },
+      {
+        "field": "PARCELID",
+        "count": 94
+      },
+      {
+        "field": "APN",
+        "count": 62
+      },
+      {
+        "field": "PARCEL_ID",
+        "count": 48
+      },
+      {
+        "field": "GEOID",
+        "count": 42
+      },
+      {
+        "field": "ParcelID",
+        "count": 41
+      },
+      {
+        "field": "PID",
+        "count": 35
+      },
+      {
+        "field": "GEO_ID",
+        "count": 32
+      },
+      {
+        "field": "PROP_ID",
+        "count": 24
+      },
+      {
+        "field": "TAX_ID",
+        "count": 22
+      },
+      {
+        "field": "Parcel_ID",
+        "count": 21
+      },
+      {
+        "field": "Prop_ID",
+        "count": 20
+      },
+      {
+        "field": "PARCEL_NUM",
+        "count": 15
+      },
+      {
+        "field": "ParcelNumb",
+        "count": 13
+      },
+      {
+        "field": "PARCEL_NO",
+        "count": 12
+      },
+      {
+        "field": "PARID",
+        "count": 11
+      },
+      {
+        "field": "PARCELNO",
+        "count": 10
+      },
+      {
+        "field": "GISPIN",
+        "count": 8
+      },
+      {
+        "field": "PARCEL_ID_",
+        "count": 8
+      },
+      {
+        "field": "pid",
+        "count": 8
+      },
+      {
+        "field": "parcel_id",
+        "count": 8
+      },
+      {
+        "field": "GIS_PIN",
+        "count": 8
+      },
+      {
+        "field": "TMS",
+        "count": 7
+      },
+      {
+        "field": "PARCELNUM",
+        "count": 7
+      },
+      {
+        "field": "TaxID",
+        "count": 6
+      },
+      {
+        "field": "parcelid",
+        "count": 6
+      },
+      {
+        "field": "ACCOUNT",
+        "count": 6
+      },
+      {
+        "field": "ParcelNo",
+        "count": 5
+      },
+      {
+        "field": "PARCELNUMB",
+        "count": 5
+      },
+      {
+        "field": "PARCEL_KEY",
+        "count": 5
+      },
+      {
+        "field": "FOLIO",
+        "count": 5
+      },
+      {
+        "field": "PropertyID",
+        "count": 5
+      },
+      {
+        "field": "parcel_num",
+        "count": 4
+      },
+      {
+        "field": "ParcelNumber",
+        "count": 4
+      },
+      {
+        "field": "ppin",
+        "count": 4
+      },
+      {
+        "field": "Parcel_Num",
+        "count": 4
+      },
+      {
+        "field": "PROP_NUM",
+        "count": 4
+      },
+      {
+        "field": "geo_id",
+        "count": 4
+      },
+      {
+        "field": "account",
+        "count": 3
+      },
+      {
+        "field": "Parcel_No",
+        "count": 3
+      },
+      {
+        "field": "Land_Parcel_Number",
+        "count": 3
+      },
+      {
+        "field": "pin",
+        "count": 3
+      },
+      {
+        "field": "PARCEL_APN",
+        "count": 3
+      },
+      {
+        "field": "GPIN",
+        "count": 3
+      },
+      {
+        "field": "AIN",
+        "count": 3
+      },
+      {
+        "field": "Account",
+        "count": 3
+      },
+      {
+        "field": "parcelpin",
+        "count": 2
+      },
+      {
+        "field": "apn",
+        "count": 2
+      },
+      {
+        "field": "geoid",
+        "count": 2
+      },
+      {
+        "field": "ParcelId",
+        "count": 2
+      },
+      {
+        "field": "TAXID",
+        "count": 2
+      },
+      {
+        "field": "parcel_no",
+        "count": 2
+      },
+      {
+        "field": "PPIN",
+        "count": 2
+      },
+      {
+        "field": "Pin",
+        "count": 2
+      },
+      {
+        "field": "Parcel_Number",
+        "count": 2
+      },
+      {
+        "field": "TAXKEY",
+        "count": 2
+      },
+      {
+        "field": "landnum",
+        "count": 2
+      },
+      {
+        "field": "prop_id",
+        "count": 2
+      },
+      {
+        "field": "TaxPIN",
+        "count": 2
+      },
+      {
+        "field": "Account__",
+        "count": 1
+      },
+      {
+        "field": "PropertyNumber",
+        "count": 1
+      },
+      {
+        "field": "parcelnumb",
+        "count": 1
+      },
+      {
+        "field": "parcelnumb_no_formatting",
+        "count": 1
+      },
+      {
+        "field": "state_parcelnumb",
+        "count": 1
+      },
+      {
+        "field": "account_number",
+        "count": 1
+      },
+      {
+        "field": "tax_id",
+        "count": 1
+      },
+      {
+        "field": "alt_parcelnumb1",
+        "count": 1
+      },
+      {
+        "field": "alt_parcelnumb3",
+        "count": 1
+      },
+      {
+        "field": "taxpin",
+        "count": 1
+      },
+      {
+        "field": "ASSESS_NUM",
+        "count": 1
+      },
+      {
+        "field": "assessorParcelNumber",
+        "count": 1
+      },
+      {
+        "field": "TaxPin",
+        "count": 1
+      },
+      {
+        "field": "PropID",
+        "count": 1
+      },
+      {
+        "field": "STRAP",
+        "count": 1
+      },
+      {
+        "field": "TAXACCT",
+        "count": 1
+      },
+      {
+        "field": "p_id",
+        "count": 1
+      },
+      {
+        "field": "assessor_num",
+        "count": 1
+      },
+      {
+        "field": "parid",
+        "count": 1
+      },
+      {
+        "field": "Property_ID",
+        "count": 1
+      },
+      {
+        "field": "GEOid",
+        "count": 1
+      },
+      {
+        "field": "Account_Number",
+        "count": 1
+      },
+      {
+        "field": "GISPin",
+        "count": 1
+      },
+      {
+        "field": "Tax_ID",
+        "count": 1
+      },
+      {
+        "field": "AccountNumber",
+        "count": 1
+      },
+      {
+        "field": "AcctNo",
+        "count": 1
+      },
+      {
+        "field": "Tax_Acct",
+        "count": 1
+      },
+      {
+        "field": "TAXPIN",
+        "count": 1
+      },
+      {
+        "field": "PARCEL_NUMBER",
+        "count": 1
+      },
+      {
+        "field": "Q_PARCEL_NUMBER",
+        "count": 1
+      },
+      {
+        "field": "parcel_number",
+        "count": 1
+      },
+      {
+        "field": "propertyid",
+        "count": 1
+      },
+      {
+        "field": "PIN_",
+        "count": 1
+      },
+      {
+        "field": "ACCT_NUM",
+        "count": 1
+      },
+      {
+        "field": "parcelnumber",
+        "count": 1
+      }
+    ],
+    "zoning_code": [
+      {
+        "field": "ZONING",
+        "count": 139
+      },
+      {
+        "field": "Zoning",
+        "count": 116
+      },
+      {
+        "field": "Zone",
+        "count": 111
+      },
+      {
+        "field": "ZONE",
+        "count": 79
+      },
+      {
+        "field": "zone",
+        "count": 52
+      },
+      {
+        "field": "ZONECLASS",
+        "count": 38
+      },
+      {
+        "field": "ZONEDESC",
+        "count": 37
+      },
+      {
+        "field": "zoning",
+        "count": 32
+      },
+      {
+        "field": "ZONE_",
+        "count": 30
+      },
+      {
+        "field": "ZONE_TYPE",
+        "count": 24
+      },
+      {
+        "field": "ZONENAME",
+        "count": 21
+      },
+      {
+        "field": "Zoning_Code",
+        "count": 20
+      },
+      {
+        "field": "ZONECODE",
+        "count": 19
+      },
+      {
+        "field": "ZONING_COD",
+        "count": 18
+      },
+      {
+        "field": "ZONE_DESC",
+        "count": 17
+      },
+      {
+        "field": "ZoneCode",
+        "count": 16
+      },
+      {
+        "field": "ZONEID",
+        "count": 16
+      },
+      {
+        "field": "ZONING_TYP",
+        "count": 16
+      },
+      {
+        "field": "ZONE_CODE",
+        "count": 15
+      },
+      {
+        "field": "ZONING_NAM",
+        "count": 15
+      },
+      {
+        "field": "Zone_",
+        "count": 14
+      },
+      {
+        "field": "ZoningDistrict",
+        "count": 13
+      },
+      {
+        "field": "ZONING_ID",
+        "count": 13
+      },
+      {
+        "field": "Zone_Name",
+        "count": 12
+      },
+      {
+        "field": "ZONE_DIST_",
+        "count": 12
+      },
+      {
+        "field": "ZONE_NAME",
+        "count": 12
+      },
+      {
+        "field": "ZONE_ID",
+        "count": 12
+      },
+      {
+        "field": "ZoningCode",
+        "count": 11
+      },
+      {
+        "field": "ZoneDesc",
+        "count": 11
+      },
+      {
+        "field": "ZoningDescription",
+        "count": 11
+      },
+      {
+        "field": "ZoneName",
+        "count": 11
+      },
+      {
+        "field": "Spec_Zone",
+        "count": 10
+      },
+      {
+        "field": "zoneclass",
+        "count": 10
+      },
+      {
+        "field": "Zoning_Description",
+        "count": 10
+      },
+      {
+        "field": "ZONING_",
+        "count": 10
+      },
+      {
+        "field": "County_Zon",
+        "count": 9
+      },
+      {
+        "field": "zonedesc",
+        "count": 9
+      },
+      {
+        "field": "Zoning2__Zoning_District",
+        "count": 9
+      },
+      {
+        "field": "ZONING_DESC",
+        "count": 8
+      },
+      {
+        "field": "ZoningDesc",
+        "count": 8
+      },
+      {
+        "field": "ZONE_DESCRIPTION",
+        "count": 8
+      },
+      {
+        "field": "Zoning_Name",
+        "count": 8
+      },
+      {
+        "field": "ZONING_CODE",
+        "count": 7
+      },
+      {
+        "field": "GENZONE",
+        "count": 7
+      },
+      {
+        "field": "ZoningClass",
+        "count": 7
+      },
+      {
+        "field": "Zoning__Zoning_District",
+        "count": 7
+      },
+      {
+        "field": "ZONE_ABV",
+        "count": 6
+      },
+      {
+        "field": "ZoneID",
+        "count": 6
+      },
+      {
+        "field": "ZoningClassification",
+        "count": 6
+      },
+      {
+        "field": "ZONING_DES",
+        "count": 6
+      },
+      {
+        "field": "ZONE_DISTRICT",
+        "count": 6
+      },
+      {
+        "field": "Zoning_WithNameSimplified",
+        "count": 6
+      },
+      {
+        "field": "ZONE_DIST",
+        "count": 6
+      },
+      {
+        "field": "SWPZONE",
+        "count": 6
+      },
+      {
+        "field": "Zone1",
+        "count": 5
+      },
+      {
+        "field": "Zone_Description",
+        "count": 5
+      },
+      {
+        "field": "CurrentZone",
+        "count": 5
+      },
+      {
+        "field": "ZONING_TYPE",
+        "count": 5
+      },
+      {
+        "field": "ZONETYPE",
+        "count": 5
+      },
+      {
+        "field": "ZONEDIST",
+        "count": 5
+      },
+      {
+        "field": "ZoneDescription",
+        "count": 5
+      },
+      {
+        "field": "Zoning1",
+        "count": 5
+      },
+      {
+        "field": "Zone_1",
+        "count": 5
+      },
+      {
+        "field": "ZONE_ABBR",
+        "count": 5
+      },
+      {
+        "field": "ZoneDes",
+        "count": 5
+      },
+      {
+        "field": "ZONE1",
+        "count": 5
+      },
+      {
+        "field": "zoning_id",
+        "count": 4
+      },
+      {
+        "field": "Zone_ID",
+        "count": 4
+      },
+      {
+        "field": "CURRZONE",
+        "count": 4
+      },
+      {
+        "field": "ZONING_NAME",
+        "count": 4
+      },
+      {
+        "field": "ZoningLabel",
+        "count": 4
+      },
+      {
+        "field": "NEW_ZONE",
+        "count": 4
+      },
+      {
+        "field": "Zoning_Dist",
+        "count": 4
+      },
+      {
+        "field": "ZONED",
+        "count": 4
+      },
+      {
+        "field": "Zone_Code",
+        "count": 4
+      },
+      {
+        "field": "zone_id",
+        "count": 4
+      },
+      {
+        "field": "CNTY_ZONE",
+        "count": 4
+      },
+      {
+        "field": "ZoneType",
+        "count": 4
+      },
+      {
+        "field": "PROPOSED_ZONE",
+        "count": 4
+      },
+      {
+        "field": "MultiZone",
+        "count": 4
+      },
+      {
+        "field": "Refuse_Zone",
+        "count": 4
+      },
+      {
+        "field": "ZoningName",
+        "count": 3
+      },
+      {
+        "field": "Zoning_Des",
+        "count": 3
+      },
+      {
+        "field": "Zoning_1",
+        "count": 3
+      },
+      {
+        "field": "ZONE_CODE_1",
+        "count": 3
+      },
+      {
+        "field": "Raymond_Hill_Zone",
+        "count": 3
+      },
+      {
+        "field": "zoning_",
+        "count": 3
+      },
+      {
+        "field": "Zone_Descr",
+        "count": 3
+      },
+      {
+        "field": "Zone_Desc",
+        "count": 3
+      },
+      {
+        "field": "CT_ZONE",
+        "count": 3
+      },
+      {
+        "field": "LOCAL_ZONE",
+        "count": 3
+      },
+      {
+        "field": "CityZone",
+        "count": 3
+      },
+      {
+        "field": "UND_ZONE",
+        "count": 3
+      },
+      {
+        "field": "QualifiedHUBZone",
+        "count": 3
+      },
+      {
+        "field": "CurrentZoning",
+        "count": 3
+      },
+      {
+        "field": "ZONE_DISTR",
+        "count": 3
+      },
+      {
+        "field": "ZONE_LABEL",
+        "count": 3
+      },
+      {
+        "field": "zoning_name",
+        "count": 3
+      },
+      {
+        "field": "BASEZONE",
+        "count": 3
+      },
+      {
+        "field": "MULTIZONING",
+        "count": 3
+      },
+      {
+        "field": "ZONE_CLASS",
+        "count": 3
+      },
+      {
+        "field": "DSC_ZONE",
+        "count": 3
+      },
+      {
+        "field": "WorkZoneType",
+        "count": 3
+      },
+      {
+        "field": "LONGZONE",
+        "count": 3
+      },
+      {
+        "field": "P_ZONE",
+        "count": 3
+      },
+      {
+        "field": "CVT_ZoneCode",
+        "count": 3
+      },
+      {
+        "field": "Old_Zone",
+        "count": 3
+      },
+      {
+        "field": "ZONING_DIS",
+        "count": 3
+      },
+      {
+        "field": "Zoning_Sym",
+        "count": 3
+      },
+      {
+        "field": "SP_ZONE",
+        "count": 3
+      },
+      {
+        "field": "ZONE_1",
+        "count": 3
+      },
+      {
+        "field": "CURRENT_ZONE",
+        "count": 3
+      },
+      {
+        "field": "ClassCodeZoning",
+        "count": 3
+      },
+      {
+        "field": "ZON_CODE",
+        "count": 3
+      },
+      {
+        "field": "ZoningID",
+        "count": 3
+      },
+      {
+        "field": "zondes",
+        "count": 3
+      },
+      {
+        "field": "BASEZONING",
+        "count": 2
+      },
+      {
+        "field": "Zone_Abbr",
+        "count": 2
+      },
+      {
+        "field": "ZONINGDISTRICT",
+        "count": 2
+      },
+      {
+        "field": "Does_It_Have_Zoning_",
+        "count": 2
+      },
+      {
+        "field": "Link_to_Zoning_Code",
+        "count": 2
+      },
+      {
+        "field": "Zoning_Code_Year_Amended",
+        "count": 2
+      },
+      {
+        "field": "Zone_Label",
+        "count": 2
+      },
+      {
+        "field": "EXISTNG_ZON",
+        "count": 2
+      },
+      {
+        "field": "PROP_ZON",
+        "count": 2
+      },
+      {
+        "field": "SPLIT_ZON",
+        "count": 2
+      },
+      {
+        "field": "ZoneLabel",
+        "count": 2
+      },
+      {
+        "field": "ZONE_DESCR",
+        "count": 2
+      },
+      {
+        "field": "zoning_description",
+        "count": 2
+      },
+      {
+        "field": "FZONE",
+        "count": 2
+      },
+      {
+        "field": "PrimaryZone",
+        "count": 2
+      },
+      {
+        "field": "COUNTY_ZON",
+        "count": 2
+      },
+      {
+        "field": "ZoneId",
+        "count": 2
+      },
+      {
+        "field": "Zoning_Dis",
+        "count": 2
+      },
+      {
+        "field": "ZONEDESCRIPTION",
+        "count": 2
+      },
+      {
+        "field": "ExistZone",
+        "count": 2
+      },
+      {
+        "field": "ReqZone",
+        "count": 2
+      },
+      {
+        "field": "ZONING_1",
+        "count": 2
+      },
+      {
+        "field": "zone_class",
+        "count": 2
+      },
+      {
+        "field": "HUBZONE",
+        "count": 2
+      },
+      {
+        "field": "ZONING_LABEL",
+        "count": 2
+      },
+      {
+        "field": "Split_Zoning",
+        "count": 2
+      },
+      {
+        "field": "zone_type",
+        "count": 2
+      },
+      {
+        "field": "MAP_ZONING",
+        "count": 2
+      },
+      {
+        "field": "FaultZone",
+        "count": 2
+      },
+      {
+        "field": "LandslideZone",
+        "count": 2
+      },
+      {
+        "field": "LiquefactionZone",
+        "count": 2
+      },
+      {
+        "field": "zoning_code",
+        "count": 2
+      },
+      {
+        "field": "Reef_Zone",
+        "count": 2
+      },
+      {
+        "field": "ZoneClass",
+        "count": 2
+      },
+      {
+        "field": "ProposedZoning",
+        "count": 2
+      },
+      {
+        "field": "ZONINGDESCRIPTION",
+        "count": 2
+      },
+      {
+        "field": "ZO_ZONE",
+        "count": 2
+      },
+      {
+        "field": "zone_code",
+        "count": 2
+      },
+      {
+        "field": "ZONEDISTRI",
+        "count": 2
+      },
+      {
+        "field": "Zon_Class",
+        "count": 2
+      },
+      {
+        "field": "Zon_Code",
+        "count": 2
+      },
+      {
+        "field": "ZONE_DISTRICT_GROUP",
+        "count": 2
+      },
+      {
+        "field": "ZONE_DIST_TYPE",
+        "count": 2
+      },
+      {
+        "field": "zone_name",
+        "count": 2
+      },
+      {
+        "field": "W_ZONE",
+        "count": 2
+      },
+      {
+        "field": "Zone_Class",
+        "count": 2
+      },
+      {
+        "field": "CdeEnfZone",
+        "count": 2
+      },
+      {
+        "field": "OZONE",
+        "count": 2
+      },
+      {
+        "field": "ZONELABEL",
+        "count": 2
+      },
+      {
+        "field": "EPA_Radon_Zone",
+        "count": 2
+      },
+      {
+        "field": "ZoningDist",
+        "count": 2
+      },
+      {
+        "field": "Zoning_District",
+        "count": 2
+      },
+      {
+        "field": "Zone_Type",
+        "count": 2
+      },
+      {
+        "field": "EXISTINGZONING",
+        "count": 2
+      },
+      {
+        "field": "REQUESTEDZONING",
+        "count": 2
+      },
+      {
+        "field": "RECHARGE_ZONE",
+        "count": 2
+      },
+      {
+        "field": "zoned_acres_nonAgClassified",
+        "count": 2
+      },
+      {
+        "field": "BEAR_ZONE",
+        "count": 2
+      },
+      {
+        "field": "COUGAR_ZON",
+        "count": 2
+      },
+      {
+        "field": "NYSP_ZONE",
+        "count": 2
+      },
+      {
+        "field": "FireMgmtZone",
+        "count": 2
+      },
+      {
+        "field": "SeedZone",
+        "count": 2
+      },
+      {
+        "field": "CityZoningCode",
+        "count": 2
+      },
+      {
+        "field": "no_zoning",
+        "count": 2
+      },
+      {
+        "field": "ECP_Zoning_Code",
+        "count": 2
+      },
+      {
+        "field": "EQ_ZONE",
+        "count": 1
+      },
+      {
+        "field": "WIND_ZONE",
+        "count": 1
+      },
+      {
+        "field": "PropZone",
+        "count": 1
+      },
+      {
+        "field": "ZONECOD",
+        "count": 1
+      },
+      {
+        "field": "zoning_type",
+        "count": 1
+      },
+      {
+        "field": "zoning_code_link",
+        "count": 1
+      },
+      {
+        "field": "zoningdesc",
+        "count": 1
+      },
+      {
+        "field": "CZONE_CODE",
+        "count": 1
+      },
+      {
+        "field": "CountyZoning",
+        "count": 1
+      },
+      {
+        "field": "MULTIZONETYPE",
+        "count": 1
+      },
+      {
+        "field": "ZONINGDESP",
+        "count": 1
+      },
+      {
+        "field": "Zone_label",
+        "count": 1
+      },
+      {
+        "field": "ZoningCodeLink",
+        "count": 1
+      },
+      {
+        "field": "PrevZoningClass",
+        "count": 1
+      },
+      {
+        "field": "TAX_ZONE",
+        "count": 1
+      },
+      {
+        "field": "PROP_ZONE",
+        "count": 1
+      },
+      {
+        "field": "EXIST_ZONE",
+        "count": 1
+      },
+      {
+        "field": "ORIGZONE",
+        "count": 1
+      },
+      {
+        "field": "O_ZONING",
+        "count": 1
+      },
+      {
+        "field": "AHZONE",
+        "count": 1
+      },
+      {
+        "field": "PLAN_ZONE",
+        "count": 1
+      },
+      {
+        "field": "zone_label",
+        "count": 1
+      },
+      {
+        "field": "zone_",
+        "count": 1
+      },
+      {
+        "field": "ZONEDESG",
+        "count": 1
+      },
+      {
+        "field": "FemaFldZon",
+        "count": 1
+      },
+      {
+        "field": "ZON",
+        "count": 1
+      },
+      {
+        "field": "PREVZONING",
+        "count": 1
+      },
+      {
+        "field": "ConditionalZoning",
+        "count": 1
+      },
+      {
+        "field": "GreenZone",
+        "count": 1
+      },
+      {
+        "field": "ChangeZone",
+        "count": 1
+      },
+      {
+        "field": "OPPO_ZONE",
+        "count": 1
+      },
+      {
+        "field": "REG_ZONE",
+        "count": 1
+      },
+      {
+        "field": "Pre_UDO_Zoning",
+        "count": 1
+      },
+      {
+        "field": "zoning_cod",
+        "count": 1
+      },
+      {
+        "field": "CURRENTZONING",
+        "count": 1
+      },
+      {
+        "field": "Oxford_Zoning_ZONING",
+        "count": 1
+      },
+      {
+        "field": "ZONING1",
+        "count": 1
+      },
+      {
+        "field": "ZONEDES1",
+        "count": 1
+      },
+      {
+        "field": "ZONEDES2",
+        "count": 1
+      },
+      {
+        "field": "ParcelID_Zoning",
+        "count": 1
+      },
+      {
+        "field": "DISTZONE",
+        "count": 1
+      },
+      {
+        "field": "ZoningClas",
+        "count": 1
+      },
+      {
+        "field": "FID_Zoning",
+        "count": 1
+      },
+      {
+        "field": "Orange_Zoning_ZONING",
+        "count": 1
+      },
+      {
+        "field": "Zone_class",
+        "count": 1
+      },
+      {
+        "field": "GameZone",
+        "count": 1
+      },
+      {
+        "field": "Former_Zone",
+        "count": 1
+      },
+      {
+        "field": "SB_Zoning",
+        "count": 1
+      },
+      {
+        "field": "ZONEDISTRICT",
+        "count": 1
+      },
+      {
+        "field": "OldZone",
+        "count": 1
+      },
+      {
+        "field": "F_ZONE",
+        "count": 1
+      },
+      {
+        "field": "Zonin_Code",
+        "count": 1
+      },
+      {
+        "field": "ENTZONE",
+        "count": 1
+      },
+      {
+        "field": "zoning_district",
+        "count": 1
+      },
+      {
+        "field": "ZONINGLBL",
+        "count": 1
+      },
+      {
+        "field": "BUFFERZONE",
+        "count": 1
+      },
+      {
+        "field": "NEWZoning",
+        "count": 1
+      },
+      {
+        "field": "COMPZONING",
+        "count": 1
+      },
+      {
+        "field": "CountyZone",
+        "count": 1
+      },
+      {
+        "field": "ZONE_CODE1",
+        "count": 1
+      },
+      {
+        "field": "Scioto_Zoning_ZONING",
+        "count": 1
+      },
+      {
+        "field": "SpecZone",
+        "count": 1
+      },
+      {
+        "field": "zoningcode",
+        "count": 1
+      },
+      {
+        "field": "SplitZoning",
+        "count": 1
+      },
+      {
+        "field": "EvacuationZone",
+        "count": 1
+      },
+      {
+        "field": "genzone",
+        "count": 1
+      },
+      {
+        "field": "Zoning_full_name",
+        "count": 1
+      },
+      {
+        "field": "OLDZONING",
+        "count": 1
+      },
+      {
+        "field": "Harlem_Zoning_ZONING",
+        "count": 1
+      },
+      {
+        "field": "PRIOR_ZONE",
+        "count": 1
+      },
+      {
+        "field": "PROP_ZONE_SPLIT_PCL",
+        "count": 1
+      },
+      {
+        "field": "ZONE_EXIS_DESC",
+        "count": 1
+      },
+      {
+        "field": "ZONE_PROP_DESC",
+        "count": 1
+      },
+      {
+        "field": "Flooding_Zone",
+        "count": 1
+      },
+      {
+        "field": "ZoneDesig",
+        "count": 1
+      },
+      {
+        "field": "ZoneDist1",
+        "count": 1
+      },
+      {
+        "field": "ZoneDist2",
+        "count": 1
+      },
+      {
+        "field": "ZoneDist3",
+        "count": 1
+      },
+      {
+        "field": "ZoneDist4",
+        "count": 1
+      },
+      {
+        "field": "lccbrdzone",
+        "count": 1
+      },
+      {
+        "field": "ZoneTypeID",
+        "count": 1
+      },
+      {
+        "field": "ZON_CUR_CD",
+        "count": 1
+      },
+      {
+        "field": "Troy_Zoning_ZONING",
+        "count": 1
+      },
+      {
+        "field": "Troy_Zoning_DSC_ZONE",
+        "count": 1
+      },
+      {
+        "field": "PRI_ZON",
+        "count": 1
+      },
+      {
+        "field": "SEC_ZON",
+        "count": 1
+      },
+      {
+        "field": "PZONE",
+        "count": 1
+      },
+      {
+        "field": "Porter_Zoning_ZONING",
+        "count": 1
+      },
+      {
+        "field": "Bear_Zone",
+        "count": 1
+      },
+      {
+        "field": "GatorZone",
+        "count": 1
+      },
+      {
+        "field": "Deer_Zone",
+        "count": 1
+      },
+      {
+        "field": "ZONINGCLASSIFICATION",
+        "count": 1
+      },
+      {
+        "field": "ZoningDistrictHyperlink",
+        "count": 1
+      },
+      {
+        "field": "ZoningDistrictWeblink",
+        "count": 1
+      },
+      {
+        "field": "Zone_Abbre",
+        "count": 1
+      },
+      {
+        "field": "FID_ZONING",
+        "count": 1
+      },
+      {
+        "field": "zone_description",
+        "count": 1
+      },
+      {
+        "field": "RPP_ZONE",
+        "count": 1
+      },
+      {
+        "field": "ShrimpZone",
+        "count": 1
+      },
+      {
+        "field": "Propo_Zone",
+        "count": 1
+      },
+      {
+        "field": "COMZONE",
+        "count": 1
+      },
+      {
+        "field": "NLVZONE_",
+        "count": 1
+      },
+      {
+        "field": "OLDZONE",
+        "count": 1
+      },
+      {
+        "field": "UnifiedZon",
+        "count": 1
+      },
+      {
+        "field": "Zoning_typ",
+        "count": 1
+      },
+      {
+        "field": "Genoa_Zoning_ZONING",
+        "count": 1
+      },
+      {
+        "field": "Genoa_Zoning_DSC_ZONE",
+        "count": 1
+      },
+      {
+        "field": "Cnt_ZONE",
+        "count": 1
+      },
+      {
+        "field": "ZONING_DISTRICT",
+        "count": 1
+      },
+      {
+        "field": "Sec_Cnty_Zone",
+        "count": 1
+      },
+      {
+        "field": "Tert_Cnty_Zone",
+        "count": 1
+      },
+      {
+        "field": "Quat_Cnty_Zone",
+        "count": 1
+      },
+      {
+        "field": "Sec_City_Zone",
+        "count": 1
+      },
+      {
+        "field": "Tert_City_Zone",
+        "count": 1
+      },
+      {
+        "field": "elk_hunt_zone",
+        "count": 1
+      },
+      {
+        "field": "goose_zone",
+        "count": 1
+      },
+      {
+        "field": "ZONE_CD",
+        "count": 1
+      },
+      {
+        "field": "EZONE",
+        "count": 1
+      },
+      {
+        "field": "LinktoZoning",
+        "count": 1
+      },
+      {
+        "field": "ZONE_NAME_",
+        "count": 1
+      },
+      {
+        "field": "CURRENTZONE",
+        "count": 1
+      },
+      {
+        "field": "PROPZONE",
+        "count": 1
+      },
+      {
+        "field": "WEIGHTEDZONE",
+        "count": 1
+      },
+      {
+        "field": "Zone_ABBR",
+        "count": 1
+      },
+      {
+        "field": "CITY_ZONE",
+        "count": 1
+      },
+      {
+        "field": "Zoning_Classification",
+        "count": 1
+      },
+      {
+        "field": "OCRRAZone",
+        "count": 1
+      },
+      {
+        "field": "Berlin_Zoning_ZONING",
+        "count": 1
+      },
+      {
+        "field": "NZONE",
+        "count": 1
+      },
+      {
+        "field": "EMS_Zone",
+        "count": 1
+      },
+      {
+        "field": "newDescZon",
+        "count": 1
+      },
+      {
+        "field": "MasterZone",
+        "count": 1
+      },
+      {
+        "field": "AICUZ_ZONE",
+        "count": 1
+      },
+      {
+        "field": "GEN_ZONE",
+        "count": 1
+      },
+      {
+        "field": "FID_zoning",
+        "count": 1
+      },
+      {
+        "field": "ZonDescrip",
+        "count": 1
+      },
+      {
+        "field": "ImpervSurfaceZone",
+        "count": 1
+      },
+      {
+        "field": "zone_symb",
+        "count": 1
+      },
+      {
+        "field": "Brown_Zoning_ZONING",
+        "count": 1
+      },
+      {
+        "field": "Brown_Zoning_DSC_ZONE",
+        "count": 1
+      },
+      {
+        "field": "SFZONING",
+        "count": 1
+      },
+      {
+        "field": "LOAD_LIMIT_ZONE",
+        "count": 1
+      },
+      {
+        "field": "Previous_Zone",
+        "count": 1
+      },
+      {
+        "field": "FAULTZONE",
+        "count": 1
+      },
+      {
+        "field": "LIQ_ZONE",
+        "count": 1
+      },
+      {
+        "field": "LUCZONE",
+        "count": 1
+      },
+      {
+        "field": "LUP_ZONE",
+        "count": 1
+      },
+      {
+        "field": "zoning_category",
+        "count": 1
+      },
+      {
+        "field": "ORIG_ZONE",
+        "count": 1
+      },
+      {
+        "field": "GeneralZon",
+        "count": 1
+      },
+      {
+        "field": "DoveZone",
+        "count": 1
+      },
+      {
+        "field": "TWP_ZONING",
+        "count": 1
+      },
+      {
+        "field": "VH_ZONING",
+        "count": 1
+      },
+      {
+        "field": "ZoningClassAbbrev",
+        "count": 1
+      },
+      {
+        "field": "EJZone",
+        "count": 1
+      },
+      {
+        "field": "BASEZONING_Future",
+        "count": 1
+      },
+      {
+        "field": "ExistZoning",
+        "count": 1
+      },
+      {
+        "field": "PLANZONE",
+        "count": 1
+      },
+      {
+        "field": "SPCS_ZONE",
+        "count": 1
+      },
+      {
+        "field": "CURRENT_ZONING",
+        "count": 1
+      },
+      {
+        "field": "PROPOSED_ZONING",
+        "count": 1
+      },
+      {
+        "field": "GeneralZoning",
+        "count": 1
+      },
+      {
+        "field": "SPLIT_ZONING",
+        "count": 1
+      },
+      {
+        "field": "Zoning_Desc",
+        "count": 1
+      },
+      {
+        "field": "APPROVEDZONING",
+        "count": 1
+      },
+      {
+        "field": "ExistingZoning",
+        "count": 1
+      },
+      {
+        "field": "RequestedZoning",
+        "count": 1
+      },
+      {
+        "field": "ISO_EQ_Zone",
+        "count": 1
+      },
+      {
+        "field": "Evacuation_Zone",
+        "count": 1
+      },
+      {
+        "field": "CONTRIBUTING_ZONE",
+        "count": 1
+      },
+      {
+        "field": "PREV_ZONING",
+        "count": 1
+      },
+      {
+        "field": "OppZone",
+        "count": 1
+      },
+      {
+        "field": "OppZoneCD",
+        "count": 1
+      },
+      {
+        "field": "Zone_CODE",
+        "count": 1
+      },
+      {
+        "field": "Zone_DESC",
+        "count": 1
+      },
+      {
+        "field": "Zone_TYPE",
+        "count": 1
+      },
+      {
+        "field": "PZONING",
+        "count": 1
+      },
+      {
+        "field": "FID_GALZON",
+        "count": 1
+      },
+      {
+        "field": "CNT_ZONE_",
+        "count": 1
+      },
+      {
+        "field": "RepoZone",
+        "count": 1
+      },
+      {
+        "field": "AppZoning",
+        "count": 1
+      },
+      {
+        "field": "FalseZone",
+        "count": 1
+      },
+      {
+        "field": "TranstZone",
+        "count": 1
+      },
+      {
+        "field": "EPA_zone",
+        "count": 1
+      },
+      {
+        "field": "ZoningID_Zoning",
+        "count": 1
+      },
+      {
+        "field": "STREET_VENDOR_ZONE",
+        "count": 1
+      },
+      {
+        "field": "zoningType",
+        "count": 1
+      },
+      {
+        "field": "DV_ZONING_CODE",
+        "count": 1
+      },
+      {
+        "field": "TrusteeZone",
+        "count": 1
+      },
+      {
+        "field": "new_zone",
+        "count": 1
+      },
+      {
+        "field": "zone_desc",
+        "count": 1
+      },
+      {
+        "field": "ProtZone",
+        "count": 1
+      },
+      {
+        "field": "LAW_ZONE",
+        "count": 1
+      },
+      {
+        "field": "Parcel_Zoning",
+        "count": 1
+      },
+      {
+        "field": "ZoneNam",
+        "count": 1
+      },
+      {
+        "field": "zonedes",
+        "count": 1
+      },
+      {
+        "field": "Econ_Zone",
+        "count": 1
+      },
+      {
+        "field": "IntlZoning",
+        "count": 1
+      },
+      {
+        "field": "Pro_Zoning",
+        "count": 1
+      },
+      {
+        "field": "MainZone",
+        "count": 1
+      },
+      {
+        "field": "DEMZone",
+        "count": 1
+      },
+      {
+        "field": "TownZone",
+        "count": 1
+      },
+      {
+        "field": "BulkTrashZone",
+        "count": 1
+      },
+      {
+        "field": "ZONINGCATEGORY",
+        "count": 1
+      },
+      {
+        "field": "OLD_ZONE",
+        "count": 1
+      },
+      {
+        "field": "NCEM_zone",
+        "count": 1
+      },
+      {
+        "field": "ElkZone",
+        "count": 1
+      },
+      {
+        "field": "Zone_Type_Text",
+        "count": 1
+      },
+      {
+        "field": "GPS_Zone",
+        "count": 1
+      },
+      {
+        "field": "OLD_ZONING",
+        "count": 1
+      },
+      {
+        "field": "LAPSED_ZON",
+        "count": 1
+      },
+      {
+        "field": "ZONING_DENSITY_DESCRIPTION",
+        "count": 1
+      },
+      {
+        "field": "seed_zone",
+        "count": 1
+      },
+      {
+        "field": "DESCRIPTION_RN_ZONE",
+        "count": 1
+      },
+      {
+        "field": "ZoningDistrictID",
+        "count": 1
+      }
+    ],
+    "zoning_secondary": [
+      {
+        "field": "ZONE_SUBTY",
+        "count": 10
+      },
+      {
+        "field": "Overlay",
+        "count": 7
+      },
+      {
+        "field": "DUAL_ZONE",
+        "count": 7
+      },
+      {
+        "field": "SPLIT_ZONE",
+        "count": 6
+      },
+      {
+        "field": "Zone2",
+        "count": 5
+      },
+      {
+        "field": "Zoning2",
+        "count": 5
+      },
+      {
+        "field": "Zoning3",
+        "count": 5
+      },
+      {
+        "field": "ZONING2",
+        "count": 4
+      },
+      {
+        "field": "OVERLAY",
+        "count": 4
+      },
+      {
+        "field": "OVERLAY_DIST",
+        "count": 4
+      },
+      {
+        "field": "Sub_Zone",
+        "count": 3
+      },
+      {
+        "field": "Hospitality_Zone_Overlay",
+        "count": 3
+      },
+      {
+        "field": "ZONEOVERLAY",
+        "count": 3
+      },
+      {
+        "field": "OVERLAY_OR",
+        "count": 3
+      },
+      {
+        "field": "OVERLAY_FL",
+        "count": 3
+      },
+      {
+        "field": "zone_subty",
+        "count": 3
+      },
+      {
+        "field": "SplitZoneN",
+        "count": 2
+      },
+      {
+        "field": "subzone",
+        "count": 2
+      },
+      {
+        "field": "OVERLAY_DISTRICT",
+        "count": 2
+      },
+      {
+        "field": "zoning_subtype",
+        "count": 1
+      },
+      {
+        "field": "fema_flood_zone_subtype",
+        "count": 1
+      },
+      {
+        "field": "OverlayZone",
+        "count": 1
+      },
+      {
+        "field": "OverlayDistrict",
+        "count": 1
+      },
+      {
+        "field": "OVERLAY_CODE",
+        "count": 1
+      },
+      {
+        "field": "OVERLAY_DESC",
+        "count": 1
+      },
+      {
+        "field": "OVERLAY_CODE2",
+        "count": 1
+      },
+      {
+        "field": "Zone_2",
+        "count": 1
+      },
+      {
+        "field": "Zone_3",
+        "count": 1
+      },
+      {
+        "field": "ZONE2",
+        "count": 1
+      },
+      {
+        "field": "ZoningOverlay",
+        "count": 1
+      },
+      {
+        "field": "Overlay1",
+        "count": 1
+      },
+      {
+        "field": "Overlay2",
+        "count": 1
+      },
+      {
+        "field": "SplitZone",
+        "count": 1
+      },
+      {
+        "field": "zoningsubtype",
+        "count": 1
+      },
+      {
+        "field": "Subzone",
+        "count": 1
+      },
+      {
+        "field": "Overlay_1",
+        "count": 1
+      },
+      {
+        "field": "Overlay_2",
+        "count": 1
+      },
+      {
+        "field": "AirportOverlayZoneCode",
+        "count": 1
+      },
+      {
+        "field": "OVERLAY_2",
+        "count": 1
+      },
+      {
+        "field": "OVERLAY_DI",
+        "count": 1
+      },
+      {
+        "field": "OVERLAY_SHORT",
+        "count": 1
+      },
+      {
+        "field": "OVERLAY_NAME",
+        "count": 1
+      },
+      {
+        "field": "OVERLAY_LINK",
+        "count": 1
+      },
+      {
+        "field": "OverlayDes",
+        "count": 1
+      },
+      {
+        "field": "SubZones",
+        "count": 1
+      },
+      {
+        "field": "ZONE_SUBTY_1",
+        "count": 1
+      },
+      {
+        "field": "SecondaryZone",
+        "count": 1
+      },
+      {
+        "field": "SUB_ZONE",
+        "count": 1
+      },
+      {
+        "field": "overlay",
+        "count": 1
+      },
+      {
+        "field": "OVERLAYDIST",
+        "count": 1
+      },
+      {
+        "field": "OVERLAYDESC",
+        "count": 1
+      },
+      {
+        "field": "FloodHazard_ZoneSubtype",
+        "count": 1
+      }
+    ],
+    "pud_flag": [
+      {
+        "field": "PUD",
+        "count": 14
+      },
+      {
+        "field": "PUDNo",
+        "count": 5
+      },
+      {
+        "field": "PUDDate",
+        "count": 5
+      },
+      {
+        "field": "PUD_NAME",
+        "count": 4
+      },
+      {
+        "field": "PUD_NUM",
+        "count": 4
+      },
+      {
+        "field": "Planned_Units",
+        "count": 4
+      },
+      {
+        "field": "PU_DESC",
+        "count": 4
+      },
+      {
+        "field": "PU_DOR_CD",
+        "count": 4
+      },
+      {
+        "field": "PUDNumber",
+        "count": 2
+      },
+      {
+        "field": "PUDNAME",
+        "count": 2
+      },
+      {
+        "field": "PUD_STD_ZONE_DIST",
+        "count": 2
+      },
+      {
+        "field": "PUD_DOCUMENT",
+        "count": 2
+      },
+      {
+        "field": "PUD_CLASS",
+        "count": 2
+      },
+      {
+        "field": "pudAcres",
+        "count": 2
+      },
+      {
+        "field": "pudPct",
+        "count": 2
+      },
+      {
+        "field": "pudCount",
+        "count": 2
+      },
+      {
+        "field": "PlannedUnitDev_Join_Count",
+        "count": 2
+      },
+      {
+        "field": "PUDAllowedUse",
+        "count": 1
+      },
+      {
+        "field": "PUDRESOLUTION",
+        "count": 1
+      },
+      {
+        "field": "PUDRESDATE",
+        "count": 1
+      },
+      {
+        "field": "pudname",
+        "count": 1
+      },
+      {
+        "field": "PUDNUM",
+        "count": 1
+      },
+      {
+        "field": "PUD_USE",
+        "count": 1
+      },
+      {
+        "field": "PUD_innum",
+        "count": 1
+      },
+      {
+        "field": "PUD_WEB_URL",
+        "count": 1
+      },
+      {
+        "field": "PUD_ZONING",
+        "count": 1
+      },
+      {
+        "field": "PUD_STATUS",
+        "count": 1
+      },
+      {
+        "field": "PUD_CASE_NUMBER",
+        "count": 1
+      },
+      {
+        "field": "PUDName",
+        "count": 1
+      },
+      {
+        "field": "PUDLink",
+        "count": 1
+      },
+      {
+        "field": "districtIsPlannedDev",
+        "count": 1
+      },
+      {
+        "field": "plannedDevSize",
+        "count": 1
+      },
+      {
+        "field": "plannedDevReferences",
+        "count": 1
+      },
+      {
+        "field": "plannedDevReferencesList",
+        "count": 1
+      },
+      {
+        "field": "plannedDevDensityRegulated",
+        "count": 1
+      },
+      {
+        "field": "plannedDevDensity",
+        "count": 1
+      },
+      {
+        "field": "plannedDevDensityType",
+        "count": 1
+      },
+      {
+        "field": "plannedDevMixedUse",
+        "count": 1
+      },
+      {
+        "field": "PUDTreatment",
+        "count": 1
+      },
+      {
+        "field": "PUDMinSize",
+        "count": 1
+      },
+      {
+        "field": "PUDDensity",
+        "count": 1
+      },
+      {
+        "field": "PUDMixedUse",
+        "count": 1
+      },
+      {
+        "field": "PUD_ORD",
+        "count": 1
+      }
+    ],
+    "cup_flag": [
+      {
+        "field": "cup",
+        "count": 4
+      },
+      {
+        "field": "CUP",
+        "count": 4
+      },
+      {
+        "field": "SUP",
+        "count": 1
+      },
+      {
+        "field": "CondUsePermitNumber",
+        "count": 1
+      },
+      {
+        "field": "CondUseDescription",
+        "count": 1
+      },
+      {
+        "field": "CONDITIONAL_USE",
+        "count": 1
+      },
+      {
+        "field": "CONDUSE",
+        "count": 1
+      },
+      {
+        "field": "CUP_Ordinances_Orders",
+        "count": 1
+      },
+      {
+        "field": "CUPDATE",
+        "count": 1
+      },
+      {
+        "field": "CUPCMNTS",
+        "count": 1
+      },
+      {
+        "field": "CUPPMTNO",
+        "count": 1
+      },
+      {
+        "field": "ConditionalUse",
+        "count": 1
+      },
+      {
+        "field": "SpecialUse",
+        "count": 1
+      }
+    ],
+    "lot_width": [
+      {
+        "field": "lot_width",
+        "count": 7
+      },
+      {
+        "field": "WIDTH",
+        "count": 7
+      },
+      {
+        "field": "lot_width_allows",
+        "count": 6
+      },
+      {
+        "field": "FRONTAGE",
+        "count": 6
+      },
+      {
+        "field": "WidthFront",
+        "count": 5
+      },
+      {
+        "field": "WidthBack",
+        "count": 5
+      },
+      {
+        "field": "Lot_Width",
+        "count": 5
+      },
+      {
+        "field": "width",
+        "count": 2
+      },
+      {
+        "field": "Frontage",
+        "count": 2
+      },
+      {
+        "field": "FRONTFEET",
+        "count": 2
+      },
+      {
+        "field": "FRONT_FOOTAGE",
+        "count": 2
+      },
+      {
+        "field": "LotWidth",
+        "count": 1
+      },
+      {
+        "field": "minLotWidth",
+        "count": 1
+      },
+      {
+        "field": "MINIMUM_LOT_WIDTH_FT",
+        "count": 1
+      }
+    ],
+    "lot_depth": [
+      {
+        "field": "DEPTH",
+        "count": 33
+      },
+      {
+        "field": "Depth1",
+        "count": 5
+      },
+      {
+        "field": "Depth2",
+        "count": 5
+      },
+      {
+        "field": "Lot_Depth",
+        "count": 5
+      },
+      {
+        "field": "Depth",
+        "count": 3
+      },
+      {
+        "field": "depth",
+        "count": 2
+      },
+      {
+        "field": "DEPTH_1",
+        "count": 2
+      },
+      {
+        "field": "LotDepth",
+        "count": 2
+      },
+      {
+        "field": "LOTDEPTH",
+        "count": 1
+      },
+      {
+        "field": "LOT_DEPTH_FEET",
+        "count": 1
+      },
+      {
+        "field": "LOT_DEPTH_FEET2",
+        "count": 1
+      },
+      {
+        "field": "LOTDEPTHFACTOR",
+        "count": 1
+      },
+      {
+        "field": "lot_depth",
+        "count": 1
+      }
+    ],
+    "lot_area": [
+      {
+        "field": "ACRES",
+        "count": 146
+      },
+      {
+        "field": "Acres",
+        "count": 96
+      },
+      {
+        "field": "AREA",
+        "count": 79
+      },
+      {
+        "field": "Acreage",
+        "count": 34
+      },
+      {
+        "field": "GIS_AREA",
+        "count": 33
+      },
+      {
+        "field": "GISAcres",
+        "count": 30
+      },
+      {
+        "field": "CALC_ACRE",
+        "count": 24
+      },
+      {
+        "field": "ACREAGE",
+        "count": 24
+      },
+      {
+        "field": "GISACRES",
+        "count": 22
+      },
+      {
+        "field": "acres",
+        "count": 22
+      },
+      {
+        "field": "gisacres",
+        "count": 19
+      },
+      {
+        "field": "Area",
+        "count": 19
+      },
+      {
+        "field": "GIS_Acres",
+        "count": 16
+      },
+      {
+        "field": "GIS_ACRES",
+        "count": 15
+      },
+      {
+        "field": "LOT_SIZE",
+        "count": 13
+      },
+      {
+        "field": "CALC_AREA",
+        "count": 12
+      },
+      {
+        "field": "ACRE",
+        "count": 12
+      },
+      {
+        "field": "TOTAL_ACRE",
+        "count": 12
+      },
+      {
+        "field": "SQFT",
+        "count": 11
+      },
+      {
+        "field": "MapAcres",
+        "count": 9
+      },
+      {
+        "field": "acreage",
+        "count": 9
+      },
+      {
+        "field": "DeedAcres",
+        "count": 8
+      },
+      {
+        "field": "CalculatedAcres",
+        "count": 8
+      },
+      {
+        "field": "LANDAREA",
+        "count": 7
+      },
+      {
+        "field": "Land_Acres",
+        "count": 6
+      },
+      {
+        "field": "DEEDACRES",
+        "count": 6
+      },
+      {
+        "field": "lot_size",
+        "count": 6
+      },
+      {
+        "field": "DeedAcre",
+        "count": 6
+      },
+      {
+        "field": "Parcel_Size",
+        "count": 6
+      },
+      {
+        "field": "TotalAcres",
+        "count": 6
+      },
+      {
+        "field": "LotSize",
+        "count": 6
+      },
+      {
+        "field": "SegSqFt",
+        "count": 5
+      },
+      {
+        "field": "LegalAcres",
+        "count": 5
+      },
+      {
+        "field": "TOTALACRES",
+        "count": 5
+      },
+      {
+        "field": "CALCACRES",
+        "count": 5
+      },
+      {
+        "field": "AREA_",
+        "count": 5
+      },
+      {
+        "field": "Lot_Acreage",
+        "count": 5
+      },
+      {
+        "field": "SqFt",
+        "count": 5
+      },
+      {
+        "field": "DeededAcre",
+        "count": 5
+      },
+      {
+        "field": "LANDSQFT",
+        "count": 4
+      },
+      {
+        "field": "area",
+        "count": 4
+      },
+      {
+        "field": "gis_acres",
+        "count": 4
+      },
+      {
+        "field": "DeededAcres",
+        "count": 4
+      },
+      {
+        "field": "SQ_FT",
+        "count": 4
+      },
+      {
+        "field": "SIZE",
+        "count": 4
+      },
+      {
+        "field": "taxacres",
+        "count": 4
+      },
+      {
+        "field": "AREA_SQ_FT",
+        "count": 4
+      },
+      {
+        "field": "PARCEL_AREA",
+        "count": 4
+      },
+      {
+        "field": "LotArea",
+        "count": 3
+      },
+      {
+        "field": "LAND_AREA",
+        "count": 3
+      },
+      {
+        "field": "PARCEL_ACREAGE",
+        "count": 3
+      },
+      {
+        "field": "GISSQFT",
+        "count": 3
+      },
+      {
+        "field": "LandArea",
+        "count": 3
+      },
+      {
+        "field": "Sq_Ft",
+        "count": 3
+      },
+      {
+        "field": "GISACRE",
+        "count": 3
+      },
+      {
+        "field": "MAP_ACRES",
+        "count": 3
+      },
+      {
+        "field": "CALC_ACRES",
+        "count": 3
+      },
+      {
+        "field": "Total_Acres",
+        "count": 3
+      },
+      {
+        "field": "CALCULATED_ACREAGE",
+        "count": 2
+      },
+      {
+        "field": "sqft",
+        "count": 2
+      },
+      {
+        "field": "totalacres",
+        "count": 2
+      },
+      {
+        "field": "CALCAcres",
+        "count": 2
+      },
+      {
+        "field": "Lot_Area",
+        "count": 2
+      },
+      {
+        "field": "lotsize",
+        "count": 2
+      },
+      {
+        "field": "legal_acre",
+        "count": 2
+      },
+      {
+        "field": "TaxAcres",
+        "count": 2
+      },
+      {
+        "field": "ParcelAcre",
+        "count": 2
+      },
+      {
+        "field": "LOTAREA",
+        "count": 2
+      },
+      {
+        "field": "GIS_SqFt",
+        "count": 2
+      },
+      {
+        "field": "AreaSqFt",
+        "count": 2
+      },
+      {
+        "field": "TAX_ACRES",
+        "count": 2
+      },
+      {
+        "field": "SQFEET",
+        "count": 2
+      },
+      {
+        "field": "CalcAcres",
+        "count": 2
+      },
+      {
+        "field": "TAX_ACRE",
+        "count": 2
+      },
+      {
+        "field": "DEED_ACRE",
+        "count": 2
+      },
+      {
+        "field": "Area_SqFt",
+        "count": 2
+      },
+      {
+        "field": "GIS_SqFeet",
+        "count": 1
+      },
+      {
+        "field": "landarea",
+        "count": 1
+      },
+      {
+        "field": "lot_acres",
+        "count": 1
+      },
+      {
+        "field": "TOTALSQFT",
+        "count": 1
+      },
+      {
+        "field": "deeded_acres",
+        "count": 1
+      },
+      {
+        "field": "gisacre",
+        "count": 1
+      },
+      {
+        "field": "DEED_AREA",
+        "count": 1
+      },
+      {
+        "field": "DEED_AREA_",
+        "count": 1
+      },
+      {
+        "field": "CALCSF",
+        "count": 1
+      },
+      {
+        "field": "DEEDSF",
+        "count": 1
+      },
+      {
+        "field": "parcel_acres",
+        "count": 1
+      },
+      {
+        "field": "total_sq_ft",
+        "count": 1
+      },
+      {
+        "field": "land_sqft",
+        "count": 1
+      },
+      {
+        "field": "SHAPE_SQFT",
+        "count": 1
+      },
+      {
+        "field": "SHAPE_ACRE",
+        "count": 1
+      },
+      {
+        "field": "GIS_acres",
+        "count": 1
+      },
+      {
+        "field": "LOT_SQ_FEET",
+        "count": 1
+      },
+      {
+        "field": "total_acre",
+        "count": 1
+      },
+      {
+        "field": "SQFTLOT",
+        "count": 1
+      },
+      {
+        "field": "GIS_SQ_FT",
+        "count": 1
+      },
+      {
+        "field": "Acre",
+        "count": 1
+      },
+      {
+        "field": "LotSqFt",
+        "count": 1
+      },
+      {
+        "field": "LandAcre",
+        "count": 1
+      },
+      {
+        "field": "Squarefeet",
+        "count": 1
+      },
+      {
+        "field": "DeedArea",
+        "count": 1
+      },
+      {
+        "field": "Deed_Acres",
+        "count": 1
+      },
+      {
+        "field": "area_",
+        "count": 1
+      },
+      {
+        "field": "ParcelAcres",
+        "count": 1
+      },
+      {
+        "field": "LEGAL_ACRE",
+        "count": 1
+      },
+      {
+        "field": "GIS_ACRE",
+        "count": 1
+      },
+      {
+        "field": "TotalArea",
+        "count": 1
+      },
+      {
+        "field": "TOTAL_AREA",
+        "count": 1
+      },
+      {
+        "field": "Calc_Acres",
+        "count": 1
+      },
+      {
+        "field": "Square_Feet",
+        "count": 1
+      },
+      {
+        "field": "AREA_SQFT",
+        "count": 1
+      },
+      {
+        "field": "TOTAL_ACREAGE",
+        "count": 1
+      },
+      {
+        "field": "CalcAcre",
+        "count": 1
+      },
+      {
+        "field": "LOT_ACRES",
+        "count": 1
+      },
+      {
+        "field": "Assessed_Acres",
+        "count": 1
+      },
+      {
+        "field": "CalcArea",
+        "count": 1
+      },
+      {
+        "field": "AREASQFT",
+        "count": 1
+      },
+      {
+        "field": "acre",
+        "count": 1
+      },
+      {
+        "field": "Calc_Acre",
+        "count": 1
+      },
+      {
+        "field": "PARCEL_SIZE",
+        "count": 1
+      },
+      {
+        "field": "sq_ft",
+        "count": 1
+      },
+      {
+        "field": "parcel_acre",
+        "count": 1
+      },
+      {
+        "field": "deededacres",
+        "count": 1
+      },
+      {
+        "field": "SQ_FEET",
+        "count": 1
+      },
+      {
+        "field": "parcel_size",
+        "count": 1
+      },
+      {
+        "field": "GISAcreage",
+        "count": 1
+      },
+      {
+        "field": "deed_acres",
+        "count": 1
+      },
+      {
+        "field": "LAND_SF",
+        "count": 1
+      }
+    ],
+    "year_built": [
+      {
+        "field": "YEAR_BUILT",
+        "count": 47
+      },
+      {
+        "field": "YearBuilt",
+        "count": 21
+      },
+      {
+        "field": "YEARBLT",
+        "count": 13
+      },
+      {
+        "field": "yr_built",
+        "count": 12
+      },
+      {
+        "field": "year_built",
+        "count": 9
+      },
+      {
+        "field": "YrBuilt",
+        "count": 7
+      },
+      {
+        "field": "EFF_YR_BLT",
+        "count": 7
+      },
+      {
+        "field": "ACT_YR_BLT",
+        "count": 7
+      },
+      {
+        "field": "RESYRBLT",
+        "count": 6
+      },
+      {
+        "field": "YRBLT",
+        "count": 5
+      },
+      {
+        "field": "EFFYRBLT",
+        "count": 5
+      },
+      {
+        "field": "YearBuilt1",
+        "count": 5
+      },
+      {
+        "field": "AptYrBuilt",
+        "count": 4
+      },
+      {
+        "field": "Year_Built",
+        "count": 4
+      },
+      {
+        "field": "Yr_Built",
+        "count": 4
+      },
+      {
+        "field": "YR_BLT",
+        "count": 4
+      },
+      {
+        "field": "Year_Built_1",
+        "count": 4
+      },
+      {
+        "field": "YRBUILT",
+        "count": 4
+      },
+      {
+        "field": "yearbuilt",
+        "count": 3
+      },
+      {
+        "field": "RES_ORIG_YEAR_BUILT",
+        "count": 3
+      },
+      {
+        "field": "COM_ORIG_YEAR_BUILT",
+        "count": 3
+      },
+      {
+        "field": "ACTYRBLT",
+        "count": 3
+      },
+      {
+        "field": "COM_YR_BLT",
+        "count": 2
+      },
+      {
+        "field": "Year_Built__Effective_",
+        "count": 2
+      },
+      {
+        "field": "Extra_Features_Year_Built",
+        "count": 2
+      },
+      {
+        "field": "YEARBUILT",
+        "count": 2
+      },
+      {
+        "field": "yearblt",
+        "count": 1
+      },
+      {
+        "field": "YRBUILTSRC",
+        "count": 1
+      },
+      {
+        "field": "YR_BUILT",
+        "count": 1
+      },
+      {
+        "field": "EFF_YR_BUILT",
+        "count": 1
+      },
+      {
+        "field": "year_built_effective_date",
+        "count": 1
+      },
+      {
+        "field": "effective_year_built",
+        "count": 1
+      },
+      {
+        "field": "eff_yr_blt",
+        "count": 1
+      },
+      {
+        "field": "yr_blt",
+        "count": 1
+      },
+      {
+        "field": "COMM_YEAR_BUILT",
+        "count": 1
+      },
+      {
+        "field": "Principal_Building_Year_Built",
+        "count": 1
+      },
+      {
+        "field": "A_YEAR_BUILT",
+        "count": 1
+      },
+      {
+        "field": "YR_BUILT_UPDATE",
+        "count": 1
+      },
+      {
+        "field": "YearBuilt2",
+        "count": 1
+      },
+      {
+        "field": "YearBuilt3",
+        "count": 1
+      },
+      {
+        "field": "YearBuilt4",
+        "count": 1
+      },
+      {
+        "field": "YearBuilt5",
+        "count": 1
+      },
+      {
+        "field": "fyrblt",
+        "count": 1
+      },
+      {
+        "field": "BLDG_YRBLT",
+        "count": 1
+      },
+      {
+        "field": "MinYrBuilt",
+        "count": 1
+      },
+      {
+        "field": "MaxYrBuilt",
+        "count": 1
+      }
+    ],
+    "unit_count": [
+      {
+        "field": "UNITS",
+        "count": 21
+      },
+      {
+        "field": "UNIT",
+        "count": 17
+      },
+      {
+        "field": "NUM_UNITS",
+        "count": 6
+      },
+      {
+        "field": "UNIT_NUM",
+        "count": 6
+      },
+      {
+        "field": "AptUnits",
+        "count": 5
+      },
+      {
+        "field": "UNITNO",
+        "count": 5
+      },
+      {
+        "field": "Units",
+        "count": 5
+      },
+      {
+        "field": "num_units",
+        "count": 4
+      },
+      {
+        "field": "Unit",
+        "count": 4
+      },
+      {
+        "field": "NUMBER_UNITS",
+        "count": 4
+      },
+      {
+        "field": "TOT_UNITS",
+        "count": 3
+      },
+      {
+        "field": "UNITNUM",
+        "count": 3
+      },
+      {
+        "field": "NUMUNITS",
+        "count": 3
+      },
+      {
+        "field": "Bedroom_1_Apt_Units",
+        "count": 2
+      },
+      {
+        "field": "Bedroom_2_Apt_Units",
+        "count": 2
+      },
+      {
+        "field": "Bedroom_3_Apt_Units",
+        "count": 2
+      },
+      {
+        "field": "Efficiency_Apt_Units",
+        "count": 2
+      },
+      {
+        "field": "No__Residential_Units",
+        "count": 2
+      },
+      {
+        "field": "Total_housing_units",
+        "count": 2
+      },
+      {
+        "field": "Total_Occupied_housing_units",
+        "count": 2
+      },
+      {
+        "field": "Total_Vacant_housing_units",
+        "count": 2
+      },
+      {
+        "field": "Percent_Vacant_housing_units",
+        "count": 2
+      },
+      {
+        "field": "Total_housing_units_Built_1939_",
+        "count": 2
+      },
+      {
+        "field": "Percent_Total_housing_units_Bui",
+        "count": 2
+      },
+      {
+        "field": "Unit_Count",
+        "count": 2
+      },
+      {
+        "field": "numunits",
+        "count": 1
+      },
+      {
+        "field": "num_housing_units",
+        "count": 1
+      },
+      {
+        "field": "units",
+        "count": 1
+      },
+      {
+        "field": "Housing_Unit_Counts",
+        "count": 1
+      },
+      {
+        "field": "UnitNum",
+        "count": 1
+      },
+      {
+        "field": "NOUNITS",
+        "count": 1
+      },
+      {
+        "field": "TOTAL_UNIT",
+        "count": 1
+      },
+      {
+        "field": "SingleComplexUnitCount",
+        "count": 1
+      },
+      {
+        "field": "unit",
+        "count": 1
+      },
+      {
+        "field": "UnitsTotal",
+        "count": 1
+      },
+      {
+        "field": "access_dwellingunits",
+        "count": 1
+      },
+      {
+        "field": "RES_UNITS",
+        "count": 1
+      },
+      {
+        "field": "NUMUNITS_1",
+        "count": 1
+      },
+      {
+        "field": "Number_Of_Units",
+        "count": 1
+      },
+      {
+        "field": "UNIT_COUNT",
+        "count": 1
+      },
+      {
+        "field": "DWELLING_UNITS",
+        "count": 1
+      }
+    ],
+    "building_sqft": [
+      {
+        "field": "Living_Area",
+        "count": 6
+      },
+      {
+        "field": "RES_AREA",
+        "count": 6
+      },
+      {
+        "field": "BldgSF",
+        "count": 5
+      },
+      {
+        "field": "AptBldgSF",
+        "count": 4
+      },
+      {
+        "field": "fin_sq_ft",
+        "count": 4
+      },
+      {
+        "field": "BLDG_SQFT",
+        "count": 4
+      },
+      {
+        "field": "BLDG_SIZE",
+        "count": 4
+      },
+      {
+        "field": "BLDGAREA",
+        "count": 4
+      },
+      {
+        "field": "COM_GROSS_AREA",
+        "count": 3
+      },
+      {
+        "field": "bldg_sqft",
+        "count": 3
+      },
+      {
+        "field": "FIN_SQ_FT",
+        "count": 2
+      },
+      {
+        "field": "Bldg_Living_Area",
+        "count": 2
+      },
+      {
+        "field": "Gross_Area",
+        "count": 2
+      },
+      {
+        "field": "Heated_Area",
+        "count": 2
+      },
+      {
+        "field": "BLDG_SQFT_",
+        "count": 2
+      },
+      {
+        "field": "FINISHEDLIVINGAREA",
+        "count": 2
+      },
+      {
+        "field": "BusinessLivingArea",
+        "count": 2
+      },
+      {
+        "field": "StructureArea",
+        "count": 2
+      },
+      {
+        "field": "ResMainFloorSF",
+        "count": 1
+      },
+      {
+        "field": "TOT_LIVING_AREA_SF",
+        "count": 1
+      },
+      {
+        "field": "finarea",
+        "count": 1
+      },
+      {
+        "field": "TotalLivingArea",
+        "count": 1
+      },
+      {
+        "field": "GROSS_AREA",
+        "count": 1
+      },
+      {
+        "field": "BLDGSQFT",
+        "count": 1
+      },
+      {
+        "field": "RES_LIVING_AREA",
+        "count": 1
+      },
+      {
+        "field": "COMM_BUILDING_SQ_FT",
+        "count": 1
+      },
+      {
+        "field": "HeatedSquareFeet",
+        "count": 1
+      },
+      {
+        "field": "STRUCTAREA",
+        "count": 1
+      },
+      {
+        "field": "BldgArea",
+        "count": 1
+      },
+      {
+        "field": "ResArea",
+        "count": 1
+      },
+      {
+        "field": "Gross_SqFt",
+        "count": 1
+      },
+      {
+        "field": "StructArea",
+        "count": 1
+      },
+      {
+        "field": "BLDG_SQFT_1",
+        "count": 1
+      },
+      {
+        "field": "FinishedSQFT",
+        "count": 1
+      },
+      {
+        "field": "BLDG_SF",
+        "count": 1
+      },
+      {
+        "field": "FIN_AREA",
+        "count": 1
+      }
+    ],
+    "assessed_value": [
+      {
+        "field": "LAND_VALUE",
+        "count": 35
+      },
+      {
+        "field": "LandValue",
+        "count": 20
+      },
+      {
+        "field": "TotalValue",
+        "count": 20
+      },
+      {
+        "field": "LAND_VAL",
+        "count": 17
+      },
+      {
+        "field": "Land_Value",
+        "count": 14
+      },
+      {
+        "field": "landval",
+        "count": 11
+      },
+      {
+        "field": "BldgValue",
+        "count": 10
+      },
+      {
+        "field": "LANDVALUE",
+        "count": 9
+      },
+      {
+        "field": "improvval",
+        "count": 9
+      },
+      {
+        "field": "LANDVAL",
+        "count": 9
+      },
+      {
+        "field": "TOTALVALUE",
+        "count": 8
+      },
+      {
+        "field": "Total_Assessed_Value",
+        "count": 8
+      },
+      {
+        "field": "NET_VALUE",
+        "count": 8
+      },
+      {
+        "field": "Ag_Land_Value",
+        "count": 7
+      },
+      {
+        "field": "BLDG_VALUE",
+        "count": 6
+      },
+      {
+        "field": "Total_Value",
+        "count": 6
+      },
+      {
+        "field": "landvalue",
+        "count": 6
+      },
+      {
+        "field": "IMPROVVAL",
+        "count": 6
+      },
+      {
+        "field": "BLDG_VAL",
+        "count": 6
+      },
+      {
+        "field": "ASSESSED_VALUE",
+        "count": 5
+      },
+      {
+        "field": "Assessed_Value",
+        "count": 5
+      },
+      {
+        "field": "totalvalue",
+        "count": 4
+      },
+      {
+        "field": "APPRAISED_VALUE",
+        "count": 4
+      },
+      {
+        "field": "Roll_LandValue",
+        "count": 4
+      },
+      {
+        "field": "land_value",
+        "count": 4
+      },
+      {
+        "field": "land_val",
+        "count": 4
+      },
+      {
+        "field": "TAX_VALUE",
+        "count": 4
+      },
+      {
+        "field": "APPRAISED_LAND_VALUE",
+        "count": 3
+      },
+      {
+        "field": "APPRAISED_TOTAL_VALUE",
+        "count": 3
+      },
+      {
+        "field": "ASSESSED_LAND_VALUE",
+        "count": 3
+      },
+      {
+        "field": "ASSESSED_TOTAL_VALUE",
+        "count": 3
+      },
+      {
+        "field": "TAXABLE_AMT",
+        "count": 3
+      },
+      {
+        "field": "TOT_VALUE",
+        "count": 3
+      },
+      {
+        "field": "Improvement_Value",
+        "count": 3
+      },
+      {
+        "field": "Market_Value",
+        "count": 3
+      },
+      {
+        "field": "TotalLandValue",
+        "count": 3
+      },
+      {
+        "field": "Taxable_Value",
+        "count": 3
+      },
+      {
+        "field": "BuildingValue",
+        "count": 3
+      },
+      {
+        "field": "ImprovementValue",
+        "count": 3
+      },
+      {
+        "field": "AgLandValue",
+        "count": 3
+      },
+      {
+        "field": "MarketValue",
+        "count": 2
+      },
+      {
+        "field": "TotVal",
+        "count": 2
+      },
+      {
+        "field": "LandAssess",
+        "count": 2
+      },
+      {
+        "field": "TotAssess",
+        "count": 2
+      },
+      {
+        "field": "Building_Value",
+        "count": 2
+      },
+      {
+        "field": "Exempt_Land_Value",
+        "count": 2
+      },
+      {
+        "field": "Exempt_Total_Value",
+        "count": 2
+      },
+      {
+        "field": "Market_Land_Value",
+        "count": 2
+      },
+      {
+        "field": "Total_Value__Taxable_",
+        "count": 2
+      },
+      {
+        "field": "AgriculturalLandValue",
+        "count": 2
+      },
+      {
+        "field": "ResidentialLandValue",
+        "count": 2
+      },
+      {
+        "field": "CommercialLandValue",
+        "count": 2
+      },
+      {
+        "field": "ExemptLandValue",
+        "count": 2
+      },
+      {
+        "field": "MARKETVAL",
+        "count": 2
+      },
+      {
+        "field": "Improv_Val",
+        "count": 2
+      },
+      {
+        "field": "ASSESS_VAL",
+        "count": 2
+      },
+      {
+        "field": "LANDASSESS",
+        "count": 2
+      },
+      {
+        "field": "TOTAL_VAL",
+        "count": 2
+      },
+      {
+        "field": "assessed_val",
+        "count": 2
+      },
+      {
+        "field": "totval",
+        "count": 2
+      },
+      {
+        "field": "TAXABLEVAL",
+        "count": 2
+      },
+      {
+        "field": "LandValue2023",
+        "count": 2
+      },
+      {
+        "field": "AgLandValue2023",
+        "count": 2
+      },
+      {
+        "field": "ImprovementValue2023",
+        "count": 2
+      },
+      {
+        "field": "LandValue2022",
+        "count": 2
+      },
+      {
+        "field": "AgLandValue2022",
+        "count": 2
+      },
+      {
+        "field": "ImprovementValue2022",
+        "count": 2
+      },
+      {
+        "field": "LandValue2024",
+        "count": 2
+      },
+      {
+        "field": "AgLandValue2024",
+        "count": 2
+      },
+      {
+        "field": "ImprovementValue2024",
+        "count": 2
+      },
+      {
+        "field": "LandValue2025",
+        "count": 2
+      },
+      {
+        "field": "AgLandValue2025",
+        "count": 2
+      },
+      {
+        "field": "ImprovementValue2025",
+        "count": 2
+      },
+      {
+        "field": "LandValueTaxTable",
+        "count": 2
+      },
+      {
+        "field": "AgLandValueTaxTable",
+        "count": 2
+      },
+      {
+        "field": "ImprovementValueTaxTable",
+        "count": 2
+      },
+      {
+        "field": "bldgvalue",
+        "count": 2
+      },
+      {
+        "field": "Land_Val",
+        "count": 1
+      },
+      {
+        "field": "BLDGVALUE",
+        "count": 1
+      },
+      {
+        "field": "taxamt",
+        "count": 1
+      },
+      {
+        "field": "LANDVALUET",
+        "count": 1
+      },
+      {
+        "field": "assessed_bldg_value",
+        "count": 1
+      },
+      {
+        "field": "assessed_land_value",
+        "count": 1
+      },
+      {
+        "field": "total_assessed_value",
+        "count": 1
+      },
+      {
+        "field": "previous_total_assessed_value",
+        "count": 1
+      },
+      {
+        "field": "total_assessed",
+        "count": 1
+      },
+      {
+        "field": "taxable_value",
+        "count": 1
+      },
+      {
+        "field": "BldgVal",
+        "count": 1
+      },
+      {
+        "field": "MARKET_LAND_VALUE",
+        "count": 1
+      },
+      {
+        "field": "AG_LAND_VALUE",
+        "count": 1
+      },
+      {
+        "field": "JUST_VALUE",
+        "count": 1
+      },
+      {
+        "field": "TAXABLE_VALUE",
+        "count": 1
+      },
+      {
+        "field": "BLDGVAL",
+        "count": 1
+      },
+      {
+        "field": "TOTALVAL",
+        "count": 1
+      },
+      {
+        "field": "ASSESSVAL",
+        "count": 1
+      },
+      {
+        "field": "ASSD_VALUE",
+        "count": 1
+      },
+      {
+        "field": "NETVALUE",
+        "count": 1
+      },
+      {
+        "field": "TAXVALUE",
+        "count": 1
+      },
+      {
+        "field": "AppLandValue",
+        "count": 1
+      },
+      {
+        "field": "TaxLandValue",
+        "count": 1
+      },
+      {
+        "field": "JustValue",
+        "count": 1
+      },
+      {
+        "field": "TaxAmount",
+        "count": 1
+      },
+      {
+        "field": "TOTAL_ASSESSED_VALUE",
+        "count": 1
+      },
+      {
+        "field": "building_value",
+        "count": 1
+      },
+      {
+        "field": "total_value",
+        "count": 1
+      },
+      {
+        "field": "LandVal",
+        "count": 1
+      },
+      {
+        "field": "Building_value",
+        "count": 1
+      },
+      {
+        "field": "Land_value",
+        "count": 1
+      },
+      {
+        "field": "Assessed_value",
+        "count": 1
+      },
+      {
+        "field": "APPRVAL",
+        "count": 1
+      },
+      {
+        "field": "JUSTVAL",
+        "count": 1
+      },
+      {
+        "field": "TAXVAL1",
+        "count": 1
+      },
+      {
+        "field": "TAXVAL2",
+        "count": 1
+      },
+      {
+        "field": "TAXVAL3",
+        "count": 1
+      },
+      {
+        "field": "TAXVAL4",
+        "count": 1
+      },
+      {
+        "field": "LandVal1",
+        "count": 1
+      },
+      {
+        "field": "TotVal1",
+        "count": 1
+      },
+      {
+        "field": "PAYTotAssess",
+        "count": 1
+      },
+      {
+        "field": "assessvalue",
+        "count": 1
+      },
+      {
+        "field": "LandValue2026",
+        "count": 1
+      },
+      {
+        "field": "AgLandValue2026",
+        "count": 1
+      },
+      {
+        "field": "ImprovementValue2026",
+        "count": 1
+      },
+      {
+        "field": "Farm_Land_Value",
+        "count": 1
+      },
+      {
+        "field": "Residential_Land_Value",
+        "count": 1
+      },
+      {
+        "field": "Commercial_Land_Value",
+        "count": 1
+      },
+      {
+        "field": "AssessedValue",
+        "count": 1
+      },
+      {
+        "field": "LAND_VALUE_TYPE_ID",
+        "count": 1
+      },
+      {
+        "field": "netassessed",
+        "count": 1
+      },
+      {
+        "field": "bldg_val",
+        "count": 1
+      },
+      {
+        "field": "total_val",
+        "count": 1
+      },
+      {
+        "field": "total_assess",
+        "count": 1
+      },
+      {
+        "field": "taxable_val",
+        "count": 1
+      },
+      {
+        "field": "Ag_TaxableValue",
+        "count": 1
+      },
+      {
+        "field": "Res_TaxableValue",
+        "count": 1
+      },
+      {
+        "field": "Comm_TaxableValue",
+        "count": 1
+      },
+      {
+        "field": "Net_TaxableValue",
+        "count": 1
+      }
+    ],
+    "owner": [
+      {
+        "field": "OWNER_NAME",
+        "count": 60
+      },
+      {
+        "field": "Owner",
+        "count": 60
+      },
+      {
+        "field": "OWNER2",
+        "count": 44
+      },
+      {
+        "field": "OWNER",
+        "count": 39
+      },
+      {
+        "field": "OWNER1",
+        "count": 37
+      },
+      {
+        "field": "OwnerName",
+        "count": 19
+      },
+      {
+        "field": "OWNERNME1",
+        "count": 15
+      },
+      {
+        "field": "Owner2",
+        "count": 13
+      },
+      {
+        "field": "OWNERNME2",
+        "count": 13
+      },
+      {
+        "field": "Owner1",
+        "count": 12
+      },
+      {
+        "field": "owner_name",
+        "count": 12
+      },
+      {
+        "field": "owner",
+        "count": 10
+      },
+      {
+        "field": "OwnerFullA",
+        "count": 9
+      },
+      {
+        "field": "ownlast",
+        "count": 9
+      },
+      {
+        "field": "ownname",
+        "count": 9
+      },
+      {
+        "field": "OWNERNAME",
+        "count": 8
+      },
+      {
+        "field": "OWNERNAME1",
+        "count": 8
+      },
+      {
+        "field": "OWNERNAME2",
+        "count": 8
+      },
+      {
+        "field": "OwnerAddress1",
+        "count": 8
+      },
+      {
+        "field": "OwnerAddress2",
+        "count": 8
+      },
+      {
+        "field": "OWN_NAME",
+        "count": 7
+      },
+      {
+        "field": "Owner_Name",
+        "count": 7
+      },
+      {
+        "field": "OWNNAME",
+        "count": 6
+      },
+      {
+        "field": "Owner_Addr",
+        "count": 5
+      },
+      {
+        "field": "FullOwnerAddress",
+        "count": 5
+      },
+      {
+        "field": "OwnerName2",
+        "count": 5
+      },
+      {
+        "field": "OWNER_ADDRESS_LINE1",
+        "count": 4
+      },
+      {
+        "field": "OWNER_ADDRESS_LINE2",
+        "count": 4
+      },
+      {
+        "field": "owner2",
+        "count": 4
+      },
+      {
+        "field": "OwnerAddressLine1",
+        "count": 4
+      },
+      {
+        "field": "OwnerAddressLine2",
+        "count": 4
+      },
+      {
+        "field": "tax_name",
+        "count": 4
+      },
+      {
+        "field": "Owner_1",
+        "count": 4
+      },
+      {
+        "field": "ownername",
+        "count": 4
+      },
+      {
+        "field": "OwnerAddress3",
+        "count": 4
+      },
+      {
+        "field": "Ownname",
+        "count": 4
+      },
+      {
+        "field": "OwnerName1",
+        "count": 4
+      },
+      {
+        "field": "Current_Owner_Name",
+        "count": 4
+      },
+      {
+        "field": "Second_Owner_Name",
+        "count": 4
+      },
+      {
+        "field": "TaxOwnerName",
+        "count": 3
+      },
+      {
+        "field": "TaxOwnerAddressLine1",
+        "count": 3
+      },
+      {
+        "field": "TaxOwnerAddressLine2",
+        "count": 3
+      },
+      {
+        "field": "TaxOwnerAddressLine3",
+        "count": 3
+      },
+      {
+        "field": "TaxOwnerAddressLine4",
+        "count": 3
+      },
+      {
+        "field": "owner1",
+        "count": 3
+      },
+      {
+        "field": "OwnrName",
+        "count": 3
+      },
+      {
+        "field": "Owner_Names",
+        "count": 3
+      },
+      {
+        "field": "OwnerFullName",
+        "count": 3
+      },
+      {
+        "field": "MAIL_NAME",
+        "count": 3
+      },
+      {
+        "field": "OWNER_1",
+        "count": 3
+      },
+      {
+        "field": "OwnerAddre",
+        "count": 3
+      },
+      {
+        "field": "OWNER_ADDRESS_1",
+        "count": 3
+      },
+      {
+        "field": "OWNER_ADDRESS_2",
+        "count": 3
+      },
+      {
+        "field": "mail_name",
+        "count": 3
+      },
+      {
+        "field": "Mineral_Owner_Address",
+        "count": 3
+      },
+      {
+        "field": "IAS_Owner_Full",
+        "count": 3
+      },
+      {
+        "field": "OWNR_NM",
+        "count": 2
+      },
+      {
+        "field": "TAX_NAME",
+        "count": 2
+      },
+      {
+        "field": "owner3",
+        "count": 2
+      },
+      {
+        "field": "mail1",
+        "count": 2
+      },
+      {
+        "field": "mail2",
+        "count": 2
+      },
+      {
+        "field": "Owner_2",
+        "count": 2
+      },
+      {
+        "field": "Owner_Name__First_Name_First_",
+        "count": 2
+      },
+      {
+        "field": "Owner_Name_2_First_Name_First",
+        "count": 2
+      },
+      {
+        "field": "ownername1",
+        "count": 2
+      },
+      {
+        "field": "OWNLAST",
+        "count": 2
+      },
+      {
+        "field": "OWNER3",
+        "count": 2
+      },
+      {
+        "field": "OWNER6",
+        "count": 2
+      },
+      {
+        "field": "FullOwnerName",
+        "count": 2
+      },
+      {
+        "field": "OWNER_2",
+        "count": 2
+      },
+      {
+        "field": "ownerName",
+        "count": 2
+      },
+      {
+        "field": "CURRENT_OWNER",
+        "count": 2
+      },
+      {
+        "field": "OWNERNAME3",
+        "count": 2
+      },
+      {
+        "field": "OWNERADDR",
+        "count": 2
+      },
+      {
+        "field": "Owner_Address",
+        "count": 2
+      },
+      {
+        "field": "owner_addr",
+        "count": 2
+      },
+      {
+        "field": "OWNER_NAME1",
+        "count": 1
+      },
+      {
+        "field": "OWNER_NAME2",
+        "count": 1
+      },
+      {
+        "field": "OWNER_ADDRESS_LINE3",
+        "count": 1
+      },
+      {
+        "field": "OWNER_ADDRESS_LINE4",
+        "count": 1
+      },
+      {
+        "field": "owner4",
+        "count": 1
+      },
+      {
+        "field": "owner_name1",
+        "count": 1
+      },
+      {
+        "field": "owner_address",
+        "count": 1
+      },
+      {
+        "field": "owner_address1",
+        "count": 1
+      },
+      {
+        "field": "own_name",
+        "count": 1
+      },
+      {
+        "field": "CurrentOwner",
+        "count": 1
+      },
+      {
+        "field": "MAIL1",
+        "count": 1
+      },
+      {
+        "field": "MAIL2",
+        "count": 1
+      },
+      {
+        "field": "PROPERTY_OWNER",
+        "count": 1
+      },
+      {
+        "field": "Ownername1",
+        "count": 1
+      },
+      {
+        "field": "OWNER_FULL",
+        "count": 1
+      },
+      {
+        "field": "CareOfTaxpayer",
+        "count": 1
+      },
+      {
+        "field": "Taxpayer",
+        "count": 1
+      },
+      {
+        "field": "OWNER_3",
+        "count": 1
+      },
+      {
+        "field": "A_OWNER_NAME",
+        "count": 1
+      },
+      {
+        "field": "OWNERNME_1",
+        "count": 1
+      },
+      {
+        "field": "OwnName",
+        "count": 1
+      },
+      {
+        "field": "PropertyOwnerType",
+        "count": 1
+      },
+      {
+        "field": "OwnerNamesPolaris",
+        "count": 1
+      },
+      {
+        "field": "Owner_Name1",
+        "count": 1
+      },
+      {
+        "field": "Owner_Name2",
+        "count": 1
+      },
+      {
+        "field": "OWNER_ADDRESS",
+        "count": 1
+      },
+      {
+        "field": "DEED_OWNER_1",
+        "count": 1
+      },
+      {
+        "field": "DEED_OWNER_2",
+        "count": 1
+      },
+      {
+        "field": "mappedLandownerName",
+        "count": 1
+      },
+      {
+        "field": "mappedLandownerAddress",
+        "count": 1
+      },
+      {
+        "field": "Owner_Names_cont",
+        "count": 1
+      },
+      {
+        "field": "LEGAL_OWNER_NAME",
+        "count": 1
+      },
+      {
+        "field": "Mail1",
+        "count": 1
+      },
+      {
+        "field": "Mail2",
+        "count": 1
+      },
+      {
+        "field": "USER_Owner_Name",
+        "count": 1
+      },
+      {
+        "field": "Taxpayer_Name_1",
+        "count": 1
+      },
+      {
+        "field": "Taxpayer_Name_2",
+        "count": 1
+      },
+      {
+        "field": "Owner_Name_1",
+        "count": 1
+      },
+      {
+        "field": "Owner_Name_2",
+        "count": 1
+      },
+      {
+        "field": "Owner_Name_3",
+        "count": 1
+      },
+      {
+        "field": "Owner_Name_4",
+        "count": 1
+      },
+      {
+        "field": "Owner_Name_5",
+        "count": 1
+      },
+      {
+        "field": "Owner_Name_6",
+        "count": 1
+      },
+      {
+        "field": "PREV_OWNER_NAME",
+        "count": 1
+      },
+      {
+        "field": "owneraddress1",
+        "count": 1
+      },
+      {
+        "field": "owneraddress2",
+        "count": 1
+      },
+      {
+        "field": "Owner3",
+        "count": 1
+      },
+      {
+        "field": "OWNER_ADDR",
+        "count": 1
+      },
+      {
+        "field": "legal_Owner_name",
+        "count": 1
+      },
+      {
+        "field": "ownernmcommon",
+        "count": 1
+      },
+      {
+        "field": "ownername2",
+        "count": 1
+      },
+      {
+        "field": "owneraddre",
+        "count": 1
+      },
+      {
+        "field": "Co_Owner_Name",
+        "count": 1
+      },
+      {
+        "field": "OWNER_NM2",
+        "count": 1
+      },
+      {
+        "field": "OWNER_NM3",
+        "count": 1
+      },
+      {
+        "field": "TAXPAYER",
+        "count": 1
+      }
+    ],
+    "situs_address": [
+      {
+        "field": "ADDRESS",
+        "count": 95
+      },
+      {
+        "field": "Address",
+        "count": 58
+      },
+      {
+        "field": "SITUS_ADDR",
+        "count": 29
+      },
+      {
+        "field": "ADDRESS1",
+        "count": 11
+      },
+      {
+        "field": "SITEADDRESS",
+        "count": 10
+      },
+      {
+        "field": "ADDRESS_1",
+        "count": 10
+      },
+      {
+        "field": "Situs_Address",
+        "count": 10
+      },
+      {
+        "field": "SITE_ADDR",
+        "count": 9
+      },
+      {
+        "field": "address",
+        "count": 9
+      },
+      {
+        "field": "SiteAddres",
+        "count": 9
+      },
+      {
+        "field": "siteadd",
+        "count": 9
+      },
+      {
+        "field": "PropertyFullStreetAddress",
+        "count": 8
+      },
+      {
+        "field": "PARCEL_ADD",
+        "count": 8
+      },
+      {
+        "field": "ST_ADDRESS",
+        "count": 8
+      },
+      {
+        "field": "Street_Address",
+        "count": 8
+      },
+      {
+        "field": "SITEADDRES",
+        "count": 8
+      },
+      {
+        "field": "Address_1",
+        "count": 7
+      },
+      {
+        "field": "SITE_ADDRESS",
+        "count": 7
+      },
+      {
+        "field": "SitusAddress",
+        "count": 7
+      },
+      {
+        "field": "PROP_ADD",
+        "count": 7
+      },
+      {
+        "field": "address1",
+        "count": 6
+      },
+      {
+        "field": "Address1",
+        "count": 6
+      },
+      {
+        "field": "SITUS_ADDRESS",
+        "count": 6
+      },
+      {
+        "field": "LandAddr",
+        "count": 5
+      },
+      {
+        "field": "SITEADD",
+        "count": 5
+      },
+      {
+        "field": "StAddr",
+        "count": 5
+      },
+      {
+        "field": "SITE_ADD",
+        "count": 5
+      },
+      {
+        "field": "PropertyAddress",
+        "count": 5
+      },
+      {
+        "field": "Ph_Full_Address",
+        "count": 5
+      },
+      {
+        "field": "SitusAddre",
+        "count": 5
+      },
+      {
+        "field": "StreetAddr",
+        "count": 5
+      },
+      {
+        "field": "streetaddr",
+        "count": 4
+      },
+      {
+        "field": "AddressLine1",
+        "count": 4
+      },
+      {
+        "field": "AddressLine2",
+        "count": 4
+      },
+      {
+        "field": "Site_Address",
+        "count": 4
+      },
+      {
+        "field": "PropAddr",
+        "count": 4
+      },
+      {
+        "field": "PROPADDR",
+        "count": 4
+      },
+      {
+        "field": "SITUS_ADDRESS_ID",
+        "count": 3
+      },
+      {
+        "field": "SITUS_ADDRESS_LINE1",
+        "count": 3
+      },
+      {
+        "field": "SITUS_ADDRESS_LINE2",
+        "count": 3
+      },
+      {
+        "field": "SITUS_ADDR_NBR",
+        "count": 3
+      },
+      {
+        "field": "SITUS_ADDR_NBR_SUFFIX",
+        "count": 3
+      },
+      {
+        "field": "ADDR_1",
+        "count": 3
+      },
+      {
+        "field": "PROPERTY_ADDRESS",
+        "count": 3
+      },
+      {
+        "field": "ADDRESS_LINE_1",
+        "count": 3
+      },
+      {
+        "field": "ADDRESS_LINE_2",
+        "count": 3
+      },
+      {
+        "field": "FULLADDRESS",
+        "count": 3
+      },
+      {
+        "field": "PROPERTYADDRESS",
+        "count": 3
+      },
+      {
+        "field": "SITE_ADDRE",
+        "count": 3
+      },
+      {
+        "field": "SITUSADD",
+        "count": 3
+      },
+      {
+        "field": "FullAddr",
+        "count": 3
+      },
+      {
+        "field": "PropAddress",
+        "count": 3
+      },
+      {
+        "field": "FullSitusAddress",
+        "count": 3
+      },
+      {
+        "field": "situs_addr",
+        "count": 3
+      },
+      {
+        "field": "FullAddress",
+        "count": 3
+      },
+      {
+        "field": "Situs_Address_Full",
+        "count": 2
+      },
+      {
+        "field": "AddressLine3",
+        "count": 2
+      },
+      {
+        "field": "Propaddrnu",
+        "count": 2
+      },
+      {
+        "field": "STREET_ADDRESS",
+        "count": 2
+      },
+      {
+        "field": "Prop_Addre",
+        "count": 2
+      },
+      {
+        "field": "Full_Address",
+        "count": 2
+      },
+      {
+        "field": "SITEADDR",
+        "count": 2
+      },
+      {
+        "field": "FULL_ADD",
+        "count": 2
+      },
+      {
+        "field": "SitusAddressAll",
+        "count": 2
+      },
+      {
+        "field": "FULL_ADDR",
+        "count": 2
+      },
+      {
+        "field": "site_addr_1",
+        "count": 2
+      },
+      {
+        "field": "site_addr_2",
+        "count": 2
+      },
+      {
+        "field": "site_addr_3",
+        "count": 2
+      },
+      {
+        "field": "PARCEL_ADDRESS",
+        "count": 2
+      },
+      {
+        "field": "Property_Address",
+        "count": 2
+      },
+      {
+        "field": "streetaddress",
+        "count": 2
+      },
+      {
+        "field": "PROP_ADDR",
+        "count": 2
+      },
+      {
+        "field": "SITUSADDRS",
+        "count": 1
+      },
+      {
+        "field": "LOCADDR",
+        "count": 1
+      },
+      {
+        "field": "siteAddressIntersection",
+        "count": 1
+      },
+      {
+        "field": "siteaddres",
+        "count": 1
+      },
+      {
+        "field": "SITUS_ADD",
+        "count": 1
+      },
+      {
+        "field": "SiteAddrNum",
+        "count": 1
+      },
+      {
+        "field": "SiteAddr",
+        "count": 1
+      },
+      {
+        "field": "SitusAdd",
+        "count": 1
+      },
+      {
+        "field": "PROPERTY_ADDR_NUM",
+        "count": 1
+      },
+      {
+        "field": "PROPERTY_ADDR_DIR",
+        "count": 1
+      },
+      {
+        "field": "PROPERTY_ADDR_NAME",
+        "count": 1
+      },
+      {
+        "field": "PROPERTY_ADDR_STREET",
+        "count": 1
+      },
+      {
+        "field": "PROPERTY_ADDR_CITY",
+        "count": 1
+      },
+      {
+        "field": "PROPERTY_ADDR_ZIP",
+        "count": 1
+      },
+      {
+        "field": "PROPERTY_ADDR_ZIP4",
+        "count": 1
+      },
+      {
+        "field": "STREET_ADD",
+        "count": 1
+      },
+      {
+        "field": "SITUS_ADDRTYPE",
+        "count": 1
+      },
+      {
+        "field": "Propaddr_1",
+        "count": 1
+      },
+      {
+        "field": "Propaddrdi",
+        "count": 1
+      },
+      {
+        "field": "PROPADR",
+        "count": 1
+      },
+      {
+        "field": "FULLADDR",
+        "count": 1
+      },
+      {
+        "field": "G_FULLADDRESS",
+        "count": 1
+      },
+      {
+        "field": "Loc_Addr",
+        "count": 1
+      },
+      {
+        "field": "property_address",
+        "count": 1
+      },
+      {
+        "field": "ParcelAddress1",
+        "count": 1
+      },
+      {
+        "field": "Site_Addr_",
+        "count": 1
+      },
+      {
+        "field": "PROP_ADDRE",
+        "count": 1
+      },
+      {
+        "field": "prop_addr",
+        "count": 1
+      },
+      {
+        "field": "SitusFullAddress",
+        "count": 1
+      },
+      {
+        "field": "MailingAddressLine1",
+        "count": 1
+      },
+      {
+        "field": "MailingAddressLine2",
+        "count": 1
+      },
+      {
+        "field": "FULL_ADDRESS",
+        "count": 1
+      },
+      {
+        "field": "PROPADD",
+        "count": 1
+      },
+      {
+        "field": "SITUS_ADDR_NUM",
+        "count": 1
+      },
+      {
+        "field": "PREMISEADD",
+        "count": 1
+      },
+      {
+        "field": "Property_Address_Number",
+        "count": 1
+      },
+      {
+        "field": "PREMISE_ADDRESS",
+        "count": 1
+      },
+      {
+        "field": "PropertyAddr1",
+        "count": 1
+      },
+      {
+        "field": "FullStreetAddress",
+        "count": 1
+      },
+      {
+        "field": "STREETADDRESS",
+        "count": 1
+      },
+      {
+        "field": "WebsiteAddress",
+        "count": 1
+      },
+      {
+        "field": "site_addr",
+        "count": 1
+      }
+    ],
+    "legal_description": [
+      {
+        "field": "LOT",
+        "count": 74
+      },
+      {
+        "field": "BLOCK",
+        "count": 63
+      },
+      {
+        "field": "LEGAL_DESC",
+        "count": 43
+      },
+      {
+        "field": "Block",
+        "count": 38
+      },
+      {
+        "field": "Lot",
+        "count": 32
+      },
+      {
+        "field": "plat",
+        "count": 28
+      },
+      {
+        "field": "LEGAL",
+        "count": 21
+      },
+      {
+        "field": "PLAT",
+        "count": 20
+      },
+      {
+        "field": "Subdivision",
+        "count": 17
+      },
+      {
+        "field": "TRACT",
+        "count": 13
+      },
+      {
+        "field": "legal_desc",
+        "count": 13
+      },
+      {
+        "field": "LegalDescr",
+        "count": 13
+      },
+      {
+        "field": "SUBDIV",
+        "count": 12
+      },
+      {
+        "field": "LegalDesc2",
+        "count": 11
+      },
+      {
+        "field": "block",
+        "count": 11
+      },
+      {
+        "field": "Legal",
+        "count": 11
+      },
+      {
+        "field": "Legal_Description",
+        "count": 11
+      },
+      {
+        "field": "LegalDesc1",
+        "count": 10
+      },
+      {
+        "field": "lot",
+        "count": 9
+      },
+      {
+        "field": "LegalDescription",
+        "count": 9
+      },
+      {
+        "field": "Tract",
+        "count": 7
+      },
+      {
+        "field": "LOT_NUM",
+        "count": 6
+      },
+      {
+        "field": "plat_name",
+        "count": 6
+      },
+      {
+        "field": "legal",
+        "count": 6
+      },
+      {
+        "field": "lot_num",
+        "count": 6
+      },
+      {
+        "field": "LOT_ID",
+        "count": 6
+      },
+      {
+        "field": "BlockLegal",
+        "count": 5
+      },
+      {
+        "field": "LotLegal",
+        "count": 5
+      },
+      {
+        "field": "LegalDesc",
+        "count": 5
+      },
+      {
+        "field": "PlatName",
+        "count": 5
+      },
+      {
+        "field": "SUBDIVISION",
+        "count": 4
+      },
+      {
+        "field": "LegalDescLine1",
+        "count": 4
+      },
+      {
+        "field": "Subdiv_Name",
+        "count": 4
+      },
+      {
+        "field": "LegalDesc3",
+        "count": 3
+      },
+      {
+        "field": "LEGALDESC",
+        "count": 3
+      },
+      {
+        "field": "subdivision",
+        "count": 3
+      },
+      {
+        "field": "BLKNUM",
+        "count": 3
+      },
+      {
+        "field": "Legal_Desc",
+        "count": 3
+      },
+      {
+        "field": "legal_description",
+        "count": 3
+      },
+      {
+        "field": "BLOCKNAME",
+        "count": 3
+      },
+      {
+        "field": "ADDITION",
+        "count": 3
+      },
+      {
+        "field": "IAS_Legal_Desc_Full",
+        "count": 3
+      },
+      {
+        "field": "SUB_DIV",
+        "count": 2
+      },
+      {
+        "field": "PLAT_NAME",
+        "count": 2
+      },
+      {
+        "field": "SubDiv",
+        "count": 2
+      },
+      {
+        "field": "FEATURES_SDE_CAMA_LEGAL_DESCR",
+        "count": 2
+      },
+      {
+        "field": "SubdivisionName",
+        "count": 2
+      },
+      {
+        "field": "LOTNUM",
+        "count": 2
+      },
+      {
+        "field": "TractID",
+        "count": 2
+      },
+      {
+        "field": "SUBDIVISION_NAME",
+        "count": 2
+      },
+      {
+        "field": "LegalDescriptionShort",
+        "count": 2
+      },
+      {
+        "field": "SubDivName",
+        "count": 2
+      },
+      {
+        "field": "LegalDescription1",
+        "count": 2
+      },
+      {
+        "field": "LegalDescription2",
+        "count": 2
+      },
+      {
+        "field": "FullLegalDescription",
+        "count": 2
+      },
+      {
+        "field": "block_num",
+        "count": 2
+      },
+      {
+        "field": "SUBDIV_ID",
+        "count": 2
+      },
+      {
+        "field": "TRACTID",
+        "count": 2
+      },
+      {
+        "field": "BLK_NUM",
+        "count": 2
+      },
+      {
+        "field": "TRACTNO",
+        "count": 2
+      },
+      {
+        "field": "Plat",
+        "count": 2
+      },
+      {
+        "field": "subdiv",
+        "count": 2
+      },
+      {
+        "field": "subdivno",
+        "count": 2
+      },
+      {
+        "field": "legaldescription",
+        "count": 2
+      },
+      {
+        "field": "LEGALDESCR",
+        "count": 2
+      },
+      {
+        "field": "tract",
+        "count": 2
+      },
+      {
+        "field": "subdiv_name",
+        "count": 2
+      },
+      {
+        "field": "AdditionName",
+        "count": 1
+      },
+      {
+        "field": "TRACT_NAME",
+        "count": 1
+      },
+      {
+        "field": "BLOCK_ID",
+        "count": 1
+      },
+      {
+        "field": "legaldesc1",
+        "count": 1
+      },
+      {
+        "field": "legaldesc2",
+        "count": 1
+      },
+      {
+        "field": "legaldesc3",
+        "count": 1
+      },
+      {
+        "field": "legaldescr",
+        "count": 1
+      },
+      {
+        "field": "Lot_No",
+        "count": 1
+      },
+      {
+        "field": "BLOCKNUM",
+        "count": 1
+      },
+      {
+        "field": "ADDITION_NAME",
+        "count": 1
+      },
+      {
+        "field": "TractName",
+        "count": 1
+      },
+      {
+        "field": "LotNum",
+        "count": 1
+      },
+      {
+        "field": "LEGALDESC1",
+        "count": 1
+      },
+      {
+        "field": "PLATNAME",
+        "count": 1
+      },
+      {
+        "field": "BLK",
+        "count": 1
+      },
+      {
+        "field": "LegalDesci",
+        "count": 1
+      },
+      {
+        "field": "A_LEGAL_DESC",
+        "count": 1
+      },
+      {
+        "field": "LOTNO",
+        "count": 1
+      },
+      {
+        "field": "mlegalDesc",
+        "count": 1
+      },
+      {
+        "field": "Lotnum",
+        "count": 1
+      },
+      {
+        "field": "ADDITIONNUM",
+        "count": 1
+      },
+      {
+        "field": "BLKID",
+        "count": 1
+      },
+      {
+        "field": "Legal_desc",
+        "count": 1
+      },
+      {
+        "field": "BLOCK_NUM",
+        "count": 1
+      },
+      {
+        "field": "LegalDescLine2",
+        "count": 1
+      },
+      {
+        "field": "LegalDescLine3",
+        "count": 1
+      },
+      {
+        "field": "LegalDescLine4",
+        "count": 1
+      },
+      {
+        "field": "LegalDescLine5",
+        "count": 1
+      },
+      {
+        "field": "LegalDescLineLast",
+        "count": 1
+      },
+      {
+        "field": "Tract_ID",
+        "count": 1
+      },
+      {
+        "field": "PlatNo",
+        "count": 1
+      },
+      {
+        "field": "Plat_Num",
+        "count": 1
+      },
+      {
+        "field": "block_id",
+        "count": 1
+      },
+      {
+        "field": "SUBDIVNAME",
+        "count": 1
+      },
+      {
+        "field": "PROPERTY_LEGAL_DESCRIPTION",
+        "count": 1
+      },
+      {
+        "field": "SUBDIVID",
+        "count": 1
+      },
+      {
+        "field": "subdiv_num",
+        "count": 1
+      },
+      {
+        "field": "legaldescript",
+        "count": 1
+      },
+      {
+        "field": "PLAT_Num",
+        "count": 1
+      },
+      {
+        "field": "LOT_Num",
+        "count": 1
+      },
+      {
+        "field": "BLOCK_Num",
+        "count": 1
+      }
+    ]
+  }
+}

@@ -45,3 +45,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# discovery crawler resume state (scripts/discover)
+scripts/discover/.cache/
