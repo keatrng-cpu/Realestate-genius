@@ -1,20 +1,14 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Reveal } from "../Reveal";
-import { DEMO_LISTING } from "@/lib/tour";
-
-const HouseTour = dynamic(
-  () => import("./HouseTour").then((m) => m.HouseTour),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-[min(68vh,640px)] min-h-[380px] w-full animate-pulse rounded-2xl border border-ink-600 bg-ink-800" />
-    ),
-  },
-);
+import { TourExperience } from "./TourExperience";
+import { DEFAULT_LISTING_ID, listListingIds } from "@/lib/listings/demo-data";
+import { useState } from "react";
 
 export function TourSection() {
+  const ids = listListingIds();
+  const [listingId, setListingId] = useState(DEFAULT_LISTING_ID);
+
   return (
     <section
       id="tour"
@@ -26,23 +20,39 @@ export function TourSection() {
             Listing media
           </p>
           <h2 className="mt-6 max-w-3xl font-display text-[clamp(2rem,5vw,3.75rem)] leading-[1.02] tracking-[-0.02em]">
-            The photos, shown properly.
-            <span className="text-bone-500"> Then a tour that moves.</span>
+            Photos for every listing.
+            <span className="text-bone-500"> Depth when we have it.</span>
+            <span className="text-bone-500"> Splat only when captured.</span>
           </h2>
           <p className="mt-6 max-w-2xl leading-relaxed text-bone-300">
-            Full-bleed gallery, labeled filmstrip, cinematic walkthrough with
-            depth parallax, and a one-tap play path through the house — built to
-            beat compressed portal galleries and floor-arrow 3D tours. Works on
-            ordinary listing photos nationwide.
+            Wired from <code className="text-bone-100">listing_photos</code> —
+            nationwide stills become a walkthrough and 3D-photo gallery. Guided
+            phone capture unlocks the premium Gaussian tier. No fake
+            photogrammetry from portal JPEGs.
           </p>
         </Reveal>
 
-        <Reveal delay={0.1} className="mt-12">
-          <HouseTour
-            rooms={DEMO_LISTING.rooms}
-            address={DEMO_LISTING.address}
-            city={DEMO_LISTING.city}
-          />
+        <Reveal delay={0.08} className="mt-8">
+          <div className="flex flex-wrap gap-2">
+            {ids.map((id) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setListingId(id)}
+                className={`rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-wider transition-colors ${
+                  listingId === id
+                    ? "border-ember-400 bg-ember-400/10 text-ember-300"
+                    : "border-ink-500 text-bone-300 hover:border-bone-500"
+                }`}
+              >
+                {id}
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.12} className="mt-10">
+          <TourExperience listingId={listingId} />
         </Reveal>
 
         <Reveal delay={0.15}>
@@ -50,18 +60,18 @@ export function TourSection() {
             {[
               {
                 k: "01",
-                t: "Picture first",
-                d: "Expandable full-bleed stills, room labels on every frame, sequence path under the stage — the gallery is the product.",
+                t: "listing_photos",
+                d: "API maps each row to TourRoom.src. Swap demo data for Supabase — same payload shape.",
               },
               {
                 k: "02",
-                t: "Animated path",
-                d: "Play tour pans each room, then travels the floor plan. No scavenger hunt on floor arrows.",
+                t: "Depth parallax",
+                d: "Multi-layer 3D photo on every still. depth_map_url replaces the luminance proxy when the batch job lands.",
               },
               {
                 k: "03",
-                t: "Depth on any set",
-                d: "Parallax from a depth proxy today; swap in monocular depth maps per photo when the batch job is live.",
+                t: "Premium splat",
+                d: "Request guided capture per listing. splat_url appears only after real overlapping frames process.",
               },
             ].map((c) => (
               <div
