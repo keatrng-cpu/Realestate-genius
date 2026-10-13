@@ -27,7 +27,7 @@
 # agent tooling — .claude/skills contains symlinks into .agents/, which break
 # zip-upload deploys to Netlify's Linux builders. Local-only, never deployed.
 .agents/
-.claude/
+.claude/*
 .netlify/
 
 # debug
@@ -48,3 +48,9 @@ next-env.d.ts
 
 # discovery crawler resume state (scripts/discover)
 scripts/discover/.cache/
+ai/.sessions.log
+graphify-out/.post-commit.log
+# auto-memory: keep these tracked
+!.claude/settings.json
+ai/.context.md
+ai/.context.md.tmp
