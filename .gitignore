@@ -52,3 +52,5 @@ ai/.sessions.log
 graphify-out/.post-commit.log
 # auto-memory: keep these tracked
 !.claude/settings.json
+ai/.context.md
+ai/.context.md.tmp
