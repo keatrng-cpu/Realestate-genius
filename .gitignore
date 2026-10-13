@@ -48,3 +48,5 @@ next-env.d.ts
 
 # discovery crawler resume state (scripts/discover)
 scripts/discover/.cache/
+ai/.sessions.log
+graphify-out/.post-commit.log
